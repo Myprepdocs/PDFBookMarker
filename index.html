@@ -631,6 +631,9 @@
 
         .mobile-menu {
             display: none;
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
         }
 
         .hamburger-btn {
@@ -659,7 +662,7 @@
         .mobile-dropdown {
             position: absolute;
             top: 100%;
-            right: 0;
+            left: 0;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 0.75rem;
@@ -1102,6 +1105,9 @@
                         </button>
                         <button id="mobileAddVideoBtn" class="btn" title="Add video to collection">
                             <i class="bi bi-play-circle me-2"></i>Add Video
+                        </button>
+                        <button id="mobileNotesBtn" class="btn" title="Scroll to notes section">
+                            <i class="bi bi-journal-text me-2"></i>Notes
                         </button>
                         <button id="mobileManageLabelsBtn" class="btn" title="Manage labels">
                             <i class="bi bi-tags me-2"></i>Manage Labels
@@ -1562,8 +1568,8 @@ You can use **Markdown** formatting:
                                         <i class="bi bi-2-circle me-2"></i>Managing Collection
                                     </h6>
                                     <ul class="list-unstyled mb-0">
-                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Single click/tap any thumbnail to view summary</li>
-                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Double click/tap to open the PDF/video</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Single click/tap any thumbnail to open the PDF/video</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Double click/tap to view summary</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Right-click, two-finger tap, or long press for options</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Drag and drop to reorder thumbnails (desktop only)</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Hover and click × to remove items</li>
@@ -1598,8 +1604,8 @@ You can use **Markdown** formatting:
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Right-click, two-finger tap, or long press for context menu</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Edit summaries with **Markdown** formatting</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Change labels to organize your collection</li>
-                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Single click/tap thumbnails to view formatted summaries</li>
-                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Double click/tap to open PDFs/videos</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Double click/tap thumbnails to view formatted summaries</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Single click/tap to open PDFs/videos directly</li>
                                     </ul>
                                 </div>
                             </div>
@@ -1612,8 +1618,10 @@ You can use **Markdown** formatting:
                                     </h6>
                                     <ul class="list-unstyled mb-0">
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Click "Add New Note" to create training notes</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Click note titles to expand/collapse content</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Link notes to specific PDFs/videos for easy reference</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Search through your notes to find information quickly</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Use "Notes" in mobile menu to scroll to notes section</li>
                                     </ul>
                                 </div>
                             </div>
@@ -1641,7 +1649,7 @@ You can use **Markdown** formatting:
                     </div>
                     <div class="alert alert-info mt-3">
                         <i class="bi bi-phone me-2"></i>
-                        <strong>Mobile Tips:</strong> Long press any thumbnail for 0.6 seconds to open the context menu. Two-finger tap also works. Drag and drop is disabled on touch devices for better tap responsiveness.
+                        <strong>Mobile Tips:</strong> Single tap thumbnails to open PDFs/videos directly. Double tap to view summaries. Long press for 0.6 seconds to open the context menu. Use the hamburger menu (top-left) to access all features including quick navigation to notes.
                     </div>
                     <div class="alert alert-success mt-3">
                         <i class="bi bi-tag me-2"></i>
@@ -1709,6 +1717,7 @@ You can use **Markdown** formatting:
                     mobileKallidusBtn: document.getElementById('mobileKallidusBtn'),
                     mobileAddPdfBtn: document.getElementById('mobileAddPdfBtn'),
                     mobileAddVideoBtn: document.getElementById('mobileAddVideoBtn'),
+                    mobileNotesBtn: document.getElementById('mobileNotesBtn'),
                     mobileManageLabelsBtn: document.getElementById('mobileManageLabelsBtn'),
                     mobileExportBtn: document.getElementById('mobileExportBtn'),
                     mobileImportBtn: document.getElementById('mobileImportBtn'),
@@ -1840,6 +1849,10 @@ You can use **Markdown** formatting:
                 });
                 this.elements.mobileAddVideoBtn.addEventListener('click', () => {
                     this.openVideoModal();
+                    this.closeMobileMenu();
+                });
+                this.elements.mobileNotesBtn.addEventListener('click', () => {
+                    this.scrollToNotes();
                     this.closeMobileMenu();
                 });
                 this.elements.mobileManageLabelsBtn.addEventListener('click', () => {
@@ -2125,6 +2138,23 @@ You can use **Markdown** formatting:
 
             closeMobileMenu() {
                 this.elements.mobileDropdown.style.display = 'none';
+            }
+
+            scrollToNotes() {
+                const notesSection = document.querySelector('.notes-section');
+                if (notesSection) {
+                    notesSection.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            }
+
+            toggleNoteExpansion(noteId) {
+                const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
+                if (noteElement) {
+                    noteElement.classList.toggle('expanded');
+                }
             }
 
             updateLabelPreview() {
@@ -2573,7 +2603,6 @@ You can use **Markdown** formatting:
             }
 
             handleThumbnailClick(event, resourceId, resourceType) {
-                console.log('handleThumbnailClick called:', resourceId, resourceType); // Debug log
                 event.preventDefault();
                 event.stopPropagation();
                 
@@ -2581,41 +2610,37 @@ You can use **Markdown** formatting:
                 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
                 
                 if (isTouchDevice) {
-                    console.log('Touch device detected'); // Debug log
                     // On touch devices, handle taps differently
                     if (this.clickTimeout) {
-                        // This is a second tap (double tap)
-                        console.log('Double tap detected'); // Debug log
+                        // This is a second tap (double tap) - show summary
                         clearTimeout(this.clickTimeout);
                         this.clickTimeout = null;
-                        this.openResource(resourceId, resourceType);
+                        this.showSummary(resourceId, resourceType);
                     } else {
-                        // First tap - set shorter timeout for better mobile UX
-                        console.log('Single tap detected, setting timeout'); // Debug log
+                        // First tap - set shorter timeout for better mobile UX - open resource
                         this.clickTimeout = setTimeout(() => {
-                            console.log('Single tap timeout fired'); // Debug log
                             this.clickTimeout = null;
-                            this.showSummary(resourceId, resourceType);
+                            this.openResource(resourceId, resourceType);
                         }, 200); // Shorter delay for mobile
                     }
                 } else {
-                    console.log('Desktop device detected'); // Debug log
                     // Desktop behavior - longer timeout for mouse double-clicks
                     if (this.clickTimeout) {
+                        // Double click - show summary
                         clearTimeout(this.clickTimeout);
                         this.clickTimeout = null;
-                        this.openResource(resourceId, resourceType);
+                        this.showSummary(resourceId, resourceType);
                     } else {
+                        // Single click - open resource
                         this.clickTimeout = setTimeout(() => {
                             this.clickTimeout = null;
-                            this.showSummary(resourceId, resourceType);
+                            this.openResource(resourceId, resourceType);
                         }, 300);
                     }
                 }
             }
 
             openResource(resourceId, resourceType) {
-                console.log('openResource called:', resourceId, resourceType); // Debug log
                 if (resourceType === 'pdf') {
                     this.openPDF(resourceId);
                 } else if (resourceType === 'video') {
@@ -2624,7 +2649,6 @@ You can use **Markdown** formatting:
             }
 
             showSummary(resourceId, resourceType) {
-                console.log('showSummary called:', resourceId, resourceType); // Debug log
                 const resource = resourceType === 'pdf' ? 
                     this.pdfCollection.find(p => p.id === resourceId) :
                     this.videoCollection.find(v => v.id === resourceId);
@@ -2655,7 +2679,7 @@ You can use **Markdown** formatting:
                 } else {
                     this.elements.summaryContent.innerHTML = `
                         <p class="text-muted">No summary available for this resource.</p>
-                        <p class="text-muted">Right-click or two-finger tap to add a summary with <strong>Markdown</strong> formatting.</p>
+                        <p class="text-muted">Right-click, long press, or use the context menu to add a summary with <strong>Markdown</strong> formatting.</p>
                     `;
                 }
                 
@@ -2944,13 +2968,8 @@ You can use **Markdown** formatting:
             }
 
             openVideo(id) {
-                console.log('openVideo called with id:', id); // Debug log
                 const video = this.videoCollection.find(v => v.id === id);
-                if (!video) {
-                    console.log('Video not found for id:', id); // Debug log
-                    return;
-                }
-                console.log('Opening Video URL:', video.url); // Debug log
+                if (!video) return;
                 window.open(video.url, '_blank');
             }
 
@@ -3014,21 +3033,24 @@ You can use **Markdown** formatting:
                         }
                         
                         return `
-                            <div class="note-item" data-id="${note.id}">
+                            <div class="note-item" data-note-id="${note.id}" onclick="pdfCompanion.toggleNoteExpansion('${note.id}')">
                                 <div class="note-header">
-                                    <h6 class="note-title">${this.escapeHtml(note.title)}</h6>
+                                    <h6 class="note-title">
+                                        <i class="bi bi-chevron-down note-expand-icon me-2"></i>
+                                        ${this.escapeHtml(note.title)}
+                                    </h6>
                                     <div class="note-actions">
-                                        <button class="note-btn" onclick="pdfCompanion.editNote('${note.id}')" title="Edit note">
+                                        <button class="note-btn" onclick="event.stopPropagation(); pdfCompanion.editNote('${note.id}')" title="Edit note">
                                             <i class="bi bi-pencil"></i>
                                         </button>
-                                        <button class="note-btn" onclick="pdfCompanion.removeNote('${note.id}')" title="Delete note">
+                                        <button class="note-btn" onclick="event.stopPropagation(); pdfCompanion.removeNote('${note.id}')" title="Delete note">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </div>
                                 </div>
                                 <div class="note-content">${this.escapeHtml(note.content)}</div>
                                 ${linkedResource ? `
-                                    <div class="note-pdf-link" onclick="pdfCompanion.openLinkedResource('${note.pdfId}')">
+                                    <div class="note-pdf-link" onclick="event.stopPropagation(); pdfCompanion.openLinkedResource('${note.pdfId}')">
                                         <i class="bi ${resourceIcon} me-1"></i>
                                         ${this.escapeHtml(linkedResource.title)}
                                     </div>
@@ -3169,6 +3191,10 @@ You can use **Markdown** formatting:
                     
                     if (title.includes(searchTerm) || content.includes(searchTerm)) {
                         item.style.display = 'block';
+                        // If search matches content, expand the note to show it
+                        if (content.includes(searchTerm) && !title.includes(searchTerm)) {
+                            item.classList.add('expanded');
+                        }
                     } else {
                         item.style.display = 'none';
                     }
@@ -3176,13 +3202,8 @@ You can use **Markdown** formatting:
             }
 
             openPDF(id) {
-                console.log('openPDF called with id:', id); // Debug log
                 const pdf = this.pdfCollection.find(p => p.id === id);
-                if (!pdf) {
-                    console.log('PDF not found for id:', id); // Debug log
-                    return;
-                }
-                console.log('Opening PDF URL:', pdf.url); // Debug log
+                if (!pdf) return;
                 window.open(pdf.url, '_blank');
             }
 
