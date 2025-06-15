@@ -2127,19 +2127,21 @@ You can use **Markdown** formatting:
             }
 
             toggleNoteExpansion(noteId) {
-                console.log('toggleNoteExpansion called with noteId:', noteId); // Debug
                 const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
-                console.log('Found note element:', noteElement); // Debug
                 
                 if (noteElement) {
                     const wasExpanded = noteElement.classList.contains('expanded');
                     noteElement.classList.toggle('expanded');
-                    console.log('Note expanded state changed from', wasExpanded, 'to', !wasExpanded); // Debug
                     
-                    // Also log the current classes
-                    console.log('Current classes:', noteElement.className);
-                } else {
-                    console.log('Note element not found for ID:', noteId);
+                    // Force a style recalculation
+                    const expandable = noteElement.querySelector('.note-expandable');
+                    if (expandable) {
+                        if (noteElement.classList.contains('expanded')) {
+                            expandable.style.display = 'block';
+                        } else {
+                            expandable.style.display = 'none';
+                        }
+                    }
                 }
             }
 
@@ -3053,7 +3055,17 @@ You can use **Markdown** formatting:
                         `;
                     }).join('');
                     
-                    console.log('Notes rendered, setting up click handlers...'); // Debug
+                    // Ensure all notes start collapsed
+                    setTimeout(() => {
+                        const allNotes = document.querySelectorAll('.note-item');
+                        allNotes.forEach(note => {
+                            note.classList.remove('expanded');
+                            const expandable = note.querySelector('.note-expandable');
+                            if (expandable) {
+                                expandable.style.display = 'none';
+                            }
+                        });
+                    }, 100);
                 }
             }
 
