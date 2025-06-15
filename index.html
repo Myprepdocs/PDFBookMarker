@@ -1,0 +1,3632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Bookmark Companion</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    
+    <!-- SortableJS for drag and drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    
+    <!-- Marked.js for markdown parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .main-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            box-shadow: var(--card-shadow-hover);
+            margin: 2rem auto;
+            max-width: 1400px;
+        }
+
+        .header-section {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 2rem;
+            border-radius: 1rem 1rem 0 0;
+            text-align: center;
+        }
+
+        .header-section h1 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .btn-kallidus {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+        }
+
+        .btn-kallidus:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .add-pdf-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+        }
+
+        .add-pdf-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .btn-small {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 0.9rem;
+        }
+
+        .btn-small:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        .help-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .help-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .content-section {
+            padding: 2rem;
+            display: flex;
+            gap: 2rem;
+            min-height: 600px;
+        }
+
+        .gallery-section {
+            flex: 1;
+        }
+
+        .notes-section {
+            flex: 1;
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            max-height: 800px;
+            overflow-y: auto;
+        }
+
+        .notes-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .notes-search {
+            border-radius: 0.5rem;
+            border: 2px solid #e5e7eb;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .notes-search:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .note-item {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            border-left: 4px solid #6366f1;
+        }
+
+        .note-item:hover {
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-1px);
+        }
+
+        .note-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .note-title {
+            font-weight: 600;
+            color: #374151;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .note-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .note-btn {
+            background: none;
+            border: none;
+            color: #6b7280;
+            padding: 0.25rem;
+            border-radius: 0.25rem;
+            transition: all 0.2s ease;
+        }
+
+        .note-btn:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .note-content {
+            color: #6b7280;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            margin-bottom: 0.75rem;
+        }
+
+        .note-pdf-link {
+            display: inline-flex;
+            align-items: center;
+            background: #eff6ff;
+            color: #2563eb;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            font-size: 0.75rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .note-pdf-link:hover {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .note-date {
+            font-size: 0.75rem;
+            color: #9ca3af;
+            margin-top: 0.5rem;
+        }
+
+        .add-note-btn {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .add-note-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            color: #64748b;
+        }
+
+        .pdf-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .video-section {
+            border-top: 2px solid #e5e7eb;
+            padding-top: 1.5rem;
+        }
+
+        .video-item {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+            user-select: none;
+            border-left: 4px solid #ef4444;
+            overflow: hidden;
+        }
+
+        .video-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: #ef4444;
+        }
+
+        .video-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+            z-index: 1000;
+        }
+
+        .video-item.drag-over {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 160px;
+            border-radius: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            padding: 1rem;
+            text-align: center;
+            background: #fef2f2;
+            border: 2px solid #fecaca;
+        }
+
+        .video-thumbnail .play-icon {
+            font-size: 2.5rem;
+            color: #ef4444;
+            margin-bottom: 0.75rem;
+        }
+
+        .video-item .pdf-title {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            line-height: 1.3;
+            overflow: visible;
+            display: block;
+            text-align: center;
+            flex-grow: 1;
+            max-height: none;
+            -webkit-line-clamp: unset;
+            -webkit-box-orient: unset;
+        }
+
+        .pdf-item {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        .pdf-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: #6366f1;
+        }
+
+        .pdf-item.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+            z-index: 1000;
+        }
+
+        .pdf-item.drag-over {
+            border-color: #10b981;
+            background: #f0fdf4;
+        }
+
+        .pdf-thumbnail {
+            width: 100%;
+            height: 120px;
+            border-radius: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            padding: 0.75rem;
+            text-align: center;
+            background: #f8fafc;
+            border: 2px solid #e5e7eb;
+        }
+
+        .pdf-title {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 0.25rem;
+            font-size: 0.8rem;
+            line-height: 1.2;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pdf-meta {
+            font-size: 0.7rem;
+            color: #6b7280;
+            margin-top: auto;
+        }
+
+        .delete-btn {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .pdf-thumbnail:hover .delete-btn {
+            display: flex;
+        }
+
+        .delete-btn:hover {
+            background: #dc2626;
+            transform: scale(1.1);
+        }
+
+        .drag-handle {
+            position: absolute;
+            top: 0.25rem;
+            left: 0.25rem;
+            background: rgba(0, 0, 0, 0.1);
+            color: #6b7280;
+            border: none;
+            border-radius: 0.25rem;
+            width: 24px;
+            height: 24px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            font-size: 0.75rem;
+        }
+
+        .pdf-item:hover .drag-handle {
+            display: flex;
+        }
+
+        .drag-handle:active {
+            cursor: grabbing;
+        }
+
+        .label-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 0.5rem 0.5rem;
+            z-index: 5;
+        }
+
+        .label-selector {
+            border-radius: 0.5rem;
+            border: 2px solid #e5e7eb;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .label-selector:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .label-preview {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .label-color-picker {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 40px;
+            height: 40px;
+            border-radius: 0.5rem;
+            border: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.selected {
+            border-color: #374151;
+            transform: scale(1.15);
+        }
+
+        .color-option.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .label-management-item {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .label-management-item:hover {
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-1px);
+        }
+
+        .label-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-grow: 1;
+        }
+
+        .label-color-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #e5e7eb;
+        }
+
+        .label-details {
+            flex-grow: 1;
+        }
+
+        .label-name {
+            font-weight: 600;
+            color: #374151;
+            margin: 0;
+        }
+
+        .label-usage {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin: 0;
+        }
+
+        .label-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .label-action-btn {
+            background: none;
+            border: none;
+            color: #6b7280;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+        }
+
+        .label-action-btn:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .label-action-btn.delete:hover {
+            background: #fef2f2;
+            color: #dc2626;
+        }
+
+        .mobile-menu {
+            display: none;
+        }
+
+        .hamburger-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hamburger-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: white;
+        }
+
+        .mobile-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 0.75rem;
+            box-shadow: var(--card-shadow-hover);
+            padding: 1rem;
+            margin-top: 0.5rem;
+            min-width: 200px;
+            z-index: 1000;
+        }
+
+        .mobile-dropdown .btn {
+            width: 100%;
+            margin-bottom: 0.5rem;
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-dropdown .btn:last-child {
+            margin-bottom: 0;
+        }
+
+        .mobile-dropdown .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--card-shadow);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #6b7280;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #d1d5db;
+        }
+
+        .floating-add {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            box-shadow: var(--card-shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .floating-add:hover {
+            transform: scale(1.1);
+            color: white;
+        }
+
+        .notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            color: white;
+            font-weight: 600;
+            z-index: 1100;
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            max-width: 300px;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.success {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+
+        .notification.error {
+            background: linear-gradient(45deg, #ef4444, #dc2626);
+        }
+
+        .notification.warning {
+            background: linear-gradient(45deg, #f59e0b, #d97706);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .context-menu {
+            position: fixed;
+            background: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e5e7eb;
+            padding: 0.5rem 0;
+            z-index: 2000;
+            min-width: 150px;
+            display: none;
+        }
+
+        .context-menu-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            color: #374151;
+            font-size: 0.875rem;
+            transition: background-color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .context-menu-item:hover {
+            background-color: #f3f4f6;
+        }
+
+        .context-menu-item i {
+            color: #6b7280;
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .container-fluid {
+                padding: 0;
+            }
+            
+            .main-container {
+                margin: 0;
+                margin-bottom: 4rem;
+                border-radius: 0;
+                min-height: 100vh;
+                width: 100%;
+                max-width: none;
+            }
+            
+            .header-section {
+                padding: 1.5rem;
+                border-radius: 0;
+            }
+            
+            .desktop-buttons {
+                display: none !important;
+            }
+            
+            .mobile-menu {
+                display: block;
+                position: relative;
+            }
+            
+            .content-section {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .pdf-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 1rem;
+            }
+            
+            .pdf-item, .video-item {
+                padding: 1rem;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+            
+            /* Hide drag handles on touch devices */
+            .drag-handle {
+                display: none !important;
+            }
+            
+            .pdf-thumbnail, .video-thumbnail {
+                height: 140px;
+                font-size: 1rem;
+                padding: 1rem;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+            }
+            
+            .pdf-title {
+                font-size: 0.875rem;
+                line-height: 1.3;
+                -webkit-line-clamp: 4;
+                max-height: none;
+                overflow: visible;
+                display: block;
+                text-align: center;
+            }
+            
+            .video-item .pdf-title {
+                font-size: 0.875rem;
+                line-height: 1.3;
+                overflow: visible;
+                display: block;
+                text-align: center;
+                max-height: none;
+                -webkit-line-clamp: unset;
+                -webkit-box-orient: unset;
+            }
+            
+            .floating-add {
+                bottom: 3rem;
+                right: 1rem;
+                width: 50px;
+                height: 50px;
+                font-size: 1.25rem;
+            }
+            
+            .storage-indicator {
+                font-size: 0.75rem;
+                padding: 0.4rem 0.8rem;
+            }
+            
+            .notes-section {
+                margin-top: 2rem;
+            }
+        }
+
+        .summary-content {
+            line-height: 1.6;
+            color: #374151;
+        }
+
+        .summary-content h1,
+        .summary-content h2,
+        .summary-content h3,
+        .summary-content h4,
+        .summary-content h5,
+        .summary-content h6 {
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .summary-content h1 { font-size: 1.5em; }
+        .summary-content h2 { font-size: 1.3em; }
+        .summary-content h3 { font-size: 1.2em; }
+        .summary-content h4 { font-size: 1.1em; }
+
+        .summary-content p {
+            margin-bottom: 1em;
+        }
+
+        .summary-content ul,
+        .summary-content ol {
+            margin-bottom: 1em;
+            padding-left: 1.5em;
+        }
+
+        .summary-content li {
+            margin-bottom: 0.25em;
+        }
+
+        .summary-content blockquote {
+            border-left: 4px solid #e5e7eb;
+            padding-left: 1em;
+            margin: 1em 0;
+            font-style: italic;
+            color: #6b7280;
+        }
+
+        .summary-content code {
+            background-color: #f3f4f6;
+            padding: 0.125em 0.25em;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.875em;
+        }
+
+        .summary-content pre {
+            background-color: #f3f4f6;
+            padding: 1em;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1em 0;
+        }
+
+        .summary-content pre code {
+            background: none;
+            padding: 0;
+        }
+
+        .summary-content a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .summary-content a:hover {
+            text-decoration: underline;
+        }
+
+        .summary-content strong {
+            font-weight: 600;
+        }
+
+        .summary-content em {
+            font-style: italic;
+        }
+
+        .summary-content hr {
+            border: none;
+            border-top: 1px solid #e5e7eb;
+            margin: 1.5em 0;
+        }
+
+        .storage-indicator {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid #e5e7eb;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+            text-align: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .storage-indicator.warning {
+            background: rgba(251, 191, 36, 0.1);
+            color: #d97706;
+            border-top-color: #fbbf24;
+        }
+
+        .storage-indicator.danger {
+            background: rgba(239, 68, 68, 0.1);
+            color: #dc2626;
+            border-top-color: #ef4444;
+        }
+
+        .storage-usage {
+            font-weight: 500;
+        }
+
+        .storage-details {
+            font-size: 0.75rem;
+            margin-left: 0.5rem;
+            opacity: 0.8;
+        }
+
+        /* Adjust main container to account for storage indicator */
+        .main-container {
+            margin-bottom: 3rem;
+        }
+
+        /* Touch feedback */
+        @media (hover: none) and (pointer: coarse) {
+            .pdf-item {
+                -webkit-tap-highlight-color: rgba(99, 102, 241, 0.1);
+            }
+            
+            .pdf-item:active {
+                background: #f8fafc;
+                transform: scale(0.98);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container">
+            <!-- Header Section -->
+            <div class="header-section position-relative">
+                <button type="button" class="help-btn" data-bs-toggle="modal" data-bs-target="#helpModal">
+                    <i class="bi bi-question-lg"></i>
+                </button>
+                
+                <h1><i class="bi bi-file-earmark-pdf me-2"></i>PDF Bookmark Companion</h1>
+                <p class="mb-4">Your personal PDF collection manager for Kallidus training documents</p>
+                
+                <div class="d-flex flex-wrap align-items-center justify-content-center btn-row desktop-buttons" style="gap: 1.5rem;">
+                    <button id="kallidusLoginBtn" class="btn btn-kallidus" title="Open Kallidus Learning Platform">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>Kallidus Login
+                    </button>
+                    
+                    <button id="addPdfBtn" class="btn add-pdf-btn">
+                        <span id="addBtnText"><i class="bi bi-plus-circle me-2"></i>Add PDF</span>
+                        <span id="addBtnSpinner" class="loading-spinner d-none"></span>
+                    </button>
+                    
+                    <button id="addVideoBtn" class="btn btn-small" title="Add video to collection">
+                        <i class="bi bi-play-circle me-1"></i>Add Video
+                    </button>
+                    <button id="manageLabelsBtn" class="btn btn-small" title="Manage labels">
+                        <i class="bi bi-tags me-1"></i>Labels
+                    </button>
+                    <button id="exportBtn" class="btn btn-small" title="Export collection to file">
+                        <i class="bi bi-download me-1"></i>Export
+                    </button>
+                    <button id="importBtn" class="btn btn-small" title="Import collection from file">
+                        <i class="bi bi-upload me-1"></i>Import
+                    </button>
+                </div>
+
+                <div class="mobile-menu">
+                    <button id="mobileMenuBtn" class="hamburger-btn" title="Menu">
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div id="mobileDropdown" class="mobile-dropdown" style="display: none;">
+                        <button id="mobileKallidusBtn" class="btn" title="Open Kallidus Learning Platform">
+                            <i class="bi bi-box-arrow-up-right me-2"></i>Kallidus Login
+                        </button>
+                        <button id="mobileAddPdfBtn" class="btn">
+                            <i class="bi bi-plus-circle me-2"></i>Add PDF
+                        </button>
+                        <button id="mobileAddVideoBtn" class="btn" title="Add video to collection">
+                            <i class="bi bi-play-circle me-2"></i>Add Video
+                        </button>
+                        <button id="mobileManageLabelsBtn" class="btn" title="Manage labels">
+                            <i class="bi bi-tags me-2"></i>Manage Labels
+                        </button>
+                        <button id="mobileExportBtn" class="btn" title="Export collection to file">
+                            <i class="bi bi-download me-2"></i>Export
+                        </button>
+                        <button id="mobileImportBtn" class="btn" title="Import collection from file">
+                            <i class="bi bi-upload me-2"></i>Import
+                        </button>
+                    </div>
+                </div>
+                
+                <input type="file" id="importFile" accept=".json" style="display: none;">
+            </div>
+
+            <!-- Content Section -->
+            <div class="content-section">
+                <!-- Gallery Section -->
+                <div class="gallery-section">
+                    <!-- Stats Bar -->
+                    <div class="stats-bar">
+                        <div>
+                            <i class="bi bi-collection me-2"></i>
+                            <span id="pdfCount">0</span> PDFs
+                        </div>
+                        <div class="d-none d-md-block">
+                            <i class="bi bi-clock me-2"></i>
+                            Last: <span id="lastAdded">None</span>
+                        </div>
+                    </div>
+
+                    <!-- PDF Grid -->
+                    <div id="pdfGrid" class="pdf-grid">
+                        <div class="empty-state">
+                            <i class="bi bi-file-earmark-plus"></i>
+                            <h4>Start Building Your Collection</h4>
+                            <p>Add PDFs from Kallidus to create a persistent gallery</p>
+                        </div>
+                    </div>
+
+                    <!-- Video Section -->
+                    <div class="video-section mt-4">
+                        <div class="stats-bar">
+                            <div>
+                                <i class="bi bi-play-circle me-2"></i>
+                                <span id="videoCount">0</span> Videos
+                            </div>
+                            <div class="d-none d-md-block">
+                                <i class="bi bi-clock me-2"></i>
+                                Last: <span id="lastVideoAdded">None</span>
+                            </div>
+                        </div>
+
+                        <!-- Video Grid -->
+                        <div id="videoGrid" class="pdf-grid">
+                            <div class="empty-state">
+                                <i class="bi bi-play-circle-fill"></i>
+                                <h4>Add Training Videos</h4>
+                                <p>Collect video links for your training resources</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notes Section -->
+                <div class="notes-section">
+                    <div class="notes-header">
+                        <h4><i class="bi bi-journal-text me-2"></i>Your Notes</h4>
+                        <input type="text" id="notesSearch" class="form-control notes-search" 
+                               placeholder="Search notes...">
+                        <button id="addNoteBtn" class="btn add-note-btn">
+                            <i class="bi bi-plus me-2"></i>Add New Note
+                        </button>
+                    </div>
+                    
+                    <div id="notesList">
+                        <div class="empty-state">
+                            <i class="bi bi-journal-plus"></i>
+                            <h5>No Notes Yet</h5>
+                            <p>Start taking notes about your training</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Add Button -->
+    <button id="floatingAdd" class="floating-add" title="Quick Add PDF">
+        <i class="bi bi-plus"></i>
+    </button>
+
+    <!-- PDF Modal -->
+    <div class="modal fade" id="pdfModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-file-earmark-pdf me-2"></i>Add PDF to Collection
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="pdfForm">
+                        <div class="mb-3">
+                            <label for="pdfUrl" class="form-label">PDF URL</label>
+                            <input type="url" class="form-control" id="pdfUrl" required 
+                                   placeholder="https://example.com/document.pdf">
+                            <div class="form-text">Paste the link to the PDF document</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="pdfLabel" class="form-label">Label (optional)</label>
+                            <div class="d-flex gap-2">
+                                <select class="form-select label-selector" id="pdfLabel">
+                                    <option value="">No label</option>
+                                </select>
+                                <button type="button" class="btn btn-outline-primary" id="newPdfLabelBtn">
+                                    <i class="bi bi-plus"></i> New
+                                </button>
+                            </div>
+                            <div id="pdfLabelPreview"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="savePdfBtn">
+                        <i class="bi bi-plus-circle me-2"></i>Add PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="modal fade" id="videoModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-play-circle me-2"></i>Add Video to Collection
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="videoForm">
+                        <div class="mb-3">
+                            <label for="videoTitle" class="form-label">Video Title</label>
+                            <input type="text" class="form-control" id="videoTitle" required 
+                                   placeholder="Enter a descriptive title for the video">
+                        </div>
+                        <div class="mb-3">
+                            <label for="videoUrl" class="form-label">Video URL</label>
+                            <input type="url" class="form-control" id="videoUrl" required 
+                                   placeholder="https://example.com/video-link">
+                            <div class="form-text">Paste the link to the training video</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="videoLabel" class="form-label">Label (optional)</label>
+                            <div class="d-flex gap-2">
+                                <select class="form-select label-selector" id="videoLabel">
+                                    <option value="">No label</option>
+                                </select>
+                                <button type="button" class="btn btn-outline-primary" id="newVideoLabelBtn">
+                                    <i class="bi bi-plus"></i> New
+                                </button>
+                            </div>
+                            <div id="videoLabelPreview"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveVideoBtn">
+                        <i class="bi bi-plus-circle me-2"></i>Add Video
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Label Management Modal -->
+    <div class="modal fade" id="labelManagementModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-tags me-2"></i>Manage Labels
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <p class="mb-0 text-muted">Organize your collection with custom labels</p>
+                        <button id="createNewLabelBtn" class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus me-1"></i>Create Label
+                        </button>
+                    </div>
+                    
+                    <div id="labelsManagementList">
+                        <div class="empty-state">
+                            <i class="bi bi-tags"></i>
+                            <h5>No Labels Created</h5>
+                            <p>Create your first label to organize your collection</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Label Creation/Edit Modal -->
+    <div class="modal fade" id="labelModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="labelModalTitle">
+                        <i class="bi bi-tag me-2"></i>Create New Label
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="labelForm">
+                        <div class="mb-3">
+                            <label for="labelName" class="form-label">Label Name</label>
+                            <input type="text" class="form-control" id="labelName" required 
+                                   placeholder="Enter label name (e.g., 'Training', 'Important')">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Choose Color</label>
+                            <div class="label-color-picker" id="colorPicker">
+                                <div class="color-option" data-color="#ef4444" style="background-color: #ef4444;"></div>
+                                <div class="color-option" data-color="#f97316" style="background-color: #f97316;"></div>
+                                <div class="color-option" data-color="#eab308" style="background-color: #eab308;"></div>
+                                <div class="color-option" data-color="#22c55e" style="background-color: #22c55e;"></div>
+                                <div class="color-option" data-color="#06b6d4" style="background-color: #06b6d4;"></div>
+                                <div class="color-option selected" data-color="#3b82f6" style="background-color: #3b82f6;"></div>
+                                <div class="color-option" data-color="#6366f1" style="background-color: #6366f1;"></div>
+                                <div class="color-option" data-color="#8b5cf6" style="background-color: #8b5cf6;"></div>
+                                <div class="color-option" data-color="#ec4899" style="background-color: #ec4899;"></div>
+                                <div class="color-option" data-color="#64748b" style="background-color: #64748b;"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Preview</label>
+                            <div>
+                                <span class="label-preview" id="labelPreview" style="background-color: #3b82f6;">Sample Label</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveLabelBtn">
+                        <i class="bi bi-plus-circle me-2"></i><span id="saveLabelBtnText">Create Label</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Note Modal -->
+    <div class="modal fade" id="noteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="noteModalTitle">Add New Note</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="noteForm">
+                        <div class="mb-3">
+                            <label for="noteTitle" class="form-label">Note Title</label>
+                            <input type="text" class="form-control" id="noteTitle" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="noteContent" class="form-label">Content</label>
+                            <textarea class="form-control" id="noteContent" rows="4" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="notePdfLink" class="form-label">Link to Resource (optional)</label>
+                            <select class="form-select" id="notePdfLink">
+                                <option value="">No resource selected</option>
+                            </select>
+                            <div class="form-text">Link this note to a specific PDF or video</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveNoteBtn">Save Note</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Modal -->
+    <div class="modal fade" id="summaryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="summaryModalTitle">
+                        <i class="bi bi-file-text me-2"></i>Resource Summary
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="summaryContent" class="p-3">
+                        <p class="text-muted">No summary available for this resource.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Summary Modal -->
+    <div class="modal fade" id="editSummaryModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-pencil-square me-2"></i>Edit Summary
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="summaryForm">
+                        <div class="mb-3">
+                            <label for="resourceTitle" class="form-label">Resource</label>
+                            <input type="text" class="form-control" id="resourceTitle" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="summaryText" class="form-label">Summary</label>
+                            <textarea class="form-control" id="summaryText" rows="6" 
+                                      placeholder="Enter a summary or notes about this resource...
+
+You can use **Markdown** formatting:
+• **bold text** or __bold text__
+• *italic text* or _italic text_
+• # Heading 1
+• ## Heading 2
+• - List item
+• [Link text](URL)
+• `code snippet`"></textarea>
+                            <div class="form-text">
+                                <i class="bi bi-markdown me-1"></i>
+                                Markdown formatting supported: **bold**, *italic*, # headings, - lists, [links](url), `code`
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveSummaryBtn">
+                        <i class="bi bi-check-circle me-2"></i>Save Summary
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Change Label Modal -->
+    <div class="modal fade" id="changeLabelModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-tag me-2"></i>Change Label
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="changeLabelForm">
+                        <div class="mb-3">
+                            <label for="changeResourceTitle" class="form-label">Resource</label>
+                            <input type="text" class="form-control" id="changeResourceTitle" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label for="currentLabel" class="form-label">Current Label</label>
+                            <div id="currentLabelDisplay" class="p-2 bg-light rounded">
+                                <span class="text-muted">No label</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newLabelSelect" class="form-label">New Label</label>
+                            <div class="d-flex gap-2">
+                                <select class="form-select" id="newLabelSelect">
+                                    <option value="">No label</option>
+                                </select>
+                                <button type="button" class="btn btn-outline-primary" id="newLabelFromChangeBtn">
+                                    <i class="bi bi-plus"></i> New
+                                </button>
+                            </div>
+                            <div id="newLabelPreview" class="mt-2"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveNewLabelBtn">
+                        <i class="bi bi-check-circle me-2"></i>Change Label
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div id="contextMenu" class="context-menu">
+        <button class="context-menu-item" id="editSummaryMenuItem">
+            <i class="bi bi-pencil-square"></i>
+            Edit Summary
+        </button>
+        <button class="context-menu-item" id="changeLabelMenuItem">
+            <i class="bi bi-tag"></i>
+            Change Label
+        </button>
+    </div>
+
+    <!-- Help Modal -->
+    <div class="modal fade" id="helpModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-info-circle me-2"></i>How to Use PDF Bookmark Companion
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">
+                                        <i class="bi bi-1-circle me-2"></i>Getting Started
+                                    </h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Click "Kallidus Login" to access the learning platform</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Keep this tab open while browsing Kallidus</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>When viewing a PDF, click "Add PDF to Gallery"</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Paste the URL and optionally select a label</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">
+                                        <i class="bi bi-2-circle me-2"></i>Managing Collection
+                                    </h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Single click/tap any thumbnail to view summary</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Double click/tap to open the PDF/video</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Right-click, two-finger tap, or long press for options</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Drag and drop to reorder thumbnails (desktop only)</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Hover and click × to remove items</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">
+                                        <i class="bi bi-3-circle me-2"></i>Label System
+                                    </h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Organize PDFs and videos with colored labels</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Create custom labels (e.g., "Training", "Important")</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Choose from 10 different colors for each label</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Labels appear as colored bars on thumbnails</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Click "Labels" button to edit or delete labels</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Sort your collection by label categories</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">
+                                        <i class="bi bi-4-circle me-2"></i>Resource Summaries
+                                    </h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Right-click, two-finger tap, or long press for context menu</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Edit summaries with **Markdown** formatting</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Change labels to organize your collection</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Single click/tap thumbnails to view formatted summaries</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Double click/tap to open PDFs/videos</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">
+                                        <i class="bi bi-5-circle me-2"></i>Taking Notes
+                                    </h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Click "Add New Note" to create training notes</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Link notes to specific PDFs/videos for easy reference</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Search through your notes to find information quickly</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">
+                                        <i class="bi bi-6-circle me-2"></i>Import & Export
+                                    </h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Export your collection, notes, labels and summaries to backup</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Import previously exported data</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Sync across different devices</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>All data is preserved during export/import</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-lightbulb me-2"></i>
+                        <strong>Pro Tip:</strong> Press <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> 
+                        (or <kbd>Cmd</kbd> + <kbd>Shift</kbd> + <kbd>P</kbd> on Mac) to quickly open the Add PDF dialog!
+                    </div>
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-phone me-2"></i>
+                        <strong>Mobile Tips:</strong> Long press any thumbnail for 0.6 seconds to open the context menu. Two-finger tap also works. Drag and drop is disabled on touch devices for better tap responsiveness.
+                    </div>
+                    <div class="alert alert-success mt-3">
+                        <i class="bi bi-tag me-2"></i>
+                        <strong>Label Tips:</strong> Use labels like "Completed", "In Progress", "Important", or by topic like "Safety Training", "IT Skills" to organize your learning materials effectively!
+                    </div>
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-markdown me-2"></i>
+                        <strong>Markdown Support:</strong> Your summaries support full Markdown formatting! Use **bold**, *italic*, # headings, - lists, [links](url), and `code` to create rich, formatted notes.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Storage Usage Indicator -->
+    <div id="storageIndicator" class="storage-indicator">
+        <span class="storage-usage">Storage: <span id="storageUsed">0 KB</span> / <span id="storageLimit">~10 MB</span> (<span id="storagePercent">0%</span>)</span>
+        <span class="storage-details d-none d-md-inline">| <span id="totalItems">0</span> items</span>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // PDF.js worker setup
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        class PDFCompanion {
+            constructor() {
+                this.pdfCollection = this.loadFromStorage();
+                this.videoCollection = this.loadVideosFromStorage();
+                this.notesCollection = this.loadNotesFromStorage();
+                this.labelsCollection = this.loadLabelsFromStorage();
+                this.summariesCollection = this.loadSummariesFromStorage();
+                this.sortable = null;
+                this.videoSortable = null;
+                this.currentEditingNote = null;
+                this.currentModalType = null; // 'pdf' or 'video'
+                this.currentEditingLabel = null; // For editing labels
+                this.selectedColor = '#3b82f6'; // Default color for new labels
+                this.currentSummaryResource = null; // For editing summaries
+                this.clickTimeout = null; // For distinguishing single vs double clicks
+                this.elements = {
+                    addPdfBtn: document.getElementById('addPdfBtn'),
+                    addBtnText: document.getElementById('addBtnText'),
+                    addBtnSpinner: document.getElementById('addBtnSpinner'),
+                    kallidusLoginBtn: document.getElementById('kallidusLoginBtn'),
+                    exportBtn: document.getElementById('exportBtn'),
+                    importBtn: document.getElementById('importBtn'),
+                    importFile: document.getElementById('importFile'),
+                    pdfGrid: document.getElementById('pdfGrid'),
+                    pdfCount: document.getElementById('pdfCount'),
+                    lastAdded: document.getElementById('lastAdded'),
+                    floatingAdd: document.getElementById('floatingAdd'),
+                    notification: document.getElementById('notification'),
+                    // Mobile menu elements
+                    mobileMenuBtn: document.getElementById('mobileMenuBtn'),
+                    mobileDropdown: document.getElementById('mobileDropdown'),
+                    mobileKallidusBtn: document.getElementById('mobileKallidusBtn'),
+                    mobileAddPdfBtn: document.getElementById('mobileAddPdfBtn'),
+                    mobileAddVideoBtn: document.getElementById('mobileAddVideoBtn'),
+                    mobileManageLabelsBtn: document.getElementById('mobileManageLabelsBtn'),
+                    mobileExportBtn: document.getElementById('mobileExportBtn'),
+                    mobileImportBtn: document.getElementById('mobileImportBtn'),
+                    // PDF elements
+                    pdfModal: document.getElementById('pdfModal'),
+                    pdfForm: document.getElementById('pdfForm'),
+                    pdfUrl: document.getElementById('pdfUrl'),
+                    pdfLabel: document.getElementById('pdfLabel'),
+                    pdfLabelPreview: document.getElementById('pdfLabelPreview'),
+                    newPdfLabelBtn: document.getElementById('newPdfLabelBtn'),
+                    savePdfBtn: document.getElementById('savePdfBtn'),
+                    // Video elements
+                    addVideoBtn: document.getElementById('addVideoBtn'),
+                    videoGrid: document.getElementById('videoGrid'),
+                    videoCount: document.getElementById('videoCount'),
+                    lastVideoAdded: document.getElementById('lastVideoAdded'),
+                    videoModal: document.getElementById('videoModal'),
+                    videoForm: document.getElementById('videoForm'),
+                    videoTitle: document.getElementById('videoTitle'),
+                    videoUrl: document.getElementById('videoUrl'),
+                    videoLabel: document.getElementById('videoLabel'),
+                    videoLabelPreview: document.getElementById('videoLabelPreview'),
+                    newVideoLabelBtn: document.getElementById('newVideoLabelBtn'),
+                    saveVideoBtn: document.getElementById('saveVideoBtn'),
+                    // Label elements
+                    manageLabelsBtn: document.getElementById('manageLabelsBtn'),
+                    labelManagementModal: document.getElementById('labelManagementModal'),
+                    labelsManagementList: document.getElementById('labelsManagementList'),
+                    createNewLabelBtn: document.getElementById('createNewLabelBtn'),
+                    labelModal: document.getElementById('labelModal'),
+                    labelForm: document.getElementById('labelForm'),
+                    labelName: document.getElementById('labelName'),
+                    colorPicker: document.getElementById('colorPicker'),
+                    labelPreview: document.getElementById('labelPreview'),
+                    saveLabelBtn: document.getElementById('saveLabelBtn'),
+                    saveLabelBtnText: document.getElementById('saveLabelBtnText'),
+                    labelModalTitle: document.getElementById('labelModalTitle'),
+                    // Notes elements
+                    addNoteBtn: document.getElementById('addNoteBtn'),
+                    notesList: document.getElementById('notesList'),
+                    notesSearch: document.getElementById('notesSearch'),
+                    noteModal: document.getElementById('noteModal'),
+                    noteForm: document.getElementById('noteForm'),
+                    noteTitle: document.getElementById('noteTitle'),
+                    noteContent: document.getElementById('noteContent'),
+                    notePdfLink: document.getElementById('notePdfLink'),
+                    saveNoteBtn: document.getElementById('saveNoteBtn'),
+                    noteModalTitle: document.getElementById('noteModalTitle'),
+                    // Summary elements
+                    summaryModal: document.getElementById('summaryModal'),
+                    summaryModalTitle: document.getElementById('summaryModalTitle'),
+                    summaryContent: document.getElementById('summaryContent'),
+                    editSummaryModal: document.getElementById('editSummaryModal'),
+                    summaryForm: document.getElementById('summaryForm'),
+                    resourceTitle: document.getElementById('resourceTitle'),
+                    summaryText: document.getElementById('summaryText'),
+                    saveSummaryBtn: document.getElementById('saveSummaryBtn'),
+                    contextMenu: document.getElementById('contextMenu'),
+                    editSummaryMenuItem: document.getElementById('editSummaryMenuItem'),
+                    changeLabelMenuItem: document.getElementById('changeLabelMenuItem'),
+                    // Change label modal elements
+                    changeLabelModal: document.getElementById('changeLabelModal'),
+                    changeLabelForm: document.getElementById('changeLabelForm'),
+                    changeResourceTitle: document.getElementById('changeResourceTitle'),
+                    currentLabelDisplay: document.getElementById('currentLabelDisplay'),
+                    newLabelSelect: document.getElementById('newLabelSelect'),
+                    newLabelFromChangeBtn: document.getElementById('newLabelFromChangeBtn'),
+                    newLabelPreview: document.getElementById('newLabelPreview'),
+                    saveNewLabelBtn: document.getElementById('saveNewLabelBtn'),
+                    // Storage indicator elements
+                    storageIndicator: document.getElementById('storageIndicator'),
+                    storageUsed: document.getElementById('storageUsed'),
+                    storageLimit: document.getElementById('storageLimit'),
+                    storagePercent: document.getElementById('storagePercent'),
+                    totalItems: document.getElementById('totalItems')
+                };
+                
+                this.noteModal = new bootstrap.Modal(this.elements.noteModal);
+                this.videoModal = new bootstrap.Modal(this.elements.videoModal);
+                this.pdfModal = new bootstrap.Modal(this.elements.pdfModal);
+                this.labelModal = new bootstrap.Modal(this.elements.labelModal);
+                this.labelManagementModal = new bootstrap.Modal(this.elements.labelManagementModal);
+                this.summaryModal = new bootstrap.Modal(this.elements.summaryModal);
+                this.editSummaryModal = new bootstrap.Modal(this.elements.editSummaryModal);
+                this.changeLabelModal = new bootstrap.Modal(this.elements.changeLabelModal);
+                this.init();
+            }
+
+            init() {
+                // Configure marked.js for security
+                marked.setOptions({
+                    breaks: true,
+                    gfm: true,
+                    sanitize: false, // We'll handle sanitization ourselves
+                    smartLists: true,
+                    smartypants: false
+                });
+                
+                this.bindEvents();
+                this.renderGallery();
+                this.renderVideos();
+                this.renderNotes();
+                this.updateStats();
+                this.updateResourceDropdown();
+                this.updateLabelDropdowns();
+                this.updateStorageIndicator();
+                this.initSortable();
+                this.initVideoSortable();
+                this.initializeLabelColorPicker();
+            }
+
+            bindEvents() {
+                this.elements.addPdfBtn.addEventListener('click', () => this.openPdfModal());
+                this.elements.floatingAdd.addEventListener('click', () => this.openPdfModal());
+                this.elements.kallidusLoginBtn.addEventListener('click', () => this.openKallidus());
+                this.elements.exportBtn.addEventListener('click', () => this.exportCollection());
+                this.elements.importBtn.addEventListener('click', () => this.triggerImport());
+                this.elements.importFile.addEventListener('change', (e) => this.importCollection(e));
+                
+                // Mobile menu events
+                this.elements.mobileMenuBtn.addEventListener('click', () => this.toggleMobileMenu());
+                this.elements.mobileKallidusBtn.addEventListener('click', () => {
+                    this.openKallidus();
+                    this.closeMobileMenu();
+                });
+                this.elements.mobileAddPdfBtn.addEventListener('click', () => {
+                    this.openPdfModal();
+                    this.closeMobileMenu();
+                });
+                this.elements.mobileAddVideoBtn.addEventListener('click', () => {
+                    this.openVideoModal();
+                    this.closeMobileMenu();
+                });
+                this.elements.mobileManageLabelsBtn.addEventListener('click', () => {
+                    this.openLabelManagementModal();
+                    this.closeMobileMenu();
+                });
+                this.elements.mobileExportBtn.addEventListener('click', () => {
+                    this.exportCollection();
+                    this.closeMobileMenu();
+                });
+                this.elements.mobileImportBtn.addEventListener('click', () => {
+                    this.triggerImport();
+                    this.closeMobileMenu();
+                });
+                
+                // Close mobile menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!this.elements.mobileMenuBtn.contains(e.target) && !this.elements.mobileDropdown.contains(e.target)) {
+                        this.closeMobileMenu();
+                    }
+                });
+                
+                // PDF events
+                this.elements.savePdfBtn.addEventListener('click', () => this.savePdf());
+                this.elements.newPdfLabelBtn.addEventListener('click', () => this.openLabelModal('pdf'));
+                this.elements.pdfLabel.addEventListener('change', () => this.updatePdfLabelPreview());
+                
+                // Video events
+                this.elements.addVideoBtn.addEventListener('click', () => this.openVideoModal());
+                this.elements.saveVideoBtn.addEventListener('click', () => this.saveVideo());
+                this.elements.newVideoLabelBtn.addEventListener('click', () => this.openLabelModal('video'));
+                this.elements.videoLabel.addEventListener('change', () => this.updateVideoLabelPreview());
+                
+                // Label management events
+                this.elements.manageLabelsBtn.addEventListener('click', () => this.openLabelManagementModal());
+                this.elements.createNewLabelBtn.addEventListener('click', () => this.openLabelModal('management'));
+                this.elements.saveLabelBtn.addEventListener('click', () => this.saveLabel());
+                this.elements.labelName.addEventListener('input', () => this.updateLabelPreview());
+                
+                // Notes events
+                this.elements.addNoteBtn.addEventListener('click', () => this.openNoteModal());
+                this.elements.saveNoteBtn.addEventListener('click', () => this.saveNote());
+                this.elements.notesSearch.addEventListener('input', (e) => this.searchNotes(e.target.value));
+                
+                // Summary events
+                this.elements.editSummaryMenuItem.addEventListener('click', () => this.openEditSummaryModal());
+                this.elements.saveSummaryBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.saveSummary();
+                });
+                
+                // Change label events
+                this.elements.changeLabelMenuItem.addEventListener('click', () => this.openChangeLabelModal());
+                this.elements.saveNewLabelBtn.addEventListener('click', () => this.saveNewLabel());
+                this.elements.newLabelFromChangeBtn.addEventListener('click', () => this.openLabelModal('change'));
+                this.elements.newLabelSelect.addEventListener('change', () => this.updateNewLabelPreview());
+                
+                // Clear currentSummaryResource when modals are closed
+                this.elements.editSummaryModal.addEventListener('hidden.bs.modal', () => {
+                    this.currentSummaryResource = null;
+                });
+                
+                this.elements.changeLabelModal.addEventListener('hidden.bs.modal', () => {
+                    this.currentSummaryResource = null;
+                });
+                
+                // Context menu events
+                document.addEventListener('click', (e) => {
+                    // Don't clear currentSummaryResource if clicking inside a modal or the context menu
+                    if (!e.target.closest('.modal') && !e.target.closest('.context-menu')) {
+                        if (!this.elements.editSummaryModal.classList.contains('show')) {
+                            this.currentSummaryResource = null;
+                        }
+                    }
+                    // Always hide context menu when clicking outside
+                    if (!e.target.closest('.context-menu')) {
+                        this.hideContextMenu();
+                    }
+                });
+                document.addEventListener('contextmenu', (e) => this.handleContextMenu(e));
+                
+                // Touch events for mobile context menu (simplified without drag/drop interference)
+                let touchStartTime = 0;
+                let touchStartCount = 0;
+                let longPressTimeout = null;
+                let touchStartTarget = null;
+                let hasMoved = false;
+                
+                document.addEventListener('touchstart', (e) => {
+                    touchStartTime = Date.now();
+                    touchStartCount = e.touches.length;
+                    touchStartTarget = e.target;
+                    hasMoved = false;
+                    
+                    // Set up long press detection for single finger on thumbnails
+                    if (touchStartCount === 1) {
+                        const thumbnail = touchStartTarget.closest('.pdf-thumbnail, .video-thumbnail');
+                        if (thumbnail) {
+                            longPressTimeout = setTimeout(() => {
+                                if (!hasMoved) {
+                                    // Create synthetic event for context menu positioning
+                                    const syntheticEvent = {
+                                        preventDefault: () => {},
+                                        target: touchStartTarget,
+                                        touches: e.touches,
+                                        clientX: e.touches[0].clientX,
+                                        clientY: e.touches[0].clientY
+                                    };
+                                    this.handleContextMenu(syntheticEvent);
+                                    
+                                    // Add haptic feedback if available
+                                    if (navigator.vibrate) {
+                                        navigator.vibrate(50);
+                                    }
+                                }
+                            }, 600); // Reduced to 600ms for better UX
+                        }
+                    }
+                }, { passive: false });
+                
+                document.addEventListener('touchmove', (e) => {
+                    hasMoved = true;
+                    // Cancel long press if finger moves
+                    if (longPressTimeout) {
+                        clearTimeout(longPressTimeout);
+                        longPressTimeout = null;
+                    }
+                }, { passive: true });
+                
+                document.addEventListener('touchend', (e) => {
+                    const touchDuration = Date.now() - touchStartTime;
+                    
+                    // Clear long press timeout
+                    if (longPressTimeout) {
+                        clearTimeout(longPressTimeout);
+                        longPressTimeout = null;
+                    }
+                    
+                    // Two-finger tap detection (only if no movement)
+                    if (touchStartCount === 2 && !hasMoved && touchDuration > 100 && touchDuration < 800) {
+                        const thumbnail = touchStartTarget.closest('.pdf-thumbnail, .video-thumbnail');
+                        if (thumbnail) {
+                            e.preventDefault();
+                            const syntheticEvent = {
+                                preventDefault: () => {},
+                                target: touchStartTarget,
+                                changedTouches: e.changedTouches,
+                                clientX: e.changedTouches[0].clientX,
+                                clientY: e.changedTouches[0].clientY
+                            };
+                            this.handleContextMenu(syntheticEvent);
+                        }
+                    }
+                }, { passive: false });
+                
+                // Keyboard shortcut
+                document.addEventListener('keydown', (e) => {
+                    if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'P') {
+                        e.preventDefault();
+                        this.openPdfModal();
+                    }
+                    
+                    // Hide context menu on Escape
+                    if (e.key === 'Escape') {
+                        this.hideContextMenu();
+                    }
+                });
+            }
+
+            initSortable() {
+                if (this.sortable) {
+                    this.sortable.destroy();
+                }
+                
+                // Don't enable drag and drop on touch devices
+                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                if (isTouchDevice) {
+                    return;
+                }
+                
+                const grid = this.elements.pdfGrid;
+                if (grid.children.length > 0 && !grid.querySelector('.empty-state')) {
+                    this.sortable = Sortable.create(grid, {
+                        animation: 150,
+                        ghostClass: 'dragging',
+                        chosenClass: 'drag-over',
+                        handle: '.pdf-item',
+                        touchStartThreshold: 10,
+                        onEnd: (evt) => {
+                            if (evt.oldIndex !== evt.newIndex) {
+                                // Reorder the collection array
+                                const movedItem = this.pdfCollection.splice(evt.oldIndex, 1)[0];
+                                this.pdfCollection.splice(evt.newIndex, 0, movedItem);
+                                this.saveToStorage();
+                                this.showNotification('PDF order updated', 'success');
+                            }
+                        }
+                    });
+                }
+            }
+
+            initVideoSortable() {
+                if (this.videoSortable) {
+                    this.videoSortable.destroy();
+                }
+                
+                // Don't enable drag and drop on touch devices
+                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                if (isTouchDevice) {
+                    return;
+                }
+                
+                const grid = this.elements.videoGrid;
+                if (grid.children.length > 0 && !grid.querySelector('.empty-state')) {
+                    this.videoSortable = Sortable.create(grid, {
+                        animation: 150,
+                        ghostClass: 'dragging',
+                        chosenClass: 'drag-over',
+                        handle: '.video-item',
+                        touchStartThreshold: 10,
+                        onEnd: (evt) => {
+                            if (evt.oldIndex !== evt.newIndex) {
+                                // Reorder the collection array
+                                const movedItem = this.videoCollection.splice(evt.oldIndex, 1)[0];
+                                this.videoCollection.splice(evt.newIndex, 0, movedItem);
+                                this.saveVideosToStorage();
+                                this.showNotification('Video order updated', 'success');
+                            }
+                        }
+                    });
+                }
+            }
+
+            async addCurrentPDF() {
+                try {
+                    let url = '';
+                    
+                    // Try to read from clipboard
+                    if (navigator.clipboard && navigator.clipboard.readText) {
+                        try {
+                            const clipboardText = await navigator.clipboard.readText();
+                            if (clipboardText && this.isValidURL(clipboardText) && clipboardText.toLowerCase().includes('.pdf')) {
+                                url = clipboardText;
+                            }
+                        } catch (e) {
+                            console.log('Could not read clipboard:', e);
+                        }
+                    }
+                    
+                    // Pre-fill the modal with clipboard URL if available
+                    if (url) {
+                        this.elements.pdfUrl.value = url;
+                    }
+                    
+                    this.openPdfModal();
+                } catch (error) {
+                    console.error('Error opening PDF modal:', error);
+                    this.openPdfModal();
+                }
+            }
+
+            initializeLabelColorPicker() {
+                const colorOptions = this.elements.colorPicker.querySelectorAll('.color-option');
+                colorOptions.forEach(option => {
+                    option.addEventListener('click', () => {
+                        // Remove selected class from all options
+                        colorOptions.forEach(opt => opt.classList.remove('selected'));
+                        // Add selected class to clicked option
+                        option.classList.add('selected');
+                        // Update selected color
+                        this.selectedColor = option.dataset.color;
+                        // Update preview
+                        this.updateLabelPreview();
+                    });
+                });
+            }
+
+            toggleMobileMenu() {
+                const dropdown = this.elements.mobileDropdown;
+                const isVisible = dropdown.style.display !== 'none';
+                dropdown.style.display = isVisible ? 'none' : 'block';
+            }
+
+            closeMobileMenu() {
+                this.elements.mobileDropdown.style.display = 'none';
+            }
+
+            updateLabelPreview() {
+                const name = this.elements.labelName.value.trim() || 'Sample Label';
+                this.elements.labelPreview.textContent = name;
+                this.elements.labelPreview.style.backgroundColor = this.selectedColor;
+            }
+
+            updatePdfLabelPreview() {
+                const selectedLabelId = this.elements.pdfLabel.value;
+                this.updateLabelPreviewElement(selectedLabelId, this.elements.pdfLabelPreview);
+            }
+
+            updateVideoLabelPreview() {
+                const selectedLabelId = this.elements.videoLabel.value;
+                this.updateLabelPreviewElement(selectedLabelId, this.elements.videoLabelPreview);
+            }
+
+            updateLabelPreviewElement(labelId, previewElement) {
+                if (!labelId) {
+                    previewElement.innerHTML = '';
+                    return;
+                }
+                
+                const label = this.labelsCollection.find(l => l.id === labelId);
+                if (label) {
+                    previewElement.innerHTML = `<span class="label-preview" style="background-color: ${label.color};">${this.escapeHtml(label.name)}</span>`;
+                }
+            }
+
+            openPdfModal() {
+                this.elements.pdfForm.reset();
+                this.elements.pdfLabelPreview.innerHTML = '';
+                this.pdfModal.show();
+            }
+
+            openLabelManagementModal() {
+                this.renderLabelManagement();
+                this.labelManagementModal.show();
+            }
+
+            renderLabelManagement() {
+                const list = this.elements.labelsManagementList;
+                
+                if (this.labelsCollection.length === 0) {
+                    list.innerHTML = `
+                        <div class="empty-state">
+                            <i class="bi bi-tags"></i>
+                            <h5>No Labels Created</h5>
+                            <p>Create your first label to organize your collection</p>
+                        </div>
+                    `;
+                } else {
+                    list.innerHTML = this.labelsCollection.map(label => {
+                        // Count usage
+                        const pdfUsage = this.pdfCollection.filter(pdf => pdf.labelId === label.id).length;
+                        const videoUsage = this.videoCollection.filter(video => video.labelId === label.id).length;
+                        const totalUsage = pdfUsage + videoUsage;
+                        
+                        return `
+                            <div class="label-management-item">
+                                <div class="label-info">
+                                    <div class="label-color-circle" style="background-color: ${label.color};"></div>
+                                    <div class="label-details">
+                                        <p class="label-name">${this.escapeHtml(label.name)}</p>
+                                        <p class="label-usage">Used in ${totalUsage} item${totalUsage !== 1 ? 's' : ''}</p>
+                                    </div>
+                                </div>
+                                <div class="label-actions">
+                                    <button class="label-action-btn" onclick="pdfCompanion.editLabel('${label.id}')" title="Edit label">
+                                        <i class="bi bi-pencil"></i> Edit
+                                    </button>
+                                    <button class="label-action-btn delete" onclick="pdfCompanion.deleteLabel('${label.id}')" title="Delete label">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+
+            editLabel(labelId) {
+                const label = this.labelsCollection.find(l => l.id === labelId);
+                if (!label) return;
+                
+                this.currentEditingLabel = labelId;
+                this.currentModalType = 'management';
+                
+                // Fill form with current label data
+                this.elements.labelName.value = label.name;
+                this.selectedColor = label.color;
+                
+                // Update UI
+                this.elements.labelModalTitle.innerHTML = '<i class="bi bi-pencil me-2"></i>Edit Label';
+                this.elements.saveLabelBtnText.textContent = 'Save Changes';
+                
+                // Set color picker
+                const colorOptions = this.elements.colorPicker.querySelectorAll('.color-option');
+                colorOptions.forEach(opt => {
+                    opt.classList.toggle('selected', opt.dataset.color === this.selectedColor);
+                });
+                
+                this.updateLabelPreview();
+                this.labelModal.show();
+            }
+
+            deleteLabel(labelId) {
+                const label = this.labelsCollection.find(l => l.id === labelId);
+                if (!label) return;
+                
+                // Count usage
+                const pdfUsage = this.pdfCollection.filter(pdf => pdf.labelId === labelId).length;
+                const videoUsage = this.videoCollection.filter(video => video.labelId === labelId).length;
+                const totalUsage = pdfUsage + videoUsage;
+                
+                let confirmMessage = `Delete label "${label.name}"?`;
+                if (totalUsage > 0) {
+                    confirmMessage += `\n\nThis label is used by ${totalUsage} item${totalUsage !== 1 ? 's' : ''}. The label will be removed from those items.`;
+                }
+                
+                if (confirm(confirmMessage)) {
+                    // Remove label from all items
+                    this.pdfCollection.forEach(pdf => {
+                        if (pdf.labelId === labelId) {
+                            pdf.labelId = null;
+                        }
+                    });
+                    
+                    this.videoCollection.forEach(video => {
+                        if (video.labelId === labelId) {
+                            video.labelId = null;
+                        }
+                    });
+                    
+                    // Remove label from collection
+                    this.labelsCollection = this.labelsCollection.filter(l => l.id !== labelId);
+                    
+                    // Save all changes
+                    this.saveLabelsToStorage();
+                    this.saveToStorage();
+                    this.saveVideosToStorage();
+                    
+                    // Update UI
+                    this.renderLabelManagement();
+                    this.renderGallery();
+                    this.renderVideos();
+                    this.updateLabelDropdowns();
+                    
+                    this.showNotification(`Label "${label.name}" deleted`, 'success');
+                }
+            }
+
+            openLabelModal(modalType) {
+                this.currentModalType = modalType;
+                this.currentEditingLabel = null;
+                this.elements.labelForm.reset();
+                this.selectedColor = '#3b82f6';
+                
+                // Reset UI to creation mode
+                this.elements.labelModalTitle.innerHTML = '<i class="bi bi-tag me-2"></i>Create New Label';
+                this.elements.saveLabelBtnText.textContent = 'Create Label';
+                
+                // Reset color picker
+                const colorOptions = this.elements.colorPicker.querySelectorAll('.color-option');
+                colorOptions.forEach(opt => opt.classList.remove('selected'));
+                colorOptions.forEach(opt => {
+                    if (opt.dataset.color === this.selectedColor) {
+                        opt.classList.add('selected');
+                    }
+                });
+                
+                this.updateLabelPreview();
+                this.labelModal.show();
+            }
+
+            saveLabel() {
+                const name = this.elements.labelName.value.trim();
+                
+                if (!name) {
+                    this.showNotification('Please enter a label name', 'error');
+                    return;
+                }
+                
+                // Check for duplicates (exclude current label if editing)
+                const existingLabel = this.labelsCollection.find(label => 
+                    label.name.toLowerCase() === name.toLowerCase() && 
+                    label.id !== this.currentEditingLabel
+                );
+                
+                if (existingLabel) {
+                    this.showNotification('A label with this name already exists', 'warning');
+                    return;
+                }
+                
+                if (this.currentEditingLabel) {
+                    // Edit existing label
+                    const labelIndex = this.labelsCollection.findIndex(l => l.id === this.currentEditingLabel);
+                    if (labelIndex !== -1) {
+                        this.labelsCollection[labelIndex] = {
+                            ...this.labelsCollection[labelIndex],
+                            name,
+                            color: this.selectedColor,
+                            dateModified: new Date().toISOString()
+                        };
+                        this.showNotification(`Label "${name}" updated successfully!`, 'success');
+                    }
+                } else {
+                    // Create new label
+                    const newLabel = {
+                        id: Date.now().toString(),
+                        name,
+                        color: this.selectedColor,
+                        dateAdded: new Date().toISOString()
+                    };
+                    
+                    this.labelsCollection.push(newLabel);
+                    this.showNotification(`Label "${name}" created successfully!`, 'success');
+                    
+                    // Select the new label in the appropriate dropdown
+                    if (this.currentModalType === 'pdf') {
+                        this.elements.pdfLabel.value = newLabel.id;
+                        this.updatePdfLabelPreview();
+                    } else if (this.currentModalType === 'video') {
+                        this.elements.videoLabel.value = newLabel.id;
+                        this.updateVideoLabelPreview();
+                    } else if (this.currentModalType === 'change') {
+                        this.elements.newLabelSelect.value = newLabel.id;
+                        this.updateNewLabelPreview();
+                    }
+                }
+                
+                this.saveLabelsToStorage();
+                this.updateLabelDropdowns();
+                this.renderLabelManagement();
+                this.renderGallery();
+                this.renderVideos();
+                this.labelModal.hide();
+            }
+
+            updateLabelDropdowns() {
+                const dropdowns = [this.elements.pdfLabel, this.elements.videoLabel, this.elements.newLabelSelect];
+                
+                dropdowns.forEach(dropdown => {
+                    const currentValue = dropdown.value;
+                    dropdown.innerHTML = '<option value="">No label</option>';
+                    
+                    this.labelsCollection.forEach(label => {
+                        const option = document.createElement('option');
+                        option.value = label.id;
+                        option.textContent = label.name;
+                        option.style.color = label.color;
+                        dropdown.appendChild(option);
+                    });
+                    
+                    // Restore selection if it still exists
+                    if (currentValue && this.labelsCollection.some(l => l.id === currentValue)) {
+                        dropdown.value = currentValue;
+                    }
+                });
+            }
+
+            savePdf() {
+                const url = this.elements.pdfUrl.value.trim();
+                const labelId = this.elements.pdfLabel.value || null;
+                
+                if (!url) {
+                    this.showNotification('Please provide a PDF URL', 'error');
+                    return;
+                }
+
+                if (!this.isValidURL(url)) {
+                    this.showNotification('Please enter a valid URL', 'error');
+                    return;
+                }
+
+                if (this.pdfCollection.some(pdf => pdf.url === url)) {
+                    this.showNotification('This PDF is already in your collection', 'warning');
+                    return;
+                }
+
+                this.addPDF(url, labelId);
+                this.pdfModal.hide();
+            }
+
+            async addPDF(url, labelId = null) {
+                url = url.trim();
+                
+                if (!url) {
+                    this.showNotification('Please provide a PDF URL', 'error');
+                    return;
+                }
+
+                if (!this.isValidURL(url)) {
+                    this.showNotification('Please enter a valid URL', 'error');
+                    return;
+                }
+
+                if (this.pdfCollection.some(pdf => pdf.url === url)) {
+                    this.showNotification('This PDF is already in your collection', 'warning');
+                    return;
+                }
+
+                this.setLoading(true);
+
+                try {
+                    const pdfData = await this.processPDF(url, labelId);
+                    this.pdfCollection.push(pdfData);
+                    this.saveToStorage();
+                    this.renderGallery();
+                    this.updateStats();
+                    this.updateResourceDropdown();
+                    this.showNotification('PDF added to your collection!', 'success');
+                } catch (error) {
+                    console.error('Error adding PDF:', error);
+                    this.showNotification('Failed to process PDF. Please check the URL.', 'error');
+                } finally {
+                    this.setLoading(false);
+                }
+            }
+
+            async processPDF(url, labelId = null) {
+                const urlParts = url.split('/');
+                const filename = urlParts[urlParts.length - 1];
+                
+                let title = decodeURIComponent(filename)
+                    .replace('.pdf', '')
+                    .replace(/[-_]/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+                
+                if (!title || title.length < 3) {
+                    title = this.extractTitleFromPath(url);
+                }
+                
+                title = title || 'Training Document';
+
+                const pdfData = {
+                    id: Date.now().toString(),
+                    url: url,
+                    title: title,
+                    labelId: labelId,
+                    dateAdded: new Date().toISOString(),
+                    domain: new URL(url).hostname
+                };
+
+                return pdfData;
+            }
+
+            extractTitleFromPath(url) {
+                try {
+                    const urlObj = new URL(url);
+                    const pathParts = urlObj.pathname.split('/').filter(part => part.length > 0);
+                    
+                    for (let i = pathParts.length - 1; i >= 0; i--) {
+                        const part = pathParts[i];
+                        if (!part.includes('.pdf') && part.length > 3) {
+                            return decodeURIComponent(part)
+                                .replace(/[-_]/g, ' ')
+                                .replace(/\s+/g, ' ')
+                                .trim();
+                        }
+                    }
+                    
+                    return 'Training Document';
+                } catch {
+                    return 'Training Document';
+                }
+            }
+
+            renderGallery() {
+                const grid = this.elements.pdfGrid;
+                
+                if (this.pdfCollection.length === 0) {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <i class="bi bi-file-earmark-plus"></i>
+                            <h4>Start Building Your Collection</h4>
+                            <p>Add PDFs from Kallidus to create a persistent gallery</p>
+                        </div>
+                    `;
+                } else {
+                    grid.innerHTML = this.pdfCollection.map(pdf => {
+                        const label = pdf.labelId ? this.labelsCollection.find(l => l.id === pdf.labelId) : null;
+                        const labelBar = label ? `<div class="label-bar" style="background-color: ${label.color};">${this.escapeHtml(label.name)}</div>` : '';
+                        
+                        return `
+                            <div class="pdf-item" data-id="${pdf.id}" data-type="pdf">
+                                <div class="drag-handle">
+                                    <i class="bi bi-grip-horizontal"></i>
+                                </div>
+                                <div class="pdf-thumbnail" onclick="pdfCompanion.handleThumbnailClick(event, '${pdf.id}', 'pdf')">
+                                    <button class="delete-btn" onclick="event.stopPropagation(); pdfCompanion.removePDF('${pdf.id}')" title="Remove from collection">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                    <div class="pdf-title">${this.escapeHtml(pdf.title)}</div>
+                                    <div class="pdf-meta">${this.formatDate(pdf.dateAdded)}</div>
+                                    ${labelBar}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                
+                this.initSortable();
+            }
+
+            renderVideos() {
+                const grid = this.elements.videoGrid;
+                
+                if (this.videoCollection.length === 0) {
+                    grid.innerHTML = `
+                        <div class="empty-state">
+                            <i class="bi bi-play-circle-fill"></i>
+                            <h4>Add Training Videos</h4>
+                            <p>Collect video links for your training resources</p>
+                        </div>
+                    `;
+                } else {
+                    grid.innerHTML = this.videoCollection.map(video => {
+                        const label = video.labelId ? this.labelsCollection.find(l => l.id === video.labelId) : null;
+                        const labelBar = label ? `<div class="label-bar" style="background-color: ${label.color};">${this.escapeHtml(label.name)}</div>` : '';
+                        
+                        return `
+                            <div class="video-item" data-id="${video.id}" data-type="video">
+                                <div class="drag-handle">
+                                    <i class="bi bi-grip-horizontal"></i>
+                                </div>
+                                <div class="video-thumbnail" onclick="pdfCompanion.handleThumbnailClick(event, '${video.id}', 'video')">
+                                    <button class="delete-btn" onclick="event.stopPropagation(); pdfCompanion.removeVideo('${video.id}')" title="Remove from collection">
+                                        <i class="bi bi-x"></i>
+                                    </button>
+                                    <div class="play-icon">
+                                        <i class="bi bi-play-circle-fill"></i>
+                                    </div>
+                                    <div class="pdf-title">${this.escapeHtml(video.title)}</div>
+                                    <div class="pdf-meta">${this.formatDate(video.dateAdded)}</div>
+                                    ${labelBar}
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                
+                this.initVideoSortable();
+            }
+
+            handleThumbnailClick(event, resourceId, resourceType) {
+                console.log('handleThumbnailClick called:', resourceId, resourceType); // Debug log
+                event.preventDefault();
+                event.stopPropagation();
+                
+                // Check if this is a touch device
+                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                
+                if (isTouchDevice) {
+                    console.log('Touch device detected'); // Debug log
+                    // On touch devices, handle taps differently
+                    if (this.clickTimeout) {
+                        // This is a second tap (double tap)
+                        console.log('Double tap detected'); // Debug log
+                        clearTimeout(this.clickTimeout);
+                        this.clickTimeout = null;
+                        this.openResource(resourceId, resourceType);
+                    } else {
+                        // First tap - set shorter timeout for better mobile UX
+                        console.log('Single tap detected, setting timeout'); // Debug log
+                        this.clickTimeout = setTimeout(() => {
+                            console.log('Single tap timeout fired'); // Debug log
+                            this.clickTimeout = null;
+                            this.showSummary(resourceId, resourceType);
+                        }, 200); // Shorter delay for mobile
+                    }
+                } else {
+                    console.log('Desktop device detected'); // Debug log
+                    // Desktop behavior - longer timeout for mouse double-clicks
+                    if (this.clickTimeout) {
+                        clearTimeout(this.clickTimeout);
+                        this.clickTimeout = null;
+                        this.openResource(resourceId, resourceType);
+                    } else {
+                        this.clickTimeout = setTimeout(() => {
+                            this.clickTimeout = null;
+                            this.showSummary(resourceId, resourceType);
+                        }, 300);
+                    }
+                }
+            }
+
+            openResource(resourceId, resourceType) {
+                console.log('openResource called:', resourceId, resourceType); // Debug log
+                if (resourceType === 'pdf') {
+                    this.openPDF(resourceId);
+                } else if (resourceType === 'video') {
+                    this.openVideo(resourceId);
+                }
+            }
+
+            showSummary(resourceId, resourceType) {
+                console.log('showSummary called:', resourceId, resourceType); // Debug log
+                const resource = resourceType === 'pdf' ? 
+                    this.pdfCollection.find(p => p.id === resourceId) :
+                    this.videoCollection.find(v => v.id === resourceId);
+                
+                if (!resource) return;
+                
+                const summaryKey = `${resourceType}:${resourceId}`;
+                const summary = this.summariesCollection[summaryKey];
+                
+                this.elements.summaryModalTitle.innerHTML = `
+                    <i class="bi bi-${resourceType === 'pdf' ? 'file-earmark-pdf' : 'play-circle'} me-2"></i>
+                    ${this.escapeHtml(resource.title)}
+                `;
+                
+                if (summary && summary.text.trim()) {
+                    // Render markdown to HTML
+                    const markdownHtml = marked.parse(summary.text);
+                    const sanitizedHtml = this.sanitizeHtml(markdownHtml);
+                    
+                    this.elements.summaryContent.innerHTML = `
+                        <div class="summary-content">${sanitizedHtml}</div>
+                        <hr>
+                        <small class="text-muted">
+                            <i class="bi bi-markdown me-1"></i>
+                            Last updated: ${this.formatDate(summary.dateModified || summary.dateAdded)}
+                        </small>
+                    `;
+                } else {
+                    this.elements.summaryContent.innerHTML = `
+                        <p class="text-muted">No summary available for this resource.</p>
+                        <p class="text-muted">Right-click or two-finger tap to add a summary with <strong>Markdown</strong> formatting.</p>
+                    `;
+                }
+                
+                this.summaryModal.show();
+            }
+
+            sanitizeHtml(html) {
+                // Basic HTML sanitization - remove script tags and dangerous attributes
+                const div = document.createElement('div');
+                div.innerHTML = html;
+                
+                // Remove script tags
+                const scripts = div.querySelectorAll('script');
+                scripts.forEach(script => script.remove());
+                
+                // Remove dangerous attributes
+                const dangerousAttrs = ['onclick', 'onload', 'onerror', 'onmouseover', 'onfocus', 'onblur'];
+                const allElements = div.querySelectorAll('*');
+                allElements.forEach(el => {
+                    dangerousAttrs.forEach(attr => {
+                        if (el.hasAttribute(attr)) {
+                            el.removeAttribute(attr);
+                        }
+                    });
+                    
+                    // Ensure links open in new tab and are safe
+                    if (el.tagName === 'A') {
+                        el.setAttribute('target', '_blank');
+                        el.setAttribute('rel', 'noopener noreferrer');
+                    }
+                });
+                
+                return div.innerHTML;
+            }
+
+            handleContextMenu(event) {
+                // Find the closest thumbnail element
+                const thumbnail = event.target.closest('.pdf-thumbnail, .video-thumbnail');
+                if (!thumbnail) {
+                    this.hideContextMenu();
+                    return;
+                }
+                
+                event.preventDefault();
+                
+                const item = thumbnail.closest('.pdf-item, .video-item');
+                if (!item) return;
+                
+                const resourceId = item.dataset.id;
+                const resourceType = item.dataset.type;
+                
+                if (!resourceId || !resourceType) return;
+                
+                // Store current resource for context menu actions
+                this.currentSummaryResource = { id: resourceId, type: resourceType };
+                
+                // Position and show context menu
+                const contextMenu = this.elements.contextMenu;
+                contextMenu.style.display = 'block';
+                
+                // Calculate position
+                let x, y;
+                if (event.touches && event.touches.length > 0) {
+                    // Touch event - use first touch
+                    x = event.touches[0].clientX;
+                    y = event.touches[0].clientY;
+                } else if (event.changedTouches && event.changedTouches.length > 0) {
+                    // Touch end event - use changedTouches
+                    x = event.changedTouches[0].clientX;
+                    y = event.changedTouches[0].clientY;
+                } else {
+                    // Mouse event
+                    x = event.clientX;
+                    y = event.clientY;
+                }
+                
+                // Get menu dimensions
+                const menuRect = contextMenu.getBoundingClientRect();
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;
+                
+                // Adjust position to keep menu on screen
+                if (x + menuRect.width > viewportWidth) {
+                    x = viewportWidth - menuRect.width - 10;
+                }
+                if (y + menuRect.height > viewportHeight) {
+                    y = viewportHeight - menuRect.height - 10;
+                }
+                
+                // Ensure minimum distance from edges
+                x = Math.max(10, x);
+                y = Math.max(10, y);
+                
+                contextMenu.style.left = `${x}px`;
+                contextMenu.style.top = `${y}px`;
+            }
+
+            hideContextMenu() {
+                this.elements.contextMenu.style.display = 'none';
+                // Don't clear currentSummaryResource here - it's needed for the edit modal
+            }
+
+            openEditSummaryModal() {
+                if (!this.currentSummaryResource) return;
+                
+                const { id, type } = this.currentSummaryResource;
+                const resource = type === 'pdf' ? 
+                    this.pdfCollection.find(p => p.id === id) :
+                    this.videoCollection.find(v => v.id === id);
+                
+                if (!resource) return;
+                
+                const summaryKey = `${type}:${id}`;
+                const summary = this.summariesCollection[summaryKey];
+                
+                this.elements.resourceTitle.value = resource.title;
+                this.elements.summaryText.value = summary ? summary.text : '';
+                
+                this.hideContextMenu();
+                this.editSummaryModal.show();
+            }
+
+            openChangeLabelModal() {
+                if (!this.currentSummaryResource) return;
+                
+                const { id, type } = this.currentSummaryResource;
+                const resource = type === 'pdf' ? 
+                    this.pdfCollection.find(p => p.id === id) :
+                    this.videoCollection.find(v => v.id === id);
+                
+                if (!resource) return;
+                
+                // Set resource title
+                this.elements.changeResourceTitle.value = resource.title;
+                
+                // Show current label
+                const currentLabel = resource.labelId ? this.labelsCollection.find(l => l.id === resource.labelId) : null;
+                if (currentLabel) {
+                    this.elements.currentLabelDisplay.innerHTML = `
+                        <span class="label-preview" style="background-color: ${currentLabel.color};">
+                            ${this.escapeHtml(currentLabel.name)}
+                        </span>
+                    `;
+                } else {
+                    this.elements.currentLabelDisplay.innerHTML = '<span class="text-muted">No label</span>';
+                }
+                
+                // Reset new label selection
+                this.elements.newLabelSelect.value = resource.labelId || '';
+                this.updateNewLabelPreview();
+                
+                this.hideContextMenu();
+                this.changeLabelModal.show();
+            }
+
+            updateNewLabelPreview() {
+                const selectedLabelId = this.elements.newLabelSelect.value;
+                this.updateLabelPreviewElement(selectedLabelId, this.elements.newLabelPreview);
+            }
+
+            saveNewLabel() {
+                if (!this.currentSummaryResource) {
+                    this.showNotification('Error: No resource selected', 'error');
+                    return;
+                }
+                
+                const { id, type } = this.currentSummaryResource;
+                const newLabelId = this.elements.newLabelSelect.value || null;
+                
+                // Find the resource and update its label
+                if (type === 'pdf') {
+                    const pdfIndex = this.pdfCollection.findIndex(p => p.id === id);
+                    if (pdfIndex !== -1) {
+                        this.pdfCollection[pdfIndex].labelId = newLabelId;
+                        this.saveToStorage();
+                        this.renderGallery();
+                    }
+                } else if (type === 'video') {
+                    const videoIndex = this.videoCollection.findIndex(v => v.id === id);
+                    if (videoIndex !== -1) {
+                        this.videoCollection[videoIndex].labelId = newLabelId;
+                        this.saveVideosToStorage();
+                        this.renderVideos();
+                    }
+                }
+                
+                const newLabel = newLabelId ? this.labelsCollection.find(l => l.id === newLabelId) : null;
+                const labelName = newLabel ? newLabel.name : 'No label';
+                
+                this.showNotification(`Label changed to "${labelName}"`, 'success');
+                this.changeLabelModal.hide();
+                this.currentSummaryResource = null;
+            }
+
+            saveSummary() {
+                if (!this.currentSummaryResource) {
+                    this.showNotification('Error: No resource selected for summary', 'error');
+                    return;
+                }
+                
+                const { id, type } = this.currentSummaryResource;
+                const summaryText = this.elements.summaryText.value.trim();
+                const summaryKey = `${type}:${id}`;
+                
+                if (summaryText) {
+                    // Save or update summary
+                    this.summariesCollection[summaryKey] = {
+                        text: summaryText,
+                        dateAdded: this.summariesCollection[summaryKey]?.dateAdded || new Date().toISOString(),
+                        dateModified: new Date().toISOString()
+                    };
+                    this.showNotification('Summary saved successfully!', 'success');
+                } else {
+                    // Remove summary if empty
+                    delete this.summariesCollection[summaryKey];
+                    this.showNotification('Summary removed', 'success');
+                }
+                
+                this.saveSummariesToStorage();
+                this.editSummaryModal.hide();
+                this.currentSummaryResource = null;
+            }
+
+            loadSummariesFromStorage() {
+                try {
+                    const stored = localStorage.getItem('pdfCompanionSummaries');
+                    return stored ? JSON.parse(stored) : {};
+                } catch (error) {
+                    console.error('Failed to load summaries from localStorage:', error);
+                    return {};
+                }
+            }
+
+            saveSummariesToStorage() {
+                try {
+                    localStorage.setItem('pdfCompanionSummaries', JSON.stringify(this.summariesCollection));
+                    this.updateStorageIndicator();
+                } catch (error) {
+                    console.error('Failed to save summaries to localStorage:', error);
+                    this.showNotification('Warning: Could not save summaries to local storage', 'error');
+                }
+            }
+
+            openVideoModal() {
+                this.elements.videoForm.reset();
+                this.elements.videoLabelPreview.innerHTML = '';
+                this.videoModal.show();
+            }
+
+            saveVideo() {
+                const title = this.elements.videoTitle.value.trim();
+                const url = this.elements.videoUrl.value.trim();
+                const labelId = this.elements.videoLabel.value || null;
+                
+                if (!title || !url) {
+                    this.showNotification('Please fill in both title and URL', 'error');
+                    return;
+                }
+                
+                if (!this.isValidURL(url)) {
+                    this.showNotification('Please enter a valid URL', 'error');
+                    return;
+                }
+                
+                if (this.videoCollection.some(video => video.url === url)) {
+                    this.showNotification('This video is already in your collection', 'warning');
+                    return;
+                }
+                
+                const newVideo = {
+                    id: Date.now().toString(),
+                    title,
+                    url,
+                    labelId,
+                    dateAdded: new Date().toISOString(),
+                    domain: new URL(url).hostname
+                };
+                
+                this.videoCollection.push(newVideo);
+                this.saveVideosToStorage();
+                this.renderVideos();
+                this.updateStats();
+                this.updateResourceDropdown();
+                this.videoModal.hide();
+                this.showNotification('Video added to your collection!', 'success');
+            }
+
+            openVideo(id) {
+                console.log('openVideo called with id:', id); // Debug log
+                const video = this.videoCollection.find(v => v.id === id);
+                if (!video) {
+                    console.log('Video not found for id:', id); // Debug log
+                    return;
+                }
+                console.log('Opening Video URL:', video.url); // Debug log
+                window.open(video.url, '_blank');
+            }
+
+            removeVideo(id) {
+                const video = this.videoCollection.find(v => v.id === id);
+                if (!video) return;
+                
+                if (confirm(`Remove "${video.title}" from your collection?`)) {
+                    this.videoCollection = this.videoCollection.filter(v => v.id !== id);
+                    // Also remove video links from notes
+                    this.notesCollection.forEach(note => {
+                        if (note.pdfId === id) {
+                            note.pdfId = null;
+                        }
+                    });
+                    // Remove summary if exists
+                    const summaryKey = `video:${id}`;
+                    delete this.summariesCollection[summaryKey];
+                    
+                    this.saveVideosToStorage();
+                    this.saveNotesToStorage();
+                    this.saveSummariesToStorage();
+                    this.renderVideos();
+                    this.renderNotes();
+                    this.updateStats();
+                    this.updateResourceDropdown();
+                    this.showNotification('Video removed from collection', 'success');
+                }
+            }
+
+            renderNotes() {
+                const notesList = this.elements.notesList;
+                
+                if (this.notesCollection.length === 0) {
+                    notesList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="bi bi-journal-plus"></i>
+                            <h5>No Notes Yet</h5>
+                            <p>Start taking notes about your training</p>
+                        </div>
+                    `;
+                } else {
+                    notesList.innerHTML = this.notesCollection.map(note => {
+                        let linkedResource = null;
+                        let resourceIcon = '';
+                        
+                        if (note.pdfId) {
+                            if (note.pdfId.startsWith('pdf:')) {
+                                const pdfId = note.pdfId.substring(4);
+                                linkedResource = this.pdfCollection.find(pdf => pdf.id === pdfId);
+                                resourceIcon = 'bi-file-earmark-pdf';
+                            } else if (note.pdfId.startsWith('video:')) {
+                                const videoId = note.pdfId.substring(6);
+                                linkedResource = this.videoCollection.find(video => video.id === videoId);
+                                resourceIcon = 'bi-play-circle';
+                            } else {
+                                // Legacy format - assume PDF
+                                linkedResource = this.pdfCollection.find(pdf => pdf.id === note.pdfId);
+                                resourceIcon = 'bi-file-earmark-pdf';
+                            }
+                        }
+                        
+                        return `
+                            <div class="note-item" data-id="${note.id}">
+                                <div class="note-header">
+                                    <h6 class="note-title">${this.escapeHtml(note.title)}</h6>
+                                    <div class="note-actions">
+                                        <button class="note-btn" onclick="pdfCompanion.editNote('${note.id}')" title="Edit note">
+                                            <i class="bi bi-pencil"></i>
+                                        </button>
+                                        <button class="note-btn" onclick="pdfCompanion.removeNote('${note.id}')" title="Delete note">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="note-content">${this.escapeHtml(note.content)}</div>
+                                ${linkedResource ? `
+                                    <div class="note-pdf-link" onclick="pdfCompanion.openLinkedResource('${note.pdfId}')">
+                                        <i class="bi ${resourceIcon} me-1"></i>
+                                        ${this.escapeHtml(linkedResource.title)}
+                                    </div>
+                                ` : ''}
+                                <div class="note-date">${this.formatDate(note.dateAdded)}</div>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+
+            openLinkedResource(resourceId) {
+                if (resourceId.startsWith('pdf:')) {
+                    const pdfId = resourceId.substring(4);
+                    this.openPDF(pdfId);
+                } else if (resourceId.startsWith('video:')) {
+                    const videoId = resourceId.substring(6);
+                    this.openVideo(videoId);
+                } else {
+                    // Legacy format - assume PDF
+                    this.openPDF(resourceId);
+                }
+            }
+
+            updateResourceDropdown() {
+                const dropdown = this.elements.notePdfLink;
+                dropdown.innerHTML = '<option value="">No resource selected</option>';
+                
+                // Add PDFs
+                if (this.pdfCollection.length > 0) {
+                    const pdfGroup = document.createElement('optgroup');
+                    pdfGroup.label = 'PDFs';
+                    this.pdfCollection.forEach(pdf => {
+                        const option = document.createElement('option');
+                        option.value = `pdf:${pdf.id}`;
+                        option.textContent = `📄 ${pdf.title}`;
+                        pdfGroup.appendChild(option);
+                    });
+                    dropdown.appendChild(pdfGroup);
+                }
+                
+                // Add Videos
+                if (this.videoCollection.length > 0) {
+                    const videoGroup = document.createElement('optgroup');
+                    videoGroup.label = 'Videos';
+                    this.videoCollection.forEach(video => {
+                        const option = document.createElement('option');
+                        option.value = `video:${video.id}`;
+                        option.textContent = `🎥 ${video.title}`;
+                        videoGroup.appendChild(option);
+                    });
+                    dropdown.appendChild(videoGroup);
+                }
+            }
+
+            openNoteModal(noteId = null) {
+                this.currentEditingNote = noteId;
+                const note = noteId ? this.notesCollection.find(n => n.id === noteId) : null;
+                
+                if (note) {
+                    this.elements.noteModalTitle.textContent = 'Edit Note';
+                    this.elements.noteTitle.value = note.title;
+                    this.elements.noteContent.value = note.content;
+                    this.elements.notePdfLink.value = note.pdfId || '';
+                } else {
+                    this.elements.noteModalTitle.textContent = 'Add New Note';
+                    this.elements.noteForm.reset();
+                }
+                
+                this.noteModal.show();
+            }
+
+            editNote(noteId) {
+                this.openNoteModal(noteId);
+            }
+
+            saveNote() {
+                const title = this.elements.noteTitle.value.trim();
+                const content = this.elements.noteContent.value.trim();
+                const pdfId = this.elements.notePdfLink.value || null;
+                
+                if (!title || !content) {
+                    this.showNotification('Please fill in title and content', 'error');
+                    return;
+                }
+                
+                if (this.currentEditingNote) {
+                    // Edit existing note
+                    const noteIndex = this.notesCollection.findIndex(n => n.id === this.currentEditingNote);
+                    if (noteIndex !== -1) {
+                        this.notesCollection[noteIndex] = {
+                            ...this.notesCollection[noteIndex],
+                            title,
+                            content,
+                            pdfId,
+                            dateModified: new Date().toISOString()
+                        };
+                        this.showNotification('Note updated successfully!', 'success');
+                    }
+                } else {
+                    // Add new note
+                    const newNote = {
+                        id: Date.now().toString(),
+                        title,
+                        content,
+                        pdfId,
+                        dateAdded: new Date().toISOString()
+                    };
+                    this.notesCollection.unshift(newNote);
+                    this.showNotification('Note added successfully!', 'success');
+                }
+                
+                this.saveNotesToStorage();
+                this.renderNotes();
+                this.noteModal.hide();
+                this.currentEditingNote = null;
+            }
+
+            removeNote(noteId) {
+                const note = this.notesCollection.find(n => n.id === noteId);
+                if (!note) return;
+                
+                if (confirm(`Delete note "${note.title}"?`)) {
+                    this.notesCollection = this.notesCollection.filter(n => n.id !== noteId);
+                    this.saveNotesToStorage();
+                    this.renderNotes();
+                    this.showNotification('Note deleted', 'success');
+                }
+            }
+
+            searchNotes(query) {
+                const items = document.querySelectorAll('.note-item');
+                const searchTerm = query.toLowerCase();
+
+                items.forEach(item => {
+                    const title = item.querySelector('.note-title').textContent.toLowerCase();
+                    const content = item.querySelector('.note-content').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            }
+
+            openPDF(id) {
+                console.log('openPDF called with id:', id); // Debug log
+                const pdf = this.pdfCollection.find(p => p.id === id);
+                if (!pdf) {
+                    console.log('PDF not found for id:', id); // Debug log
+                    return;
+                }
+                console.log('Opening PDF URL:', pdf.url); // Debug log
+                window.open(pdf.url, '_blank');
+            }
+
+            removePDF(id) {
+                const pdf = this.pdfCollection.find(p => p.id === id);
+                if (!pdf) return;
+                
+                if (confirm(`Remove "${pdf.title}" from your collection?`)) {
+                    this.pdfCollection = this.pdfCollection.filter(pdf => pdf.id !== id);
+                    // Also remove PDF links from notes
+                    this.notesCollection.forEach(note => {
+                        if (note.pdfId === id || note.pdfId === `pdf:${id}`) {
+                            note.pdfId = null;
+                        }
+                    });
+                    // Remove summary if exists
+                    const summaryKey = `pdf:${id}`;
+                    delete this.summariesCollection[summaryKey];
+                    
+                    this.saveToStorage();
+                    this.saveNotesToStorage();
+                    this.saveSummariesToStorage();
+                    this.renderGallery();
+                    this.renderNotes();
+                    this.updateStats();
+                    this.updateResourceDropdown();
+                    this.showNotification('PDF removed from collection', 'success');
+                }
+            }
+
+            updateStats() {
+                this.elements.pdfCount.textContent = this.pdfCollection.length;
+                this.elements.videoCount.textContent = this.videoCollection.length;
+                
+                if (this.pdfCollection.length > 0) {
+                    const lastAdded = new Date(this.pdfCollection[this.pdfCollection.length - 1].dateAdded);
+                    this.elements.lastAdded.textContent = this.formatDate(lastAdded.toISOString());
+                } else {
+                    this.elements.lastAdded.textContent = 'None';
+                }
+                
+                if (this.videoCollection.length > 0) {
+                    const lastVideoAdded = new Date(this.videoCollection[this.videoCollection.length - 1].dateAdded);
+                    this.elements.lastVideoAdded.textContent = this.formatDate(lastVideoAdded.toISOString());
+                } else {
+                    this.elements.lastVideoAdded.textContent = 'None';
+                }
+            }
+
+            saveToStorage() {
+                try {
+                    localStorage.setItem('pdfCompanionCollection', JSON.stringify(this.pdfCollection));
+                    this.updateStorageIndicator();
+                } catch (error) {
+                    console.error('Failed to save to localStorage:', error);
+                    this.showNotification('Warning: Could not save to local storage', 'error');
+                }
+            }
+
+            loadFromStorage() {
+                try {
+                    const stored = localStorage.getItem('pdfCompanionCollection');
+                    return stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    console.error('Failed to load from localStorage:', error);
+                    return [];
+                }
+            }
+
+            saveNotesToStorage() {
+                try {
+                    localStorage.setItem('pdfCompanionNotes', JSON.stringify(this.notesCollection));
+                    this.updateStorageIndicator();
+                } catch (error) {
+                    console.error('Failed to save notes to localStorage:', error);
+                    this.showNotification('Warning: Could not save notes to local storage', 'error');
+                }
+            }
+
+            loadNotesFromStorage() {
+                try {
+                    const stored = localStorage.getItem('pdfCompanionNotes');
+                    return stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    console.error('Failed to load notes from localStorage:', error);
+                    return [];
+                }
+            }
+
+            saveVideosToStorage() {
+                try {
+                    localStorage.setItem('pdfCompanionVideos', JSON.stringify(this.videoCollection));
+                    this.updateStorageIndicator();
+                } catch (error) {
+                    console.error('Failed to save videos to localStorage:', error);
+                    this.showNotification('Warning: Could not save videos to local storage', 'error');
+                }
+            }
+
+            loadVideosFromStorage() {
+                try {
+                    const stored = localStorage.getItem('pdfCompanionVideos');
+                    return stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    console.error('Failed to load videos from localStorage:', error);
+                    return [];
+                }
+            }
+
+            saveLabelsToStorage() {
+                try {
+                    localStorage.setItem('pdfCompanionLabels', JSON.stringify(this.labelsCollection));
+                    this.updateStorageIndicator();
+                } catch (error) {
+                    console.error('Failed to save labels to localStorage:', error);
+                    this.showNotification('Warning: Could not save labels to local storage', 'error');
+                }
+            }
+
+            loadLabelsFromStorage() {
+                try {
+                    const stored = localStorage.getItem('pdfCompanionLabels');
+                    return stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    console.error('Failed to load labels from localStorage:', error);
+                    return [];
+                }
+            }
+
+            setLoading(loading) {
+                this.elements.addPdfBtn.disabled = loading;
+                this.elements.floatingAdd.disabled = loading;
+                this.elements.addBtnText.style.display = loading ? 'none' : 'inline';
+                this.elements.addBtnSpinner.classList.toggle('d-none', !loading);
+            }
+
+            showNotification(message, type) {
+                const notification = this.elements.notification;
+                notification.textContent = message;
+                notification.className = `notification ${type}`;
+                notification.classList.add('show');
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 4000);
+            }
+
+            isValidURL(string) {
+                try {
+                    new URL(string);
+                    return true;
+                } catch (_) {
+                    return false;
+                }
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            formatDate(dateString) {
+                const date = new Date(dateString);
+                return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            }
+
+            calculateStorageUsage() {
+                let totalBytes = 0;
+                
+                // Calculate size of app-related localStorage items
+                const appKeys = [
+                    'pdfCompanionCollection',
+                    'pdfCompanionVideos', 
+                    'pdfCompanionNotes',
+                    'pdfCompanionLabels',
+                    'pdfCompanionSummaries'
+                ];
+                
+                appKeys.forEach(key => {
+                    const item = localStorage.getItem(key);
+                    if (item) {
+                        // Calculate size in bytes (each character is roughly 1 byte in UTF-8)
+                        totalBytes += new Blob([item]).size;
+                    }
+                });
+                
+                return totalBytes;
+            }
+
+            formatBytes(bytes) {
+                if (bytes === 0) return '0 KB';
+                
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                
+                const value = bytes / Math.pow(k, i);
+                const formattedValue = i === 0 ? value : value.toFixed(1);
+                
+                return `${formattedValue} ${sizes[i]}`;
+            }
+
+            updateStorageIndicator() {
+                const usedBytes = this.calculateStorageUsage();
+                const estimatedLimitBytes = 10 * 1024 * 1024; // 10MB estimate
+                const percentage = Math.round((usedBytes / estimatedLimitBytes) * 100);
+                
+                // Update display
+                this.elements.storageUsed.textContent = this.formatBytes(usedBytes);
+                this.elements.storagePercent.textContent = `${percentage}%`;
+                
+                // Update total items count
+                const totalItems = this.pdfCollection.length + 
+                                 this.videoCollection.length + 
+                                 this.notesCollection.length + 
+                                 Object.keys(this.summariesCollection).length;
+                this.elements.totalItems.textContent = totalItems;
+                
+                // Update indicator styling based on usage
+                const indicator = this.elements.storageIndicator;
+                indicator.classList.remove('warning', 'danger');
+                
+                if (percentage >= 85) {
+                    indicator.classList.add('danger');
+                } else if (percentage >= 60) {
+                    indicator.classList.add('warning');
+                }
+                
+                // Update storage limit display based on actual browser
+                const limitText = this.getStorageLimitText();
+                this.elements.storageLimit.textContent = limitText;
+            }
+
+            getStorageLimitText() {
+                // Different browsers have different localStorage limits
+                const userAgent = navigator.userAgent.toLowerCase();
+                
+                if (userAgent.includes('firefox')) {
+                    return '~10 MB';
+                } else if (userAgent.includes('safari') && !userAgent.includes('chrome')) {
+                    return '~5 MB';
+                } else if (userAgent.includes('chrome') || userAgent.includes('edge')) {
+                    return '~10 MB';
+                } else {
+                    return '~5-10 MB';
+                }
+            }
+
+            exportCollection() {
+                if (this.pdfCollection.length === 0 && this.videoCollection.length === 0 && this.notesCollection.length === 0) {
+                    this.showNotification('No data to export', 'warning');
+                    return;
+                }
+
+                try {
+                    const exportData = {
+                        version: '5.0',
+                        exportDate: new Date().toISOString(),
+                        totalPdfs: this.pdfCollection.length,
+                        totalVideos: this.videoCollection.length,
+                        totalNotes: this.notesCollection.length,
+                        totalLabels: this.labelsCollection.length,
+                        totalSummaries: Object.keys(this.summariesCollection).length,
+                        collection: this.pdfCollection,
+                        videos: this.videoCollection,
+                        notes: this.notesCollection,
+                        labels: this.labelsCollection,
+                        summaries: this.summariesCollection
+                    };
+
+                    const dataStr = JSON.stringify(exportData, null, 2);
+                    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                    
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(dataBlob);
+                    link.download = `pdf-collection-${new Date().toISOString().split('T')[0]}.json`;
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    URL.revokeObjectURL(link.href);
+                    
+                    const summariesCount = Object.keys(this.summariesCollection).length;
+                    this.showNotification(`Exported ${this.pdfCollection.length} PDFs, ${this.videoCollection.length} videos, ${this.notesCollection.length} notes, ${this.labelsCollection.length} labels, and ${summariesCount} summaries!`, 'success');
+                } catch (error) {
+                    console.error('Export error:', error);
+                    this.showNotification('Failed to export collection', 'error');
+                }
+            }
+
+            triggerImport() {
+                this.elements.importFile.click();
+            }
+
+            async importCollection(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                // Reset the file input
+                event.target.value = '';
+
+                if (file.type !== 'application/json') {
+                    this.showNotification('Please select a valid JSON file', 'error');
+                    return;
+                }
+
+                try {
+                    const fileText = await this.readFileAsText(file);
+                    const importData = JSON.parse(fileText);
+                    
+                    // Validate the imported data
+                    if (!this.validateImportData(importData)) {
+                        this.showNotification('Invalid file format. Please select a valid PDF collection file.', 'error');
+                        return;
+                    }
+
+                    // Confirm import if there is existing data
+                    const hasExistingData = this.pdfCollection.length > 0 || this.videoCollection.length > 0 || this.notesCollection.length > 0 || this.labelsCollection.length > 0 || Object.keys(this.summariesCollection).length > 0;
+                    if (hasExistingData) {
+                        const totalItems = this.pdfCollection.length + this.videoCollection.length + this.notesCollection.length + this.labelsCollection.length + Object.keys(this.summariesCollection).length;
+                        const importItems = (importData.collection || []).length + (importData.videos || []).length + (importData.notes || []).length + (importData.labels || []).length + Object.keys(importData.summaries || {}).length;
+                        const confirmed = confirm(
+                            `This will replace your current collection of ${totalItems} items. Import ${importItems} items from file?`
+                        );
+                        if (!confirmed) return;
+                    }
+
+                    // Import the collection
+                    this.pdfCollection = importData.collection || [];
+                    this.videoCollection = importData.videos || [];
+                    this.notesCollection = importData.notes || [];
+                    this.labelsCollection = importData.labels || [];
+                    this.summariesCollection = importData.summaries || {};
+                    this.saveToStorage();
+                    this.saveVideosToStorage();
+                    this.saveNotesToStorage();
+                    this.saveLabelsToStorage();
+                    this.saveSummariesToStorage();
+                    this.renderGallery();
+                    this.renderVideos();
+                    this.renderNotes();
+                    this.updateStats();
+                    this.updateResourceDropdown();
+                    this.updateLabelDropdowns();
+                    this.updateStorageIndicator();
+                    
+                    const summariesCount = Object.keys(this.summariesCollection).length;
+                    this.showNotification(`Successfully imported ${this.pdfCollection.length} PDFs, ${this.videoCollection.length} videos, ${this.notesCollection.length} notes, ${this.labelsCollection.length} labels, and ${summariesCount} summaries!`, 'success');
+                } catch (error) {
+                    console.error('Import error:', error);
+                    this.showNotification('Failed to import collection. Please check the file format.', 'error');
+                }
+            }
+
+            readFileAsText(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = (e) => reject(e);
+                    reader.readAsText(file);
+                });
+            }
+
+            validateImportData(data) {
+                // Check if it has the required structure
+                if (!data || typeof data !== 'object') return false;
+                
+                // Support v1.0 (PDFs only), v2.0 (PDFs + notes), v3.0 (PDFs + videos + notes), v4.0 (+ labels), and v5.0 (+ summaries)
+                if (data.version === '1.0') {
+                    return Array.isArray(data.collection);
+                }
+                
+                // For v2.0 and later, check collection and notes
+                if (!Array.isArray(data.collection)) return false;
+                if (data.notes && !Array.isArray(data.notes)) return false;
+                
+                // For v3.0 and later, check videos
+                if (data.videos && !Array.isArray(data.videos)) return false;
+                
+                // For v4.0 and later, check labels
+                if (data.labels && !Array.isArray(data.labels)) return false;
+                
+                // For v5.0 and later, check summaries
+                if (data.summaries && typeof data.summaries !== 'object') return false;
+                
+                // Validate each PDF item
+                for (const pdf of data.collection) {
+                    if (!pdf.id || !pdf.url || !pdf.title || !pdf.dateAdded) {
+                        return false;
+                    }
+                }
+                
+                // Validate each video item if videos exist
+                if (data.videos) {
+                    for (const video of data.videos) {
+                        if (!video.id || !video.url || !video.title || !video.dateAdded) {
+                            return false;
+                        }
+                    }
+                }
+                
+                // Validate each note item if notes exist
+                if (data.notes) {
+                    for (const note of data.notes) {
+                        if (!note.id || !note.title || !note.content || !note.dateAdded) {
+                            return false;
+                        }
+                    }
+                }
+                
+                // Validate each label item if labels exist
+                if (data.labels) {
+                    for (const label of data.labels) {
+                        if (!label.id || !label.name || !label.color || !label.dateAdded) {
+                            return false;
+                        }
+                    }
+                }
+                
+                // Validate summaries if they exist
+                if (data.summaries) {
+                    for (const [key, summary] of Object.entries(data.summaries)) {
+                        if (!summary.text || !summary.dateAdded) {
+                            return false;
+                        }
+                    }
+                }
+                
+                return true;
+            }
+
+            openKallidus() {
+                const kallidusUrl = 'https://guidedogs.kallidus-suite.com/learn//#/course/6cb80351-2a8c-4e1e-b564-0c8433d6c5e9';
+                window.open(kallidusUrl, '_blank');
+                this.showNotification('Opening Kallidus Learning Platform...', 'success');
+            }
+        }
+
+        // Initialize the companion
+        const pdfCompanion = new PDFCompanion();
+
+        console.log('💡 Tip: Press Ctrl+Shift+P (or Cmd+Shift+P on Mac) to quickly open the Add PDF dialog!');
+    </script>
+</body>
+</html>
