@@ -3033,8 +3033,8 @@ You can use **Markdown** formatting:
                         }
                         
                         return `
-                            <div class="note-item" data-note-id="${note.id}" onclick="pdfCompanion.toggleNoteExpansion('${note.id}')">
-                                <div class="note-header">
+                            <div class="note-item" data-note-id="${note.id}">
+                                <div class="note-header" onclick="pdfCompanion.toggleNoteExpansion('${note.id}')">
                                     <h6 class="note-title">
                                         <i class="bi bi-chevron-down note-expand-icon me-2"></i>
                                         ${this.escapeHtml(note.title)}
@@ -3048,14 +3048,16 @@ You can use **Markdown** formatting:
                                         </button>
                                     </div>
                                 </div>
-                                <div class="note-content">${this.escapeHtml(note.content)}</div>
-                                ${linkedResource ? `
-                                    <div class="note-pdf-link" onclick="event.stopPropagation(); pdfCompanion.openLinkedResource('${note.pdfId}')">
-                                        <i class="bi ${resourceIcon} me-1"></i>
-                                        ${this.escapeHtml(linkedResource.title)}
-                                    </div>
-                                ` : ''}
-                                <div class="note-date">${this.formatDate(note.dateAdded)}</div>
+                                <div class="note-expandable">
+                                    <div class="note-content">${this.escapeHtml(note.content)}</div>
+                                    ${linkedResource ? `
+                                        <div class="note-pdf-link" onclick="event.stopPropagation(); pdfCompanion.openLinkedResource('${note.pdfId}')">
+                                            <i class="bi ${resourceIcon} me-1"></i>
+                                            ${this.escapeHtml(linkedResource.title)}
+                                        </div>
+                                    ` : ''}
+                                    <div class="note-date">${this.formatDate(note.dateAdded)}</div>
+                                </div>
                             </div>
                         `;
                     }).join('');
@@ -3199,6 +3201,13 @@ You can use **Markdown** formatting:
                         item.style.display = 'none';
                     }
                 });
+                
+                // If search is cleared, collapse all notes
+                if (!query.trim()) {
+                    items.forEach(item => {
+                        item.classList.remove('expanded');
+                    });
+                }
             }
 
             openPDF(id) {
