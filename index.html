@@ -224,30 +224,6 @@
             margin-bottom: 0.75rem;
         }
 
-        .note-pdf-link {
-            display: inline-flex;
-            align-items: center;
-            background: #eff6ff;
-            color: #2563eb;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.375rem;
-            font-size: 0.75rem;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .note-pdf-link:hover {
-            background: #dbeafe;
-            color: #1d4ed8;
-        }
-
-        .note-date {
-            font-size: 0.75rem;
-            color: #9ca3af;
-            margin-top: 0.5rem;
-        }
-
         .add-note-btn {
             background: var(--primary-gradient);
             border: none;
@@ -2151,9 +2127,19 @@ You can use **Markdown** formatting:
             }
 
             toggleNoteExpansion(noteId) {
+                console.log('toggleNoteExpansion called with noteId:', noteId); // Debug
                 const noteElement = document.querySelector(`[data-note-id="${noteId}"]`);
+                console.log('Found note element:', noteElement); // Debug
+                
                 if (noteElement) {
+                    const wasExpanded = noteElement.classList.contains('expanded');
                     noteElement.classList.toggle('expanded');
+                    console.log('Note expanded state changed from', wasExpanded, 'to', !wasExpanded); // Debug
+                    
+                    // Also log the current classes
+                    console.log('Current classes:', noteElement.className);
+                } else {
+                    console.log('Note element not found for ID:', noteId);
                 }
             }
 
@@ -3015,6 +3001,7 @@ You can use **Markdown** formatting:
                     notesList.innerHTML = this.notesCollection.map(note => {
                         let linkedResource = null;
                         let resourceIcon = '';
+                        let linkedResourceHtml = '';
                         
                         if (note.pdfId) {
                             if (note.pdfId.startsWith('pdf:')) {
@@ -3029,6 +3016,15 @@ You can use **Markdown** formatting:
                                 // Legacy format - assume PDF
                                 linkedResource = this.pdfCollection.find(pdf => pdf.id === note.pdfId);
                                 resourceIcon = 'bi-file-earmark-pdf';
+                            }
+                            
+                            if (linkedResource) {
+                                linkedResourceHtml = `
+                                    <div class="note-pdf-link" onclick="event.stopPropagation(); pdfCompanion.openLinkedResource('${note.pdfId}')">
+                                        <i class="bi ${resourceIcon} me-1"></i>
+                                        ${this.escapeHtml(linkedResource.title)}
+                                    </div>
+                                `;
                             }
                         }
                         
@@ -3050,17 +3046,14 @@ You can use **Markdown** formatting:
                                 </div>
                                 <div class="note-expandable">
                                     <div class="note-content">${this.escapeHtml(note.content)}</div>
-                                    ${linkedResource ? `
-                                        <div class="note-pdf-link" onclick="event.stopPropagation(); pdfCompanion.openLinkedResource('${note.pdfId}')">
-                                            <i class="bi ${resourceIcon} me-1"></i>
-                                            ${this.escapeHtml(linkedResource.title)}
-                                        </div>
-                                    ` : ''}
+                                    ${linkedResourceHtml}
                                     <div class="note-date">${this.formatDate(note.dateAdded)}</div>
                                 </div>
                             </div>
                         `;
                     }).join('');
+                    
+                    console.log('Notes rendered, setting up click handlers...'); // Debug
                 }
             }
 
