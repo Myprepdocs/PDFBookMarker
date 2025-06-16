@@ -1099,6 +1099,33 @@
             font-style: italic;
         }
 
+        .summary-search-highlight {
+            background-color: #fef3c7;
+            color: #92400e;
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            border: 1px solid #fbbf24;
+        }
+
+        .summary-search-highlight.current {
+            background-color: #fef2f2;
+            color: #dc2626;
+            border-color: #f87171;
+            animation: pulse-highlight 1.5s ease-in-out 3;
+        }
+
+        @keyframes pulse-highlight {
+            0%, 100% { 
+                background-color: #fef2f2;
+                transform: scale(1);
+            }
+            50% { 
+                background-color: #fecaca;
+                transform: scale(1.02);
+            }
+        }
+
         .storage-indicator {
             position: fixed;
             bottom: 0;
@@ -1746,6 +1773,7 @@ You can use **Markdown** formatting:
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Matching thumbnails are highlighted in green</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Press Enter or click magnifying glass to search</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Click X button to clear search and highlights</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Double-click highlighted items to see highlighted text in summaries</li>
                                     </ul>
                                 </div>
                             </div>
@@ -1823,6 +1851,10 @@ You can use **Markdown** formatting:
                         <i class="bi bi-markdown me-2"></i>
                         <strong>Markdown Support:</strong> Your summaries support full Markdown formatting! Use **bold**, *italic*, # headings, - lists, [links](url), and `code` to create rich, formatted notes.
                     </div>
+                    <div class="alert alert-warning mt-3">
+                        <i class="bi bi-lightbulb-fill me-2"></i>
+                        <strong>Search Highlighting:</strong> When you search summaries and find matches, double-clicking those highlighted thumbnails will automatically scroll to and highlight the found text within the summary modal!
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it!</button>
@@ -1862,6 +1894,7 @@ You can use **Markdown** formatting:
                 this.selectedColor = '#3b82f6'; // Default color for new labels
                 this.currentSummaryResource = null; // For editing summaries
                 this.clickTimeout = null; // For distinguishing single vs double clicks
+                this.currentSearchTerm = ''; // Track current search term for highlighting
                 this.elements = {
                     addPdfBtn: document.getElementById('addPdfBtn'),
                     addBtnText: document.getElementById('addBtnText'),
@@ -2915,7 +2948,13 @@ You can use **Markdown** formatting:
                 
                 if (summary && summary.text.trim()) {
                     // Render markdown to HTML
-                    const markdownHtml = marked.parse(summary.text);
+                    let markdownHtml = marked.parse(summary.text);
+                    
+                    // If there's an active search, highlight the search terms in the summary
+                    if (this.currentSearchTerm) {
+                        markdownHtml = this.highlightTextInHtml(markdownHtml, this.currentSearchTerm);
+                    }
+                    
                     const sanitizedHtml = this.sanitizeHtml(markdownHtml);
                     
                     this.elements.summaryContent.innerHTML = `
@@ -2926,6 +2965,18 @@ You can use **Markdown** formatting:
                             Last updated: ${this.formatDate(summary.dateModified || summary.dateAdded)}
                         </small>
                     `;
+                    
+                    // If there's an active search and highlights, scroll to the first highlight
+                    setTimeout(() => {
+                        const firstHighlight = this.elements.summaryContent.querySelector('.summary-search-highlight.current');
+                        if (firstHighlight) {
+                            firstHighlight.scrollIntoView({ 
+                                behavior: 'smooth', 
+                                block: 'center',
+                                inline: 'nearest'
+                            });
+                        }
+                    }, 100);
                 } else {
                     this.elements.summaryContent.innerHTML = `
                         <p class="text-muted">No summary available for this resource.</p>
@@ -2934,6 +2985,69 @@ You can use **Markdown** formatting:
                 }
                 
                 this.summaryModal.show();
+            }
+
+            highlightTextInHtml(html, searchTerm) {
+                if (!searchTerm || !searchTerm.trim()) return html;
+                
+                // Create a temporary div to work with the HTML
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+                
+                // Function to highlight text in text nodes
+                const highlightInTextNode = (node, term) => {
+                    if (node.nodeType === Node.TEXT_NODE) {
+                        const text = node.textContent;
+                        const lowerText = text.toLowerCase();
+                        const lowerTerm = term.toLowerCase();
+                        
+                        if (lowerText.includes(lowerTerm)) {
+                            // Split the text and wrap matches
+                            const parts = [];
+                            let lastIndex = 0;
+                            let index = lowerText.indexOf(lowerTerm);
+                            let isFirst = true;
+                            
+                            while (index !== -1) {
+                                // Add text before match
+                                if (index > lastIndex) {
+                                    parts.push(document.createTextNode(text.substring(lastIndex, index)));
+                                }
+                                
+                                // Add highlighted match
+                                const span = document.createElement('span');
+                                span.className = `summary-search-highlight${isFirst ? ' current' : ''}`;
+                                span.textContent = text.substring(index, index + term.length);
+                                parts.push(span);
+                                isFirst = false;
+                                
+                                lastIndex = index + term.length;
+                                index = lowerText.indexOf(lowerTerm, lastIndex);
+                            }
+                            
+                            // Add remaining text
+                            if (lastIndex < text.length) {
+                                parts.push(document.createTextNode(text.substring(lastIndex)));
+                            }
+                            
+                            // Replace the text node with highlighted content
+                            const parent = node.parentNode;
+                            parts.forEach(part => parent.insertBefore(part, node));
+                            parent.removeChild(node);
+                        }
+                    } else if (node.nodeType === Node.ELEMENT_NODE) {
+                        // Skip script and style elements
+                        if (node.tagName !== 'SCRIPT' && node.tagName !== 'STYLE') {
+                            // Process child nodes (use array copy since we're modifying the DOM)
+                            Array.from(node.childNodes).forEach(child => {
+                                highlightInTextNode(child, term);
+                            });
+                        }
+                    }
+                };
+                
+                highlightInTextNode(tempDiv, searchTerm);
+                return tempDiv.innerHTML;
             }
 
             sanitizeHtml(html) {
@@ -3921,6 +4035,9 @@ You can use **Markdown** formatting:
                     return;
                 }
                 
+                // Store the search term for highlighting in summaries
+                this.currentSearchTerm = searchTerm;
+                
                 let matchCount = 0;
                 const allItems = [...this.pdfCollection, ...this.videoCollection];
                 const matchedIds = [];
@@ -3987,6 +4104,7 @@ You can use **Markdown** formatting:
                         <i class="bi bi-search me-1"></i>
                         Found <strong>${count}</strong> resource${count !== 1 ? 's' : ''} 
                         with summaries containing "<strong>${this.escapeHtml(searchTerm)}</strong>"
+                        <br><small class="text-muted">Double-click highlighted thumbnails to see highlighted text in summaries</small>
                     `;
                     resultsInfo.style.display = 'block';
                 } else {
@@ -4001,6 +4119,9 @@ You can use **Markdown** formatting:
             clearSummarySearch() {
                 // Clear input
                 this.elements.summarySearchInput.value = '';
+                
+                // Clear search term
+                this.currentSearchTerm = '';
                 
                 // Clear highlights
                 this.clearSearchHighlights();

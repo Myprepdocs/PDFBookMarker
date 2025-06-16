@@ -1,0 +1,231 @@
+{
+  "version": "5.0",
+  "exportDate": "2025-06-16T07:58:39.816Z",
+  "totalPdfs": 22,
+  "totalVideos": 0,
+  "totalNotes": 1,
+  "totalLabels": 3,
+  "totalSummaries": 2,
+  "collection": [
+    {
+      "id": "1749923372978",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/f71e640d-0f0d-4e6a-8d55-a1565076df4d/C801a_Puppy%20progress%20chart%20v1.1.pdf",
+      "title": "C801a Puppy progress chart v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:49:32.978Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749923219404",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/04c20665-3eb3-4bba-9055-bb53f1c7aca8/C801b_Toileting%20routine%20guidance_puppy%20raising%20v1.1.pdf",
+      "title": "C801b Toileting routine guidance puppy raising v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:46:59.404Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749923322758",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/5e1a5230-5506-487e-bbcd-bffdf17bfb38/C801c_Learning%20to%20play%20guidance_puppy%20raising%20v1.1.pdf",
+      "title": "C801c Learning to play guidance puppy raising v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:48:42.758Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749923495336",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/8b44c980-5985-497f-a625-3703c53aeeab/C801d_Greeting%20people%20guidance_puppy%20raising%20v1.1.pdf",
+      "title": "C801d Greeting people guidance puppy raising v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:51:35.336Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749923534421",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/21ced3bc-8c1d-40f9-8d82-0ea91f64de66/C801e_Learning%20manners%20guidance_puppy%20raising%20v1.1.pdf",
+      "title": "C801e Learning manners guidance puppy raising v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:52:14.421Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749923574656",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/74f4a690-794c-4e24-9131-fffccb2a9d3b/C801f_Travel%20and%20transport%20guidance_puppy%20raising%20v1.1.pdf",
+      "title": "C801f Travel and transport guidance puppy raising v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:52:54.656Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749923614878",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/7d1f6404-088e-4161-af05-b93e6545bf75/C801g_Walking%20on%20a%20lead_puppy%20raising%20v1.1.pdf",
+      "title": "C801g Walking on a lead puppy raising v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:53:34.878Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749923651415",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/75060ae7-b7ea-4f3d-bb14-a659ef372acd/C801h_Recall%20and%20off-lead%20guidance_puppy%20raising%20v1.1.pdf",
+      "title": "C801h Recall and off lead guidance puppy raising v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:54:11.415Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749923735964",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/fabb0a65-c110-4f81-afe6-7cf399719742/C801k_Handling,%20grooming%20and%20equipment_puppy%20raising%20v1.1.pdf",
+      "title": "C801k Handling, grooming and equipment puppy raising v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:55:35.964Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749923774555",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/53ff8138-61cd-4423-8be6-6c71495272f7/C801i_Being%20out%20and%20about_puppy%20raising%20v1.1.pdf",
+      "title": "C801i Being out and about puppy raising v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:56:14.555Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749923831636",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/e5f1a3c9-48ee-4240-b974-d6d5d38b1764/C801j_Social%20behaviour%20and%20settling%20on%20lead%20guidance_puppy%20raising%20v1.1.pdf",
+      "title": "C801j Social behaviour and settling on lead guidance puppy raising v1.1",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-14T17:57:11.636Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749928370296",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/4c6842e7-f4ed-4009-a738-7f4768e6dcec/C801_Mouthing_puppy%20raising%20supporting%20doc%20v1.2.pdf",
+      "title": "C801 Mouthing puppy raising supporting doc v1.2",
+      "labelId": "1749923898186",
+      "dateAdded": "2025-06-14T19:12:50.296Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749928422127",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/63615b8a-01bf-408f-b9af-87ea101e1de8/C801_Whistle%20association_puppy%20raising%20supporting%20doc%20v1.2.pdf",
+      "title": "C801 Whistle association puppy raising supporting doc v1.2",
+      "labelId": "1749923898186",
+      "dateAdded": "2025-06-14T19:13:42.127Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749928456179",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/d7ab317c-1891-426d-adb7-f60077d47ec9/C801_Observing%20traffic_puppy%20raising%20supporting%20doc%20v1.2.pdf",
+      "title": "C801 Observing traffic puppy raising supporting doc v1.2",
+      "labelId": "1749923898186",
+      "dateAdded": "2025-06-14T19:14:16.179Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749928489408",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/22b026cc-ad54-4956-af92-01c689de9298/C801_Fitting%20and%20using%20a%20t-touch%20harness_puppy%20raising%20supporting%20doc%20v1.2.pdf",
+      "title": "C801 Fitting and using a t touch harness puppy raising supporting doc v1.2",
+      "labelId": "1749923898186",
+      "dateAdded": "2025-06-14T19:14:49.408Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1749928629360",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/3c4ad089-7f9f-45fb-a09f-a0cccec3aa11/C801_Stairs%20and%20steps_puppy%20raising%20supporting%20doc%20v1.2.pdf",
+      "title": "C801 Stairs and steps puppy raising supporting doc v1.2",
+      "labelId": "1749923898186",
+      "dateAdded": "2025-06-14T19:17:09.360Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750060353250",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/b0de6bc2-0c2a-48cf-8a55-67ffe97dccd5/Dog%20health%20and%20wellbeing%20information%20index.pdf",
+      "title": "Dog health and wellbeing information index",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T07:52:33.250Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750060432470",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/b860daaf-753b-48a4-98fb-1ed783c15cdb/Emergency%20Out%20of%20Hours%20(1).pdf",
+      "title": "Emergency Out of Hours (1)",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T07:53:52.470Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750060511190",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/2eebed6f-9847-4a77-9e08-8b4fbd253705/First%20Aid%20.pdf",
+      "title": "First Aid",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T07:55:11.190Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750060601722",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/ea3b75f3-77b0-4266-b3eb-3105dfe6a366/Dental%20health.pdf",
+      "title": "Dental health",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T07:56:41.722Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750060676303",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/56b33cd6-3cec-4155-8897-f03e82d446d6/Diarrhoea%20and%20Vomiting.pdf",
+      "title": "Diarrhoea and Vomiting",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T07:57:56.303Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750060713232",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/07434488-71f0-4245-8c3a-d6cd5d928bbb/Ear%20and%20Eye%20problems.pdf",
+      "title": "Ear and Eye problems",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T07:58:33.232Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    }
+  ],
+  "videos": [],
+  "notes": [
+    {
+      "id": "1749910741349",
+      "title": "How to Introduce Equipment",
+      "content": "Start with equipment hidden behind back, bring it out so puppy can see it, immediately offer food reward, move equipment out of sight and stop rewarding. Repeat until puppy shows interest when equipment appears, then gradually introduce physical contact with the equipment.",
+      "pdfId": null,
+      "dateAdded": "2025-06-14T14:19:01.349Z",
+      "dateModified": "2025-06-14T14:20:08.840Z"
+    }
+  ],
+  "labels": [
+    {
+      "id": "1749923216569",
+      "name": "Progression Chart",
+      "color": "#3b82f6",
+      "dateAdded": "2025-06-14T17:46:56.569Z"
+    },
+    {
+      "id": "1749923898186",
+      "name": "Support Docs",
+      "color": "#ec4899",
+      "dateAdded": "2025-06-14T17:58:18.186Z",
+      "dateModified": "2025-06-14T19:19:39.541Z"
+    },
+    {
+      "id": "1750060348150",
+      "name": "Dog Health",
+      "color": "#22c55e",
+      "dateAdded": "2025-06-16T07:52:28.150Z"
+    }
+  ],
+  "summaries": {
+    "pdf:1749923372978": {
+      "text": "# Puppy Progression Chart Summary\n\n- The document is a Guide Dogs puppy progression chart that tracks development from 12 weeks to 12 months [[1]][[2]]\n- The chart is organized in 10 key training areas with proficiency levels [[1]][[2]][[3]][[4]]\n- Key training areas include:\n  * Toileting routine [[1]]\n  * Learning to play [[1]]\n  * Greeting people [[1]]\n  * Learning manners [[2]]\n  * Travel and transport [[2]]\n  * Walking on a lead [[2]]\n  * Recall and off-lead exercise [[3]]\n  * Handling, grooming and equipment [[3]]\n  * Being out and about [[4]]\n  * Social behaviors and settling on a lead [[4]]\n\n- Each training area has specific milestones to achieve [[1]][[2]][[3]][[4]]\n- The document includes useful definitions of terms like \"comfortable\" and \"uncomfortable\" behaviors [[5]]\n- A cue list is provided with common commands used in training [[5]]\n- Supporting documents are available for specific training challenges like mouthing, adolescence, and stairs [[6]]\n- The document is linked to e-learning modules in Kallidus that can be downloaded as PDFs [[1]]",
+      "dateAdded": "2025-06-15T07:16:14.698Z",
+      "dateModified": "2025-06-15T07:22:06.800Z"
+    },
+    "pdf:1749923219404": {
+      "text": "# Puppy Raising: Toileting Routine Guidance Summary\n\n## Goals\n* Develop a reliable toileting routine where puppy is clean in the house [[2]]\n* Teach puppy to respond to the \"busy-busy\" cue [[2]]\n* Train puppy to toilet on different surfaces (on and off lead) [[2]]\n* Establish a predictable routine where puppy doesn't toilet when socializing unless asked [[2]]\n\n## Why Important\n* Affects puppy's ability to concentrate and guide effectively [[3]]\n* Impacts matching process with potential guide dog owners [[3]]\n* Has practical and welfare implications [[3]]\n\n## Factors Affecting Toileting\n* Age, illness, diet changes, stress, exercise, weather, environment [[3-4]]\n* Individual preferences and developmental changes [[6]]\n\n## Teaching Process\n1. **Association**: Say \"busy-busy\" when puppy begins toileting naturally [[7]]\n2. **Timing**: Say \"busy-busy\" just before puppy toilets [[7]]\n3. **Response**: Puppy toilets in response to the cue [[8]]\n4. **Leash relieving**: Teaching puppy to toilet while on lead [[8]]\n5. **Progression**: Expanding to different locations and surfaces [[8-9]]\n\n## Tips for Success\n* Set puppy up for success with frequent opportunities [[4-5]]\n* Let puppy finish when accidents happen [[4-5]]\n* Take puppy out after waking, eating, playing or training [[5]]\n* Always supervise puppy in the garden [[5]]\n* Use a toileting chart to track progress [[6]]\n* Remember each puppy develops at their own pace [[7,9]]\n* Reward consistently for positive responses [[9]]",
+      "dateAdded": "2025-06-15T07:24:39.952Z",
+      "dateModified": "2025-06-15T07:24:39.952Z"
+    }
+  }
+}
