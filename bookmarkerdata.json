@@ -1,12 +1,35 @@
 {
   "version": "5.0",
-  "exportDate": "2025-06-16T07:58:39.816Z",
-  "totalPdfs": 22,
-  "totalVideos": 0,
-  "totalNotes": 1,
-  "totalLabels": 3,
+  "exportDate": "2025-06-16T11:39:25.492Z",
+  "totalPdfs": 46,
+  "totalVideos": 1,
+  "totalLabels": 6,
   "totalSummaries": 2,
   "collection": [
+    {
+      "id": "1750064532666",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/e2936b69-d3c2-42bb-adf3-29345a62b44e/C801%20Guide%20Dogs%20Puppy%20Raising%20-%20Preparing%20for%20Your%20Puppy.pdf",
+      "title": "C801 Guide Dogs Puppy Raising Preparing for Your Puppy",
+      "labelId": "1750064150802",
+      "dateAdded": "2025-06-16T09:02:12.666Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750064155490",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/b5add854-0019-496b-a270-5f0f233f7e1f/C801%20Guide%20Dogs%20Puppy%20Raising%20-%20Your%20First%20Week.pdf",
+      "title": "C801 Guide Dogs Puppy Raising Your First Week",
+      "labelId": "1750064150802",
+      "dateAdded": "2025-06-16T08:55:55.490Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750063737512",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/d1c8f998-3adc-4b02-b433-d66ba39ebc4b/Puppy%20guidance%20for%20children.%20Preparing%20for%20your%20puppy.pdf",
+      "title": "Puppy guidance for children. Preparing for your puppy",
+      "labelId": "1750064150802",
+      "dateAdded": "2025-06-16T08:48:57.512Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
     {
       "id": "1749923372978",
       "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/f71e640d-0f0d-4e6a-8d55-a1565076df4d/C801a_Puppy%20progress%20chart%20v1.1.pdf",
@@ -182,17 +205,184 @@
       "labelId": "1750060348150",
       "dateAdded": "2025-06-16T07:58:33.232Z",
       "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750060820241",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/511c3fb9-7d37-481c-8cab-2bb8aa1d578c/Lameness.pdf",
+      "title": "Lameness",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:00:20.241Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750060866586",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/ad695196-eac5-49d7-bf99-bdd4672c260b/Lumps%20and%20Bumps.pdf",
+      "title": "Lumps and Bumps",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:01:06.586Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750060901965",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/df06f0b5-5102-4399-b094-9dc1af9b9319/Skin%20problems%20and%20itchy%20dogs.pdf",
+      "title": "Skin problems and itchy dogs",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:01:41.965Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750061243620",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/76c131c9-bb75-48af-8cd3-bab58c16f1f6/Castration.pdf",
+      "title": "Castration",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:07:23.620Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750061276123",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/ab35dda5-7317-4c69-b4ae-0d58404fac62/Care%20for%20female%20dogs%20in%20season.pdf",
+      "title": "Care for female dogs in season",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:07:56.123Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750061342312",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/1b94bee1-6062-45ce-b560-e1f354f453e1/Bathing,%20grooming%20and%20physical%20checks.pdf",
+      "title": "Bathing, grooming and physical checks",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:09:02.312Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750061403873",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/e91fa62d-3857-4fe1-938f-12cdc27716c0/How%20to%20give%20treatments.pdf",
+      "title": "How to give treatments",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:10:03.873Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750061434173",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/15f73926-1569-45d7-b181-eb25d55c5800/Pre%20and%20Post%20operative%20care.pdf",
+      "title": "Pre and Post operative care",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:10:34.173Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750061493038",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/0582157e-a147-4b10-a3cb-479d361abe3a/Christmas.pdf",
+      "title": "Christmas",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:11:33.038Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750061530721",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/a1447ec8-4e01-4e77-b527-70296d2f07e5/Easter.pdf",
+      "title": "Easter",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:12:10.721Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750061561541",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/29918514-a5be-4e9d-bffb-508e7cd910b9/Extreme%20Weather.pdf",
+      "title": "Extreme Weather",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:12:41.541Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750061599749",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/c1f29c26-0db6-41ec-bcae-7c03b012c4aa/Seasonal%20Health%20alerts.pdf",
+      "title": "Seasonal Health alerts",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:13:19.749Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750061772932",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/ea4ac99f-c296-4cde-ab49-c6ec172494de/Waltham%20Growth%20Chart_How%20to.pdf",
+      "title": "Waltham Growth Chart How to",
+      "labelId": "1750060348150",
+      "dateAdded": "2025-06-16T08:16:12.933Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750063809029",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/6d011120-3149-47e6-acf2-242b8f49fa01/Applying%20the%20principles.%20Our%20four%20Principals.pdf",
+      "title": "Applying the principles. Our four Principals",
+      "labelId": "1750062281161",
+      "dateAdded": "2025-06-16T08:50:09.029Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750063965161",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/cee56fc5-1b53-47a7-aa58-ba7f15e849fd/C801%20Guide%20Dogs%20Puppy%20Raising%20-%20Foundation%20knowledge.pdf",
+      "title": "C801 Guide Dogs Puppy Raising Foundation knowledge",
+      "labelId": "1750062281161",
+      "dateAdded": "2025-06-16T08:52:45.161Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750062301282",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/67ca267f-7bb6-4a53-82f0-8a0f39b5cf2c/PREP%20Foundation%20course%20eLearning%20overview%20v1.1.pdf",
+      "title": "PREP Foundation course eLearning overview v1.1",
+      "labelId": "1750062281161",
+      "dateAdded": "2025-06-16T08:25:01.282Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750062375722",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/451a33e5-1569-43fa-bc8e-bdddeaa83bbc/PREP%20Foundation%20course%20live%20event%20overview%20PDF%20v1.0.pdf",
+      "title": "PREP Foundation course live event overview PDF v1.0",
+      "labelId": "1750062281161",
+      "dateAdded": "2025-06-16T08:26:15.722Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750062450237",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/920dbae0-7091-4bce-a045-1b294cbbbe72/BW.%20Foundation%20Course.%20A%20dogs%20emotional%20cup.pdf",
+      "title": "BW. Foundation Course. A dogs emotional cup",
+      "labelId": "1750062281161",
+      "dateAdded": "2025-06-16T08:27:30.237Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750063547096",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/93c05e45-9af0-46e1-963b-d925abcae3d5/Essential%20information.%20Key%20contacts%20and%20how%20to%20order%20dog%20food..pdf",
+      "title": "Essential information. Key contacts and how to order dog food.",
+      "labelId": "1750062281161",
+      "dateAdded": "2025-06-16T08:45:47.096Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750063615211",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/a19f38c7-8443-46be-926d-6cb3c5e76d6e/BW.%20Foundation%20Knowledge,%20Understanding%20your%20puppy%20-%20the%20ladder%20of%20aggression%20and%20body%20language%20of%20fear%20in%20dogs.pdf",
+      "title": "BW. Foundation Knowledge, Understanding your puppy the ladder of aggression and body language of fear in dogs",
+      "labelId": "1750062281161",
+      "dateAdded": "2025-06-16T08:46:55.211Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750064268694",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/ac2c36ca-39a8-4f98-afff-acf0a4bd0834/3%20GD0150%20Guide%20Dogs%20-%20PREP_Foundation%20Knowledge%20Visual%20impairment.pdf",
+      "title": "3 GD0150 Guide Dogs PREP Foundation Knowledge Visual impairment",
+      "labelId": "1750062281161",
+      "dateAdded": "2025-06-16T08:57:48.694Z",
+      "domain": "guidedogs.kallidus-suite.com"
     }
   ],
-  "videos": [],
-  "notes": [
+  "videos": [
     {
-      "id": "1749910741349",
-      "title": "How to Introduce Equipment",
-      "content": "Start with equipment hidden behind back, bring it out so puppy can see it, immediately offer food reward, move equipment out of sight and stop rewarding. Repeat until puppy shows interest when equipment appears, then gradually introduce physical contact with the equipment.",
-      "pdfId": null,
-      "dateAdded": "2025-06-14T14:19:01.349Z",
-      "dateModified": "2025-06-14T14:20:08.840Z"
+      "id": "1750065335798",
+      "title": "How we raise our pups",
+      "url": "https://www.youtube.com/watch?v=B8goVqh7s8A",
+      "labelId": "1750065329660",
+      "dateAdded": "2025-06-16T09:15:35.798Z",
+      "domain": "www.youtube.com"
     }
   ],
   "labels": [
@@ -214,6 +404,25 @@
       "name": "Dog Health",
       "color": "#22c55e",
       "dateAdded": "2025-06-16T07:52:28.150Z"
+    },
+    {
+      "id": "1750062281161",
+      "name": "Foundation",
+      "color": "#f97316",
+      "dateAdded": "2025-06-16T08:24:41.161Z",
+      "dateModified": "2025-06-16T08:25:13.444Z"
+    },
+    {
+      "id": "1750064150802",
+      "name": "Early Days",
+      "color": "#06b6d4",
+      "dateAdded": "2025-06-16T08:55:50.802Z"
+    },
+    {
+      "id": "1750065329660",
+      "name": "Video",
+      "color": "#eab308",
+      "dateAdded": "2025-06-16T09:15:29.660Z"
     }
   ],
   "summaries": {
