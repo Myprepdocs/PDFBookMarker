@@ -43,14 +43,20 @@
         .header-section {
             background: var(--primary-gradient);
             color: white;
-            padding: 2rem;
+            padding: 1.2rem 2rem;
             border-radius: 1rem 1rem 0 0;
             text-align: center;
         }
 
         .header-section h1 {
             font-weight: 700;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
+            font-size: 1.8rem;
+        }
+
+        .header-section p {
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
         }
 
         .btn-kallidus {
@@ -893,16 +899,36 @@
             background: linear-gradient(45deg, #10b981, #059669);
         }
 
-        /* Ensure tablets maintain 50% width */
+        /* iPad and tablet optimizations */
         @media (max-width: 1024px) and (min-width: 769px) {
-            .search-bar {
-                width: 50%;
-                max-width: 600px;
+            .pdf-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .pdf-thumbnail, .video-thumbnail {
+                height: 180px;
+                padding: 1.2rem;
+            }
+            
+            .pdf-title {
+                font-size: 0.95rem;
+                line-height: 1.4;
+            }
+            
+            .video-item .pdf-title {
+                font-size: 0.95rem;
+                line-height: 1.4;
             }
         }
 
-        /* Tablet modal sizing */
-        @media (max-width: 991px) and (min-width: 769px) {
+        /* Ensure tablets maintain full width search */
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .search-bar {
+                width: 100%;
+                max-width: none;
+            }
+            
             .modal-notes {
                 max-width: 75%;
             }
@@ -929,10 +955,19 @@
             }
             
             .header-section {
-                padding: 1.5rem;
+                padding: 1rem;
                 padding-left: 4rem;
                 border-radius: 0;
                 position: relative;
+            }
+            
+            .header-section h1 {
+                font-size: 1.5rem;
+            }
+            
+            .header-section p {
+                font-size: 0.85rem;
+                margin-bottom: 1rem;
             }
             
             .desktop-buttons {
@@ -1145,8 +1180,16 @@
             margin-bottom: 1rem;
             box-shadow: var(--card-shadow);
             transition: all 0.3s ease;
-            width: 50%;
-            max-width: 600px;
+            width: 100%;
+            max-width: none;
+        }
+
+        /* Desktop and large screens - 50% width */
+        @media (min-width: 1025px) {
+            .search-bar {
+                width: 50%;
+                max-width: 600px;
+            }
         }
 
         .search-bar:focus-within {
@@ -3076,21 +3119,21 @@ You can use **Markdown** formatting:
                 
                 // Special handling for iPad and touch devices
                 if (isTouchDevice) {
-                    // More forgiving timing for touch devices to catch double taps
+                    // Much more forgiving timing for touch devices to catch double taps
                     if (this.clickTimeout) {
                         // This is a second tap (double tap) - show summary
                         clearTimeout(this.clickTimeout);
                         this.clickTimeout = null;
                         this.showSummary(resourceId, resourceType);
                     } else {
-                        // First tap - wait longer on touch devices for potential double tap
+                        // First tap - wait much longer on touch devices for potential double tap
                         this.clickTimeout = setTimeout(() => {
                             this.clickTimeout = null;
                             this.openResource(resourceId, resourceType);
-                        }, 400); // Increased timeout for better touch double-tap detection
+                        }, 600); // Increased to 600ms for much better touch double-tap detection
                     }
                 } else {
-                    // Desktop behavior - longer timeout for mouse double-clicks
+                    // Desktop behavior - standard timeout for mouse double-clicks
                     if (this.clickTimeout) {
                         // Double click - show summary
                         clearTimeout(this.clickTimeout);
