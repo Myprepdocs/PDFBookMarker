@@ -1317,11 +1317,11 @@
                     <button id="manageLabelsBtn" class="btn btn-small" title="Manage labels">
                         <i class="bi bi-tags me-1"></i>Labels
                     </button>
-                    <button id="exportBtn" class="btn btn-small" title="Export collection to file">
-                        <i class="bi bi-download me-1"></i>Export
+                    <button id="reloadNotesBtn" class="btn btn-small" title="Reload your notes from file">
+                        <i class="bi bi-arrow-clockwise me-1"></i>Reload Notes
                     </button>
-                    <button id="importBtn" class="btn btn-small" title="Import collection from file">
-                        <i class="bi bi-upload me-1"></i>Import
+                    <button id="saveNotesBtn" class="btn btn-small" title="Save your notes to file">
+                        <i class="bi bi-floppy me-1"></i>Save Notes
                     </button>
                 </div>
 
@@ -1345,16 +1345,16 @@
                         <button id="mobileManageLabelsBtn" class="btn" title="Manage labels">
                             <i class="bi bi-tags me-2"></i>Manage Labels
                         </button>
-                        <button id="mobileExportBtn" class="btn" title="Export collection to file">
-                            <i class="bi bi-download me-2"></i>Export
+                        <button id="mobileReloadNotesBtn" class="btn" title="Reload your notes from file">
+                            <i class="bi bi-arrow-clockwise me-2"></i>Reload Notes
                         </button>
-                        <button id="mobileImportBtn" class="btn" title="Import collection from file">
-                            <i class="bi bi-upload me-2"></i>Import
+                        <button id="mobileSaveNotesBtn" class="btn" title="Save your notes to file">
+                            <i class="bi bi-floppy me-2"></i>Save Notes
                         </button>
                     </div>
                 </div>
                 
-                <input type="file" id="importFile" accept=".json" style="display: none;">
+                <input type="file" id="notesImportFile" accept=".json" style="display: none;">
             </div>
 
             <!-- Content Section -->
@@ -1916,13 +1916,13 @@ You can use **Markdown** formatting:
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h6 class="card-title text-primary">
-                                        <i class="bi bi-7-circle me-2"></i>Import & Export
+                                        <i class="bi bi-7-circle me-2"></i>Notes Management
                                     </h6>
                                     <ul class="list-unstyled mb-0">
-                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Export your collection, notes, labels and summaries to backup</li>
-                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Import previously exported data</li>
-                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Sync across different devices</li>
-                                        <li><i class="bi bi-arrow-right text-success me-2"></i>All data is preserved during export/import</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Your personal notes are stored separately from the main collection</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Click "Save Notes" to download your notes to a file</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Click "Reload Notes" to import notes from a previously saved file</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Notes are preserved when the app updates with new collection data</li>
                                     </ul>
                                 </div>
                             </div>
@@ -1956,6 +1956,14 @@ You can use **Markdown** formatting:
                     <div class="alert alert-warning mt-3">
                         <i class="bi bi-lightbulb-fill me-2"></i>
                         <strong>Search Highlighting:</strong> When you search summaries and find matches, double-clicking those highlighted thumbnails will automatically scroll to and highlight the found text within the summary modal!
+                    </div>
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-cloud-download me-2"></i>
+                        <strong>Auto-Update System:</strong> The app automatically checks for and loads updated collection data when you start it. Your personal notes are always preserved during these updates.
+                    </div>
+                    <div class="alert alert-success mt-3">
+                        <i class="bi bi-journal-text me-2"></i>
+                        <strong>Notes Backup:</strong> Use "Save Notes" regularly to backup your personal notes. The main collection (PDFs, videos, summaries, labels) is managed centrally and updates automatically.
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1997,14 +2005,16 @@ You can use **Markdown** formatting:
                 this.currentSummaryResource = null; // For editing summaries
                 this.clickTimeout = null; // For distinguishing single vs double clicks
                 this.currentSearchTerm = ''; // Track current search term for highlighting
+                this.adminClickCount = 0; // For secret admin function
+                this.adminClickTimer = null; // Timer for admin clicks
                 this.elements = {
                     addPdfBtn: document.getElementById('addPdfBtn'),
                     addBtnText: document.getElementById('addBtnText'),
                     addBtnSpinner: document.getElementById('addBtnSpinner'),
                     kallidusLoginBtn: document.getElementById('kallidusLoginBtn'),
-                    exportBtn: document.getElementById('exportBtn'),
-                    importBtn: document.getElementById('importBtn'),
-                    importFile: document.getElementById('importFile'),
+                    reloadNotesBtn: document.getElementById('reloadNotesBtn'),
+                    saveNotesBtn: document.getElementById('saveNotesBtn'),
+                    notesImportFile: document.getElementById('notesImportFile'),
                     pdfGrid: document.getElementById('pdfGrid'),
                     pdfCount: document.getElementById('pdfCount'),
                     lastAdded: document.getElementById('lastAdded'),
@@ -2018,8 +2028,8 @@ You can use **Markdown** formatting:
                     mobileAddVideoBtn: document.getElementById('mobileAddVideoBtn'),
                     mobileNotesBtn: document.getElementById('mobileNotesBtn'),
                     mobileManageLabelsBtn: document.getElementById('mobileManageLabelsBtn'),
-                    mobileExportBtn: document.getElementById('mobileExportBtn'),
-                    mobileImportBtn: document.getElementById('mobileImportBtn'),
+                    mobileReloadNotesBtn: document.getElementById('mobileReloadNotesBtn'),
+                    mobileSaveNotesBtn: document.getElementById('mobileSaveNotesBtn'),
                     // PDF elements
                     pdfModal: document.getElementById('pdfModal'),
                     pdfForm: document.getElementById('pdfForm'),
@@ -2114,7 +2124,7 @@ You can use **Markdown** formatting:
                 this.init();
             }
 
-            init() {
+            async init() {
                 // Configure marked.js for security
                 marked.setOptions({
                     breaks: true,
@@ -2126,6 +2136,9 @@ You can use **Markdown** formatting:
                 
                 // Detect and handle iPad/touch device quirks
                 this.setupTouchDeviceOptimizations();
+                
+                // Check for central data file and handle version updates
+                await this.checkAndLoadCentralData();
                 
                 this.bindEvents();
                 this.renderGallery();
@@ -2174,9 +2187,9 @@ You can use **Markdown** formatting:
                 this.elements.addPdfBtn.addEventListener('click', () => this.openPdfModal());
                 this.elements.floatingAdd.addEventListener('click', () => this.openPdfModal());
                 this.elements.kallidusLoginBtn.addEventListener('click', () => this.openKallidus());
-                this.elements.exportBtn.addEventListener('click', () => this.exportCollection());
-                this.elements.importBtn.addEventListener('click', () => this.triggerImport());
-                this.elements.importFile.addEventListener('change', (e) => this.importCollection(e));
+                this.elements.saveNotesBtn.addEventListener('click', () => this.saveNotesToFile());
+                this.elements.reloadNotesBtn.addEventListener('click', () => this.triggerNotesImport());
+                this.elements.notesImportFile.addEventListener('change', (e) => this.importNotesFromFile(e));
                 
                 // Mobile menu events
                 this.elements.mobileMenuBtn.addEventListener('click', () => this.toggleMobileMenu());
@@ -2200,12 +2213,12 @@ You can use **Markdown** formatting:
                     this.openLabelManagementModal();
                     this.closeMobileMenu();
                 });
-                this.elements.mobileExportBtn.addEventListener('click', () => {
-                    this.exportCollection();
+                this.elements.mobileReloadNotesBtn.addEventListener('click', () => {
+                    this.triggerNotesImport();
                     this.closeMobileMenu();
                 });
-                this.elements.mobileImportBtn.addEventListener('click', () => {
-                    this.triggerImport();
+                this.elements.mobileSaveNotesBtn.addEventListener('click', () => {
+                    this.saveNotesToFile();
                     this.closeMobileMenu();
                 });
                 
@@ -2378,6 +2391,13 @@ You can use **Markdown** formatting:
                         this.clearSummarySearch();
                     }
                 });
+                
+                // Secret admin function - triple click on app title
+                const appTitle = document.querySelector('.header-section h1');
+                if (appTitle) {
+                    appTitle.addEventListener('click', (e) => this.handleAdminClick(e));
+                    appTitle.style.cursor = 'default';
+                }
                 
                 // Keyboard shortcut
                 document.addEventListener('keydown', (e) => {
@@ -3757,6 +3777,276 @@ You can use **Markdown** formatting:
                 }
             }
 
+            async checkAndLoadCentralData() {
+                try {
+                    // Try to fetch the central data file
+                    const response = await fetch('./bookmarkerdata.json');
+                    if (!response.ok) {
+                        console.log('Central data file not found, using existing local storage data');
+                        return;
+                    }
+                    
+                    const centralData = await response.json();
+                    const centralVersion = centralData.version;
+                    
+                    if (!centralVersion) {
+                        console.log('Central data file has no version, skipping auto-import');
+                        return;
+                    }
+                    
+                    // Check if we should import from central file
+                    const shouldImport = this.shouldImportCentralData(centralVersion);
+                    
+                    if (shouldImport) {
+                        console.log(`Importing central data version ${centralVersion}`);
+                        await this.importCentralData(centralData);
+                        
+                        // Store the version in localStorage to track updates
+                        localStorage.setItem('pdfCompanionVersion', centralVersion);
+                        
+                        this.showNotification(`Updated to data version ${centralVersion}`, 'success');
+                    }
+                } catch (error) {
+                    console.log('Could not load central data file:', error);
+                    // This is not an error - the file might not exist in development
+                }
+            }
+
+            shouldImportCentralData(centralVersion) {
+                // Check if there's any data in localStorage
+                const hasCollectionData = localStorage.getItem('pdfCompanionCollection');
+                const hasVideoData = localStorage.getItem('pdfCompanionVideos');
+                const hasLabelsData = localStorage.getItem('pdfCompanionLabels');
+                const hasSummariesData = localStorage.getItem('pdfCompanionSummaries');
+                
+                // Check stored version
+                const storedVersion = localStorage.getItem('pdfCompanionVersion');
+                
+                // Import if no data exists, no version stored, or central version is newer
+                if (!hasCollectionData && !hasVideoData && !hasLabelsData && !hasSummariesData) {
+                    return true; // No data exists
+                }
+                
+                if (!storedVersion) {
+                    return true; // No version tracking yet
+                }
+                
+                // Compare versions (assuming semantic versioning or numeric)
+                return this.isVersionNewer(centralVersion, storedVersion);
+            }
+
+            isVersionNewer(newVersion, currentVersion) {
+                // Simple version comparison - can be enhanced for semantic versioning
+                const newNum = parseFloat(newVersion);
+                const currentNum = parseFloat(currentVersion);
+                
+                return newNum > currentNum;
+            }
+
+            async importCentralData(centralData) {
+                try {
+                    // Import PDFs, videos, labels, and summaries from central file
+                    this.pdfCollection = centralData.collection || centralData.pdfs || [];
+                    this.videoCollection = centralData.videos || [];
+                    this.labelsCollection = centralData.labels || [];
+                    this.summariesCollection = centralData.summaries || {};
+                    
+                    // Save to localStorage (notes are preserved separately)
+                    this.saveToStorage();
+                    this.saveVideosToStorage();
+                    this.saveLabelsToStorage();
+                    this.saveSummariesToStorage();
+                    
+                    console.log('Central data imported successfully');
+                } catch (error) {
+                    console.error('Error importing central data:', error);
+                    this.showNotification('Error importing central data', 'error');
+                }
+            }
+
+            handleAdminClick(event) {
+                event.preventDefault();
+                
+                this.adminClickCount++;
+                
+                // Clear any existing timer
+                if (this.adminClickTimer) {
+                    clearTimeout(this.adminClickTimer);
+                }
+                
+                // Set timer to reset click count after 2 seconds
+                this.adminClickTimer = setTimeout(() => {
+                    this.adminClickCount = 0;
+                }, 2000);
+                
+                // Check if we've reached 3 clicks
+                if (this.adminClickCount >= 3) {
+                    this.adminClickCount = 0;
+                    clearTimeout(this.adminClickTimer);
+                    this.adminClickTimer = null;
+                    
+                    // Trigger admin export function
+                    this.exportCentralData();
+                }
+            }
+
+            exportCentralData() {
+                try {
+                    // Get current version and increment it
+                    const currentVersion = localStorage.getItem('pdfCompanionVersion') || '1.0';
+                    const newVersion = (parseFloat(currentVersion) + 0.1).toFixed(1);
+                    
+                    // Create central data structure (excluding notes)
+                    const centralData = {
+                        version: newVersion,
+                        exportDate: new Date().toISOString(),
+                        totalPdfs: this.pdfCollection.length,
+                        totalVideos: this.videoCollection.length,
+                        totalLabels: this.labelsCollection.length,
+                        totalSummaries: Object.keys(this.summariesCollection).length,
+                        collection: this.pdfCollection,
+                        videos: this.videoCollection,
+                        labels: this.labelsCollection,
+                        summaries: this.summariesCollection
+                    };
+
+                    const dataStr = JSON.stringify(centralData, null, 2);
+                    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                    
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(dataBlob);
+                    link.download = 'bookmarkerdata.json';
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    URL.revokeObjectURL(link.href);
+                    
+                    // Update stored version
+                    localStorage.setItem('pdfCompanionVersion', newVersion);
+                    
+                    const summariesCount = Object.keys(this.summariesCollection).length;
+                    this.showNotification(`🔧 Admin: Exported central data v${newVersion} (${this.pdfCollection.length} PDFs, ${this.videoCollection.length} videos, ${this.labelsCollection.length} labels, ${summariesCount} summaries)`, 'success');
+                } catch (error) {
+                    console.error('Admin export error:', error);
+                    this.showNotification('🔧 Admin: Failed to export central data', 'error');
+                }
+            }
+
+            saveNotesToFile() {
+                if (this.notesCollection.length === 0) {
+                    this.showNotification('No notes to save', 'warning');
+                    return;
+                }
+
+                try {
+                    const exportData = {
+                        version: '1.0',
+                        exportDate: new Date().toISOString(),
+                        totalNotes: this.notesCollection.length,
+                        notes: this.notesCollection
+                    };
+
+                    const dataStr = JSON.stringify(exportData, null, 2);
+                    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                    
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(dataBlob);
+                    link.download = `my-notes-${new Date().toISOString().split('T')[0]}.json`;
+                    
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    URL.revokeObjectURL(link.href);
+                    
+                    this.showNotification(`Saved ${this.notesCollection.length} notes to file!`, 'success');
+                } catch (error) {
+                    console.error('Export error:', error);
+                    this.showNotification('Failed to save notes', 'error');
+                }
+            }
+
+            triggerNotesImport() {
+                this.elements.notesImportFile.click();
+            }
+
+            async importNotesFromFile(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                // Reset the file input
+                event.target.value = '';
+
+                if (file.type !== 'application/json') {
+                    this.showNotification('Please select a valid JSON file', 'error');
+                    return;
+                }
+
+                try {
+                    const fileText = await this.readFileAsText(file);
+                    const importData = JSON.parse(fileText);
+                    
+                    // Validate the imported notes data
+                    if (!this.validateNotesImportData(importData)) {
+                        this.showNotification('Invalid notes file format. Please select a valid notes file.', 'error');
+                        return;
+                    }
+
+                    // Confirm import if there are existing notes
+                    if (this.notesCollection.length > 0) {
+                        const confirmed = confirm(
+                            `This will replace your current ${this.notesCollection.length} notes. Import ${(importData.notes || []).length} notes from file?`
+                        );
+                        if (!confirmed) return;
+                    }
+
+                    // Import the notes
+                    this.notesCollection = importData.notes || [];
+                    this.saveNotesToStorage();
+                    
+                    // Re-render notes if modal is open
+                    if (this.elements.notesModal.classList.contains('show')) {
+                        this.renderNotes();
+                    }
+                    
+                    this.updateResourceDropdown();
+                    this.updateStorageIndicator();
+                    
+                    this.showNotification(`Successfully imported ${this.notesCollection.length} notes!`, 'success');
+                } catch (error) {
+                    console.error('Notes import error:', error);
+                    this.showNotification('Failed to import notes. Please check the file format.', 'error');
+                }
+            }
+
+            validateNotesImportData(data) {
+                // Check if it has the required structure for notes
+                if (!data || typeof data !== 'object') return false;
+                
+                // Check if notes array exists
+                if (!Array.isArray(data.notes)) return false;
+                
+                // Validate each note item
+                for (const note of data.notes) {
+                    if (!note.id || !note.title || !note.content || !note.dateAdded) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            }
+
+            readFileAsText(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = (e) => reject(e);
+                    reader.readAsText(file);
+                });
+            }
+
             saveToStorage() {
                 try {
                     localStorage.setItem('pdfCompanionCollection', JSON.stringify(this.pdfCollection));
@@ -3878,13 +4168,14 @@ You can use **Markdown** formatting:
             calculateStorageUsage() {
                 let totalBytes = 0;
                 
-                // Calculate size of app-related localStorage items
+                // Calculate size of all app-related localStorage items
                 const appKeys = [
-                    'pdfCompanionCollection',
-                    'pdfCompanionVideos', 
-                    'pdfCompanionNotes',
-                    'pdfCompanionLabels',
-                    'pdfCompanionSummaries'
+                    'pdfCompanionCollection',      // PDF collection
+                    'pdfCompanionVideos',          // Video collection 
+                    'pdfCompanionNotes',           // User notes (separate from central data)
+                    'pdfCompanionLabels',          // Labels collection
+                    'pdfCompanionSummaries',       // Summaries collection
+                    'pdfCompanionVersion'          // Version tracking for central data
                 ];
                 
                 appKeys.forEach(key => {
