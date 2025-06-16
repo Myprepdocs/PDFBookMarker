@@ -334,7 +334,6 @@
             position: relative;
             border: 2px solid transparent;
             user-select: none;
-            border-left: 4px solid #ef4444;
             overflow: hidden;
         }
 
@@ -666,9 +665,6 @@
 
         .mobile-menu {
             display: none;
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
         }
 
         .hamburger-btn {
@@ -934,7 +930,9 @@
             
             .header-section {
                 padding: 1.5rem;
+                padding-left: 4rem;
                 border-radius: 0;
+                position: relative;
             }
             
             .desktop-buttons {
@@ -1363,8 +1361,8 @@
                     <i class="bi bi-question-lg"></i>
                 </button>
                 
-                <h1><i class="bi bi-file-earmark-pdf me-2"></i>PDF Bookmark Companion</h1>
-                <p class="mb-4">Your personal PDF collection manager for Kallidus training documents</p>
+                <h1><i class="bi bi-bookmark-star me-2"></i>Training Collection Manager</h1>
+                <p class="mb-4">Your curated training resources and personal notes</p>
                 
                 <div class="d-flex flex-wrap align-items-center justify-content-center btn-row desktop-buttons" style="gap: 1.5rem;">
                     <button id="kallidusLoginBtn" class="btn btn-kallidus" title="Open Kallidus Learning Platform">
@@ -1875,7 +1873,7 @@ You can use **Markdown** formatting:
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title">
-                        <i class="bi bi-info-circle me-2"></i>How to Use PDF Bookmark Companion
+                        <i class="bi bi-info-circle me-2"></i>How to Use Training Collection Manager
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
@@ -4632,7 +4630,7 @@ You can use **Markdown** formatting:
         // Initialize the companion
         const pdfCompanion = new PDFCompanion();
 
-        console.log('💡 Tip: Press Ctrl+Shift+P (or Cmd+Shift+P on Mac) to quickly open the Add PDF dialog!');
+        console.log('💡 Training Collection Manager is ready!');
     </script>
 </body>
 </html>
