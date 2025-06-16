@@ -886,6 +886,22 @@
             .notes-section {
                 margin-top: 2rem;
             }
+            
+            .search-bar {
+                padding: 0.5rem;
+            }
+            
+            .search-input {
+                font-size: 0.9rem;
+                margin: 0 0.5rem;
+            }
+            
+            .search-btn,
+            .search-clear-btn {
+                width: 36px;
+                height: 36px;
+                padding: 0.4rem;
+            }
         }
 
         .summary-content {
@@ -976,6 +992,113 @@
             margin: 1.5em 0;
         }
 
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus-within {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            background: transparent;
+            margin: 0 0.75rem;
+        }
+
+        .search-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .search-btn {
+            background: var(--primary-gradient);
+            border: none;
+            color: white;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .search-clear-btn {
+            background: #f3f4f6;
+            border: none;
+            color: #6b7280;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 0.5rem;
+        }
+
+        .search-clear-btn:hover {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .search-results-info {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .search-highlight {
+            border: 3px solid #10b981 !important;
+            box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2) !important;
+            position: relative;
+        }
+
+        .search-highlight::before {
+            content: '🔍';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: #10b981;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            z-index: 10;
+        }
+
+        .search-no-results {
+            text-align: center;
+            padding: 2rem;
+            color: #6b7280;
+            font-style: italic;
+        }
+
         .storage-indicator {
             position: fixed;
             bottom: 0;
@@ -1028,6 +1151,31 @@
             .pdf-item:active {
                 background: #f8fafc;
                 transform: scale(0.98);
+            }
+            
+            /* Remove hover states on touch devices */
+            .pdf-item:hover,
+            .video-item:hover {
+                transform: none !important;
+                box-shadow: var(--card-shadow) !important;
+                border-color: transparent !important;
+            }
+        }
+
+        /* iPad specific fixes */
+        @media (pointer: coarse) {
+            .pdf-thumbnail,
+            .video-thumbnail {
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                cursor: pointer !important;
+            }
+            
+            .pdf-item:hover,
+            .video-item:hover {
+                transform: none !important;
+                box-shadow: var(--card-shadow) !important;
             }
         }
     </style>
@@ -1115,6 +1263,22 @@
                             Last: <span id="lastAdded">None</span>
                         </div>
                     </div>
+
+                    <!-- Summary Search Bar -->
+                    <div class="search-bar">
+                        <i class="bi bi-search" style="color: #9ca3af;"></i>
+                        <input type="text" id="summarySearchInput" class="search-input" 
+                               placeholder="Search in summaries..." />
+                        <button id="summarySearchBtn" class="search-btn" title="Search summaries">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        <button id="summarySearchClear" class="search-clear-btn" title="Clear search">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </div>
+
+                    <!-- Search Results Info -->
+                    <div id="searchResultsInfo" class="search-results-info" style="display: none;"></div>
 
                     <!-- PDF Grid -->
                     <div id="pdfGrid" class="pdf-grid">
@@ -1574,7 +1738,23 @@ You can use **Markdown** formatting:
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h6 class="card-title text-primary">
-                                        <i class="bi bi-4-circle me-2"></i>Resource Summaries
+                                        <i class="bi bi-4-circle me-2"></i>Summary Search
+                                    </h6>
+                                    <ul class="list-unstyled mb-0">
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Use search box above thumbnails to find summaries</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Type keywords or phrases to search summary content</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Matching thumbnails are highlighted in green</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Press Enter or click magnifying glass to search</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Click X button to clear search and highlights</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">
+                                        <i class="bi bi-5-circle me-2"></i>Resource Summaries
                                     </h6>
                                     <ul class="list-unstyled mb-0">
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Right-click, two-finger tap, or long press for context menu</li>
@@ -1590,7 +1770,7 @@ You can use **Markdown** formatting:
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h6 class="card-title text-primary">
-                                        <i class="bi bi-5-circle me-2"></i>Taking Notes
+                                        <i class="bi bi-6-circle me-2"></i>Taking Notes
                                     </h6>
                                     <ul class="list-unstyled mb-0">
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Click "Add New Note" to create training notes</li>
@@ -1606,7 +1786,7 @@ You can use **Markdown** formatting:
                             <div class="card h-100">
                                 <div class="card-body">
                                     <h6 class="card-title text-primary">
-                                        <i class="bi bi-6-circle me-2"></i>Import & Export
+                                        <i class="bi bi-7-circle me-2"></i>Import & Export
                                     </h6>
                                     <ul class="list-unstyled mb-0">
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Export your collection, notes, labels and summaries to backup</li>
@@ -1625,7 +1805,15 @@ You can use **Markdown** formatting:
                     </div>
                     <div class="alert alert-info mt-3">
                         <i class="bi bi-phone me-2"></i>
-                        <strong>Mobile Tips:</strong> Single tap thumbnails to open PDFs/videos directly. Double tap to view summaries. Long press for 0.6 seconds to open the context menu. Use the hamburger menu (top-left) to access all features including quick navigation to notes.
+                        <strong>Mobile Tips:</strong> Single tap thumbnails to open PDFs/videos directly. Double tap to view summaries. Long press for 0.5 seconds to open the context menu.
+                    </div>
+                    <div class="alert alert-info mt-3">
+                        <i class="bi bi-tablet me-2"></i>
+                        <strong>iPad Tips:</strong> Optimized for iPad Safari with immediate tap response. Use hamburger menu (top-left) for navigation. Long press thumbnails for context menu options.
+                    </div>
+                    <div class="alert alert-success mt-3">
+                        <i class="bi bi-search me-2"></i>
+                        <strong>Search Tip:</strong> Use the search box above thumbnails to quickly find resources by searching through your summary content. Perfect for locating specific topics or keywords across your entire collection!
                     </div>
                     <div class="alert alert-success mt-3">
                         <i class="bi bi-tag me-2"></i>
@@ -1768,7 +1956,12 @@ You can use **Markdown** formatting:
                     storageUsed: document.getElementById('storageUsed'),
                     storageLimit: document.getElementById('storageLimit'),
                     storagePercent: document.getElementById('storagePercent'),
-                    totalItems: document.getElementById('totalItems')
+                    totalItems: document.getElementById('totalItems'),
+                    // Summary search elements
+                    summarySearchInput: document.getElementById('summarySearchInput'),
+                    summarySearchBtn: document.getElementById('summarySearchBtn'),
+                    summarySearchClear: document.getElementById('summarySearchClear'),
+                    searchResultsInfo: document.getElementById('searchResultsInfo')
                 };
                 
                 this.noteModal = new bootstrap.Modal(this.elements.noteModal);
@@ -1792,6 +1985,9 @@ You can use **Markdown** formatting:
                     smartypants: false
                 });
                 
+                // Detect and handle iPad/touch device quirks
+                this.setupTouchDeviceOptimizations();
+                
                 this.bindEvents();
                 this.renderGallery();
                 this.renderVideos();
@@ -1803,6 +1999,37 @@ You can use **Markdown** formatting:
                 this.initSortable();
                 this.initVideoSortable();
                 this.initializeLabelColorPicker();
+            }
+
+            setupTouchDeviceOptimizations() {
+                // Enhanced touch device detection
+                const isTouch = (
+                    'ontouchstart' in window || 
+                    navigator.maxTouchPoints > 0 || 
+                    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+                );
+                
+                if (isTouch) {
+                    // Add touch device class to body for CSS targeting
+                    document.body.classList.add('touch-device');
+                    
+                    // Disable hover effects that interfere with touch
+                    const style = document.createElement('style');
+                    style.textContent = `
+                        .touch-device .pdf-item:hover,
+                        .touch-device .video-item:hover {
+                            transform: none !important;
+                            box-shadow: var(--card-shadow) !important;
+                            border-color: transparent !important;
+                        }
+                        .touch-device .pdf-thumbnail:hover,
+                        .touch-device .video-thumbnail:hover {
+                            background: #f8fafc !important;
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
             }
 
             bindEvents() {
@@ -1916,12 +2143,18 @@ You can use **Markdown** formatting:
                 let longPressTimeout = null;
                 let touchStartTarget = null;
                 let hasMoved = false;
+                let initialTouchPos = { x: 0, y: 0 };
                 
                 document.addEventListener('touchstart', (e) => {
                     touchStartTime = Date.now();
                     touchStartCount = e.touches.length;
                     touchStartTarget = e.target;
                     hasMoved = false;
+                    
+                    if (e.touches.length > 0) {
+                        initialTouchPos.x = e.touches[0].clientX;
+                        initialTouchPos.y = e.touches[0].clientY;
+                    }
                     
                     // Set up long press detection for single finger on thumbnails
                     if (touchStartCount === 1) {
@@ -1944,15 +2177,23 @@ You can use **Markdown** formatting:
                                         navigator.vibrate(50);
                                     }
                                 }
-                            }, 600); // Reduced to 600ms for better UX
+                            }, 500); // Reduced for better iPad experience
                         }
                     }
                 }, { passive: false });
                 
                 document.addEventListener('touchmove', (e) => {
-                    hasMoved = true;
+                    // Check if moved significantly (more than 10px)
+                    if (e.touches.length > 0) {
+                        const deltaX = Math.abs(e.touches[0].clientX - initialTouchPos.x);
+                        const deltaY = Math.abs(e.touches[0].clientY - initialTouchPos.y);
+                        if (deltaX > 10 || deltaY > 10) {
+                            hasMoved = true;
+                        }
+                    }
+                    
                     // Cancel long press if finger moves
-                    if (longPressTimeout) {
+                    if (hasMoved && longPressTimeout) {
                         clearTimeout(longPressTimeout);
                         longPressTimeout = null;
                     }
@@ -1983,6 +2224,21 @@ You can use **Markdown** formatting:
                         }
                     }
                 }, { passive: false });
+                
+                // Summary search events
+                this.elements.summarySearchBtn.addEventListener('click', () => this.searchSummaries());
+                this.elements.summarySearchClear.addEventListener('click', () => this.clearSummarySearch());
+                this.elements.summarySearchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        this.searchSummaries();
+                    }
+                });
+                this.elements.summarySearchInput.addEventListener('input', (e) => {
+                    // Clear search if input is empty
+                    if (!e.target.value.trim()) {
+                        this.clearSummarySearch();
+                    }
+                });
                 
                 // Keyboard shortcut
                 document.addEventListener('keydown', (e) => {
@@ -2594,22 +2850,28 @@ You can use **Markdown** formatting:
                 event.preventDefault();
                 event.stopPropagation();
                 
-                // Check if this is a touch device
-                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                // Improved touch device detection including iPad
+                const isTouchDevice = (
+                    'ontouchstart' in window || 
+                    navigator.maxTouchPoints > 0 || 
+                    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+                );
                 
+                // Special handling for iPad and touch devices
                 if (isTouchDevice) {
-                    // On touch devices, handle taps differently
+                    // Force immediate action on touch devices to avoid hover state issues
                     if (this.clickTimeout) {
                         // This is a second tap (double tap) - show summary
                         clearTimeout(this.clickTimeout);
                         this.clickTimeout = null;
                         this.showSummary(resourceId, resourceType);
                     } else {
-                        // First tap - set shorter timeout for better mobile UX - open resource
+                        // First tap - open resource immediately (no delay for touch devices)
                         this.clickTimeout = setTimeout(() => {
                             this.clickTimeout = null;
                             this.openResource(resourceId, resourceType);
-                        }, 200); // Shorter delay for mobile
+                        }, 100); // Very short delay for touch devices
                     }
                 } else {
                     // Desktop behavior - longer timeout for mouse double-clicks
@@ -3649,6 +3911,102 @@ You can use **Markdown** formatting:
                 }
                 
                 return true;
+            }
+
+            searchSummaries() {
+                const searchTerm = this.elements.summarySearchInput.value.trim().toLowerCase();
+                
+                if (!searchTerm) {
+                    this.clearSummarySearch();
+                    return;
+                }
+                
+                let matchCount = 0;
+                const allItems = [...this.pdfCollection, ...this.videoCollection];
+                const matchedIds = [];
+                
+                // Search through summaries
+                allItems.forEach(item => {
+                    const itemType = this.pdfCollection.includes(item) ? 'pdf' : 'video';
+                    const summaryKey = `${itemType}:${item.id}`;
+                    const summary = this.summariesCollection[summaryKey];
+                    
+                    if (summary && summary.text.toLowerCase().includes(searchTerm)) {
+                        matchedIds.push({ id: item.id, type: itemType });
+                        matchCount++;
+                    }
+                });
+                
+                // Highlight matching items
+                this.highlightSearchResults(matchedIds);
+                
+                // Show results info
+                this.showSearchResults(matchCount, searchTerm);
+            }
+            
+            highlightSearchResults(matchedIds) {
+                // Clear previous highlights
+                this.clearSearchHighlights();
+                
+                // Add highlights to matched items
+                matchedIds.forEach(({ id, type }) => {
+                    const selector = type === 'pdf' ? 
+                        `#pdfGrid .pdf-item[data-id="${id}"]` : 
+                        `#videoGrid .video-item[data-id="${id}"]`;
+                    const element = document.querySelector(selector);
+                    
+                    if (element) {
+                        element.classList.add('search-highlight');
+                    }
+                });
+                
+                // Scroll to first match if any
+                if (matchedIds.length > 0) {
+                    const firstMatch = document.querySelector('.search-highlight');
+                    if (firstMatch) {
+                        firstMatch.scrollIntoView({ 
+                            behavior: 'smooth', 
+                            block: 'center' 
+                        });
+                    }
+                }
+            }
+            
+            clearSearchHighlights() {
+                const highlighted = document.querySelectorAll('.search-highlight');
+                highlighted.forEach(element => {
+                    element.classList.remove('search-highlight');
+                });
+            }
+            
+            showSearchResults(count, searchTerm) {
+                const resultsInfo = this.elements.searchResultsInfo;
+                
+                if (count > 0) {
+                    resultsInfo.innerHTML = `
+                        <i class="bi bi-search me-1"></i>
+                        Found <strong>${count}</strong> resource${count !== 1 ? 's' : ''} 
+                        with summaries containing "<strong>${this.escapeHtml(searchTerm)}</strong>"
+                    `;
+                    resultsInfo.style.display = 'block';
+                } else {
+                    resultsInfo.innerHTML = `
+                        <i class="bi bi-search me-1"></i>
+                        No summaries found containing "<strong>${this.escapeHtml(searchTerm)}</strong>"
+                    `;
+                    resultsInfo.style.display = 'block';
+                }
+            }
+            
+            clearSummarySearch() {
+                // Clear input
+                this.elements.summarySearchInput.value = '';
+                
+                // Clear highlights
+                this.clearSearchHighlights();
+                
+                // Hide results info
+                this.elements.searchResultsInfo.style.display = 'none';
             }
 
             openKallidus() {
