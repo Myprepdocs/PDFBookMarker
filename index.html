@@ -656,6 +656,7 @@
             position: absolute;
             top: 1rem;
             left: 1rem;
+            z-index: 100;
         }
 
         .hamburger-btn {
@@ -829,11 +830,32 @@
             color: #6b7280;
         }
 
-        /* Ensure tablets maintain 50% width */
+        /* iPad optimizations - larger thumbnails for better title visibility */
         @media (max-width: 1024px) and (min-width: 769px) {
             .search-bar {
                 width: 50%;
                 max-width: 600px;
+            }
+            
+            .pdf-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+                gap: 1.5rem;
+            }
+            
+            .pdf-thumbnail, .video-thumbnail {
+                height: 160px;
+                padding: 1rem;
+            }
+            
+            .pdf-title {
+                font-size: 0.9rem;
+                line-height: 1.4;
+                -webkit-line-clamp: 4;
+            }
+            
+            .video-item .pdf-title {
+                font-size: 0.9rem;
+                line-height: 1.4;
             }
         }
 
@@ -875,7 +897,10 @@
             
             .mobile-menu {
                 display: block;
-                position: relative;
+                position: absolute;
+                top: 1rem;
+                left: 1rem;
+                z-index: 100;
             }
             
             .content-section {
@@ -884,6 +909,11 @@
             
             .gallery-section {
                 width: 100%;
+            }
+            
+            .search-bar {
+                width: 100%;
+                padding: 0.5rem;
             }
             
             .modal-notes {
@@ -961,11 +991,6 @@
             .storage-indicator {
                 font-size: 0.75rem;
                 padding: 0.4rem 0.8rem;
-            }
-            
-            .search-bar {
-                width: 100%;
-                padding: 0.5rem;
             }
             
             .search-input {
@@ -1291,40 +1316,6 @@
         <div class="main-container">
             <!-- Header Section -->
             <div class="header-section position-relative">
-                <button type="button" class="help-btn" data-bs-toggle="modal" data-bs-target="#helpModal">
-                    <i class="bi bi-question-lg"></i>
-                </button>
-                
-                <h1><i class="bi bi-file-earmark-pdf me-2"></i>PDF Bookmark Companion</h1>
-                <p class="mb-4">Your personal PDF collection manager for Kallidus training documents</p>
-                
-                <div class="d-flex flex-wrap align-items-center justify-content-center btn-row desktop-buttons" style="gap: 1.5rem;">
-                    <button id="kallidusLoginBtn" class="btn btn-kallidus" title="Open Kallidus Learning Platform">
-                        <i class="bi bi-box-arrow-up-right me-2"></i>Kallidus Login
-                    </button>
-                    
-                    <button id="addPdfBtn" class="btn add-pdf-btn">
-                        <span id="addBtnText"><i class="bi bi-plus-circle me-2"></i>Add PDF</span>
-                        <span id="addBtnSpinner" class="loading-spinner d-none"></span>
-                    </button>
-                    
-                    <button id="addVideoBtn" class="btn btn-small" title="Add video to collection">
-                        <i class="bi bi-play-circle me-1"></i>Add Video
-                    </button>
-                    <button id="notesBtn" class="btn btn-small" title="View and manage your notes">
-                        <i class="bi bi-journal-text me-1"></i>Your Notes
-                    </button>
-                    <button id="manageLabelsBtn" class="btn btn-small" title="Manage labels">
-                        <i class="bi bi-tags me-1"></i>Labels
-                    </button>
-                    <button id="reloadNotesBtn" class="btn btn-small" title="Reload your notes from file">
-                        <i class="bi bi-arrow-clockwise me-1"></i>Reload Notes
-                    </button>
-                    <button id="saveNotesBtn" class="btn btn-small" title="Save your notes to file">
-                        <i class="bi bi-floppy me-1"></i>Save Notes
-                    </button>
-                </div>
-
                 <div class="mobile-menu">
                     <button id="mobileMenuBtn" class="hamburger-btn" title="Menu">
                         <i class="bi bi-list"></i>
@@ -1345,15 +1336,36 @@
                         <button id="mobileManageLabelsBtn" class="btn" title="Manage labels">
                             <i class="bi bi-tags me-2"></i>Manage Labels
                         </button>
-                        <button id="mobileReloadNotesBtn" class="btn" title="Reload your notes from file">
-                            <i class="bi bi-arrow-clockwise me-2"></i>Reload Notes
-                        </button>
-                        <button id="mobileSaveNotesBtn" class="btn" title="Save your notes to file">
-                            <i class="bi bi-floppy me-2"></i>Save Notes
-                        </button>
                     </div>
                 </div>
                 
+                <button type="button" class="help-btn" data-bs-toggle="modal" data-bs-target="#helpModal">
+                    <i class="bi bi-question-lg"></i>
+                </button>
+                
+                <h1>PDF Bookmark Companion</h1>
+                
+                <div class="d-flex flex-wrap align-items-center justify-content-center btn-row desktop-buttons" style="gap: 1.5rem;">
+                    <button id="kallidusLoginBtn" class="btn btn-kallidus" title="Open Kallidus Learning Platform">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>Kallidus Login
+                    </button>
+                    
+                    <button id="addPdfBtn" class="btn add-pdf-btn">
+                        <span id="addBtnText"><i class="bi bi-plus-circle me-2"></i>Add PDF</span>
+                        <span id="addBtnSpinner" class="loading-spinner d-none"></span>
+                    </button>
+                    
+                    <button id="addVideoBtn" class="btn btn-small" title="Add video to collection">
+                        <i class="bi bi-play-circle me-1"></i>Add Video
+                    </button>
+                    <button id="notesBtn" class="btn btn-small" title="View and manage your notes">
+                        <i class="bi bi-journal-text me-1"></i>Your Notes
+                    </button>
+                    <button id="manageLabelsBtn" class="btn btn-small" title="Manage labels">
+                        <i class="bi bi-tags me-1"></i>Labels
+                    </button>
+                </div>
+
                 <input type="file" id="notesImportFile" accept=".json" style="display: none;">
             </div>
 
@@ -1782,9 +1794,17 @@ You can use **Markdown** formatting:
                                     <i class="bi bi-journal me-2"></i>
                                     <span id="notesCount">0</span> Notes
                                 </div>
-                                <button id="addNoteBtnModal" class="btn btn-primary">
-                                    <i class="bi bi-plus me-2"></i>Add New Note
-                                </button>
+                                <div class="d-flex gap-2">
+                                    <button id="reloadNotesBtn" class="btn btn-outline-primary btn-sm" title="Reload your notes from file">
+                                        <i class="bi bi-arrow-clockwise me-1"></i>Reload
+                                    </button>
+                                    <button id="saveNotesBtn" class="btn btn-outline-success btn-sm" title="Save your notes to file">
+                                        <i class="bi bi-floppy me-1"></i>Save
+                                    </button>
+                                    <button id="addNoteBtnModal" class="btn btn-primary btn-sm">
+                                        <i class="bi bi-plus me-1"></i>Add Note
+                                    </button>
+                                </div>
                             </div>
                             <input type="text" id="notesSearchModal" class="form-control notes-search-modal" 
                                    placeholder="Search notes...">
@@ -2028,8 +2048,6 @@ You can use **Markdown** formatting:
                     mobileAddVideoBtn: document.getElementById('mobileAddVideoBtn'),
                     mobileNotesBtn: document.getElementById('mobileNotesBtn'),
                     mobileManageLabelsBtn: document.getElementById('mobileManageLabelsBtn'),
-                    mobileReloadNotesBtn: document.getElementById('mobileReloadNotesBtn'),
-                    mobileSaveNotesBtn: document.getElementById('mobileSaveNotesBtn'),
                     // PDF elements
                     pdfModal: document.getElementById('pdfModal'),
                     pdfForm: document.getElementById('pdfForm'),
@@ -2213,14 +2231,6 @@ You can use **Markdown** formatting:
                     this.openLabelManagementModal();
                     this.closeMobileMenu();
                 });
-                this.elements.mobileReloadNotesBtn.addEventListener('click', () => {
-                    this.triggerNotesImport();
-                    this.closeMobileMenu();
-                });
-                this.elements.mobileSaveNotesBtn.addEventListener('click', () => {
-                    this.saveNotesToFile();
-                    this.closeMobileMenu();
-                });
                 
                 // Close mobile menu when clicking outside
                 document.addEventListener('click', (e) => {
@@ -2246,11 +2256,14 @@ You can use **Markdown** formatting:
                 this.elements.saveLabelBtn.addEventListener('click', () => this.saveLabel());
                 this.elements.labelName.addEventListener('input', () => this.updateLabelPreview());
                 
-                // Notes events
+                // Notes events - buttons are now in the modal
                 this.elements.notesBtn.addEventListener('click', () => this.openNotesModal());
                 this.elements.addNoteBtnModal.addEventListener('click', () => this.openNoteModal());
                 this.elements.saveNoteBtn.addEventListener('click', () => this.saveNote());
                 this.elements.notesSearchModal.addEventListener('input', (e) => this.searchNotes(e.target.value));
+                
+                // Notes import/export buttons are now in the modal - need to be bound after modal creation
+                // These will be bound in the openNotesModal method
                 
                 // Summary events
                 this.elements.editSummaryMenuItem.addEventListener('click', () => this.openEditSummaryModal());
@@ -2538,6 +2551,28 @@ You can use **Markdown** formatting:
 
             openNotesModal() {
                 this.renderNotes();
+                
+                // Bind events for notes buttons that are now in the modal
+                // Remove any existing event listeners first
+                const reloadBtn = this.elements.reloadNotesBtn;
+                const saveBtn = this.elements.saveNotesBtn;
+                
+                if (reloadBtn) {
+                    // Clone and replace to remove old event listeners
+                    const newReloadBtn = reloadBtn.cloneNode(true);
+                    reloadBtn.parentNode.replaceChild(newReloadBtn, reloadBtn);
+                    newReloadBtn.addEventListener('click', () => this.triggerNotesImport());
+                    this.elements.reloadNotesBtn = newReloadBtn;
+                }
+                
+                if (saveBtn) {
+                    // Clone and replace to remove old event listeners
+                    const newSaveBtn = saveBtn.cloneNode(true);
+                    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+                    newSaveBtn.addEventListener('click', () => this.saveNotesToFile());
+                    this.elements.saveNotesBtn = newSaveBtn;
+                }
+                
                 this.notesModal.show();
             }
 
@@ -3026,21 +3061,21 @@ You can use **Markdown** formatting:
                         this.clickTimeout = null;
                         this.showSummary(resourceId, resourceType);
                     } else {
-                        // First tap - open resource immediately (no delay for touch devices)
+                        // First tap - set timer to open resource if no second tap
                         this.clickTimeout = setTimeout(() => {
                             this.clickTimeout = null;
                             this.openResource(resourceId, resourceType);
-                        }, 100); // Very short delay for touch devices
+                        }, 300); // Give time for potential double tap
                     }
                 } else {
-                    // Desktop behavior - longer timeout for mouse double-clicks
+                    // Desktop behavior - mouse double-clicks
                     if (this.clickTimeout) {
                         // Double click - show summary
                         clearTimeout(this.clickTimeout);
                         this.clickTimeout = null;
                         this.showSummary(resourceId, resourceType);
                     } else {
-                        // Single click - open resource
+                        // Single click - set timer to open resource if no double click
                         this.clickTimeout = setTimeout(() => {
                             this.clickTimeout = null;
                             this.openResource(resourceId, resourceType);
