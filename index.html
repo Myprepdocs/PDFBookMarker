@@ -3109,7 +3109,7 @@ You can use **Markdown** formatting:
                 event.preventDefault();
                 event.stopPropagation();
                 
-                // Improved touch device detection including iPad
+                // Enhanced touch device detection including iPad-specific handling
                 const isTouchDevice = (
                     'ontouchstart' in window || 
                     navigator.maxTouchPoints > 0 || 
@@ -3117,20 +3117,27 @@ You can use **Markdown** formatting:
                     (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
                 );
                 
-                // Special handling for iPad and touch devices
+                // Specific iPad detection (needs longer timeout)
+                const isIPad = (
+                    /iPad/.test(navigator.userAgent) ||
+                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+                );
+                
                 if (isTouchDevice) {
-                    // Much more forgiving timing for touch devices to catch double taps
+                    // iPad needs much longer timeout due to different touch handling
+                    const touchTimeout = isIPad ? 800 : 600;
+                    
                     if (this.clickTimeout) {
                         // This is a second tap (double tap) - show summary
                         clearTimeout(this.clickTimeout);
                         this.clickTimeout = null;
                         this.showSummary(resourceId, resourceType);
                     } else {
-                        // First tap - wait much longer on touch devices for potential double tap
+                        // First tap - wait for potential double tap with device-specific timing
                         this.clickTimeout = setTimeout(() => {
                             this.clickTimeout = null;
                             this.openResource(resourceId, resourceType);
-                        }, 600); // Increased to 600ms for much better touch double-tap detection
+                        }, touchTimeout);
                     }
                 } else {
                     // Desktop behavior - standard timeout for mouse double-clicks
