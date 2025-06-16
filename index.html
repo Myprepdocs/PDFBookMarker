@@ -1232,6 +1232,9 @@
                     <button id="addVideoBtn" class="btn btn-small" title="Add video to collection">
                         <i class="bi bi-play-circle me-1"></i>Add Video
                     </button>
+                    <button id="notesBtn" class="btn btn-small" title="View and manage your notes">
+                        <i class="bi bi-journal-text me-1"></i>Your Notes
+                    </button>
                     <button id="manageLabelsBtn" class="btn btn-small" title="Manage labels">
                         <i class="bi bi-tags me-1"></i>Labels
                     </button>
@@ -1257,8 +1260,8 @@
                         <button id="mobileAddVideoBtn" class="btn" title="Add video to collection">
                             <i class="bi bi-play-circle me-2"></i>Add Video
                         </button>
-                        <button id="mobileNotesBtn" class="btn" title="Scroll to notes section">
-                            <i class="bi bi-journal-text me-2"></i>Notes
+                        <button id="mobileNotesBtn" class="btn" title="View and manage your notes">
+                            <i class="bi bi-journal-text me-2"></i>Your Notes
                         </button>
                         <button id="mobileManageLabelsBtn" class="btn" title="Manage labels">
                             <i class="bi bi-tags me-2"></i>Manage Labels
@@ -1278,7 +1281,7 @@
             <!-- Content Section -->
             <div class="content-section">
                 <!-- Gallery Section -->
-                <div class="gallery-section">
+                <div class="gallery-section full-width">
                     <!-- Stats Bar -->
                     <div class="stats-bar">
                         <div>
@@ -1336,26 +1339,6 @@
                                 <h4>Add Training Videos</h4>
                                 <p>Collect video links for your training resources</p>
                             </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Notes Section -->
-                <div class="notes-section">
-                    <div class="notes-header">
-                        <h4><i class="bi bi-journal-text me-2"></i>Your Notes</h4>
-                        <input type="text" id="notesSearch" class="form-control notes-search" 
-                               placeholder="Search notes...">
-                        <button id="addNoteBtn" class="btn add-note-btn">
-                            <i class="bi bi-plus me-2"></i>Add New Note
-                        </button>
-                    </div>
-                    
-                    <div id="notesList">
-                        <div class="empty-state">
-                            <i class="bi bi-journal-plus"></i>
-                            <h5>No Notes Yet</h5>
-                            <p>Start taking notes about your training</p>
                         </div>
                     </div>
                 </div>
@@ -1699,6 +1682,46 @@ You can use **Markdown** formatting:
             <i class="bi bi-tag"></i>
             Change Label
         </button>
+    </div>
+
+    <!-- Notes Modal -->
+    <div class="modal fade" id="notesModal" tabindex="-1">
+        <div class="modal-dialog modal-notes">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-journal-text me-2"></i>Your Notes
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Notes Section Content -->
+                    <div class="notes-section-modal">
+                        <div class="notes-header-modal">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="notes-stats">
+                                    <i class="bi bi-journal me-2"></i>
+                                    <span id="notesCount">0</span> Notes
+                                </div>
+                                <button id="addNoteBtnModal" class="btn btn-primary">
+                                    <i class="bi bi-plus me-2"></i>Add New Note
+                                </button>
+                            </div>
+                            <input type="text" id="notesSearchModal" class="form-control notes-search-modal" 
+                                   placeholder="Search notes...">
+                        </div>
+                        
+                        <div id="notesListModal" class="notes-list-modal">
+                            <div class="empty-state">
+                                <i class="bi bi-journal-plus"></i>
+                                <h5>No Notes Yet</h5>
+                                <p>Start taking notes about your training</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Help Modal -->
