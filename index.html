@@ -132,13 +132,11 @@
 
         .content-section {
             padding: 2rem;
-            display: flex;
-            gap: 2rem;
             min-height: 600px;
         }
 
         .gallery-section {
-            flex: 1;
+            width: 100%;
         }
 
         .notes-section {
@@ -148,6 +146,54 @@
             padding: 1.5rem;
             max-height: 800px;
             overflow-y: auto;
+        }
+
+        .modal-notes {
+            max-width: 75%;
+        }
+
+        @media (max-width: 991px) {
+            .modal-notes {
+                max-width: 75%;
+            }
+        }
+
+        .notes-section-modal {
+            min-height: 60vh;
+            max-height: 70vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notes-header-modal {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #e5e7eb;
+            flex-shrink: 0;
+        }
+
+        .notes-list-modal {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        .notes-search-modal {
+            border-radius: 0.5rem;
+            border: 2px solid #e5e7eb;
+            padding: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .notes-search-modal:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .notes-stats {
+            font-weight: 500;
+            color: #64748b;
         }
 
         .notes-header {
@@ -818,8 +864,23 @@
             }
             
             .content-section {
-                flex-direction: column;
                 padding: 1rem;
+            }
+            
+            .modal-notes {
+                max-width: 100%;
+                margin: 0;
+            }
+            
+            .modal-notes .modal-content {
+                height: 100vh;
+                border-radius: 0;
+                border: none;
+            }
+            
+            .notes-section-modal {
+                min-height: calc(100vh - 120px);
+                max-height: calc(100vh - 120px);
             }
             
             .pdf-grid {
@@ -881,10 +942,6 @@
             .storage-indicator {
                 font-size: 0.75rem;
                 padding: 0.4rem 0.8rem;
-            }
-            
-            .notes-section {
-                margin-top: 2rem;
             }
             
             .search-bar {
@@ -1281,7 +1338,7 @@
             <!-- Content Section -->
             <div class="content-section">
                 <!-- Gallery Section -->
-                <div class="gallery-section full-width">
+                <div class="gallery-section">
                     <!-- Stats Bar -->
                     <div class="stats-bar">
                         <div>
@@ -1824,11 +1881,11 @@ You can use **Markdown** formatting:
                                         <i class="bi bi-6-circle me-2"></i>Taking Notes
                                     </h6>
                                     <ul class="list-unstyled mb-0">
-                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Click "Add New Note" to create training notes</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Click "Your Notes" to open the notes modal</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Click note titles to expand/collapse content</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Link notes to specific PDFs/videos for easy reference</li>
                                         <li><i class="bi bi-arrow-right text-success me-2"></i>Search through your notes to find information quickly</li>
-                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Use "Notes" in mobile menu to scroll to notes section</li>
+                                        <li><i class="bi bi-arrow-right text-success me-2"></i>Use "Your Notes" in mobile menu to open the notes modal</li>
                                     </ul>
                                 </div>
                             </div>
@@ -1976,9 +2033,12 @@ You can use **Markdown** formatting:
                     saveLabelBtnText: document.getElementById('saveLabelBtnText'),
                     labelModalTitle: document.getElementById('labelModalTitle'),
                     // Notes elements
-                    addNoteBtn: document.getElementById('addNoteBtn'),
-                    notesList: document.getElementById('notesList'),
-                    notesSearch: document.getElementById('notesSearch'),
+                    notesBtn: document.getElementById('notesBtn'),
+                    notesModal: document.getElementById('notesModal'),
+                    addNoteBtnModal: document.getElementById('addNoteBtnModal'),
+                    notesListModal: document.getElementById('notesListModal'),
+                    notesSearchModal: document.getElementById('notesSearchModal'),
+                    notesCount: document.getElementById('notesCount'),
                     noteModal: document.getElementById('noteModal'),
                     noteForm: document.getElementById('noteForm'),
                     noteTitle: document.getElementById('noteTitle'),
@@ -2021,6 +2081,7 @@ You can use **Markdown** formatting:
                 };
                 
                 this.noteModal = new bootstrap.Modal(this.elements.noteModal);
+                this.notesModal = new bootstrap.Modal(this.elements.notesModal);
                 this.videoModal = new bootstrap.Modal(this.elements.videoModal);
                 this.pdfModal = new bootstrap.Modal(this.elements.pdfModal);
                 this.labelModal = new bootstrap.Modal(this.elements.labelModal);
@@ -2047,7 +2108,6 @@ You can use **Markdown** formatting:
                 this.bindEvents();
                 this.renderGallery();
                 this.renderVideos();
-                this.renderNotes();
                 this.updateStats();
                 this.updateResourceDropdown();
                 this.updateLabelDropdowns();
@@ -2111,7 +2171,7 @@ You can use **Markdown** formatting:
                     this.closeMobileMenu();
                 });
                 this.elements.mobileNotesBtn.addEventListener('click', () => {
-                    this.scrollToNotes();
+                    this.openNotesModal();
                     this.closeMobileMenu();
                 });
                 this.elements.mobileManageLabelsBtn.addEventListener('click', () => {
@@ -2152,9 +2212,10 @@ You can use **Markdown** formatting:
                 this.elements.labelName.addEventListener('input', () => this.updateLabelPreview());
                 
                 // Notes events
-                this.elements.addNoteBtn.addEventListener('click', () => this.openNoteModal());
+                this.elements.notesBtn.addEventListener('click', () => this.openNotesModal());
+                this.elements.addNoteBtnModal.addEventListener('click', () => this.openNoteModal());
                 this.elements.saveNoteBtn.addEventListener('click', () => this.saveNote());
-                this.elements.notesSearch.addEventListener('input', (e) => this.searchNotes(e.target.value));
+                this.elements.notesSearchModal.addEventListener('input', (e) => this.searchNotes(e.target.value));
                 
                 // Summary events
                 this.elements.editSummaryMenuItem.addEventListener('click', () => this.openEditSummaryModal());
@@ -2429,13 +2490,13 @@ You can use **Markdown** formatting:
             }
 
             scrollToNotes() {
-                const notesSection = document.querySelector('.notes-section');
-                if (notesSection) {
-                    notesSection.scrollIntoView({ 
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                // This function is no longer needed but kept for compatibility
+                this.openNotesModal();
+            }
+
+            openNotesModal() {
+                this.renderNotes();
+                this.notesModal.show();
             }
 
             toggleNoteExpansion(noteId) {
@@ -3378,9 +3439,9 @@ You can use **Markdown** formatting:
                     
                     this.saveVideosToStorage();
                     this.saveNotesToStorage();
+                    this.saveVideosToStorage();
                     this.saveSummariesToStorage();
                     this.renderVideos();
-                    this.renderNotes();
                     this.updateStats();
                     this.updateResourceDropdown();
                     this.showNotification('Video removed from collection', 'success');
@@ -3388,7 +3449,10 @@ You can use **Markdown** formatting:
             }
 
             renderNotes() {
-                const notesList = this.elements.notesList;
+                const notesList = this.elements.notesListModal;
+                
+                // Update notes count
+                this.elements.notesCount.textContent = this.notesCollection.length;
                 
                 if (this.notesCollection.length === 0) {
                     notesList.innerHTML = `
@@ -3570,7 +3634,10 @@ You can use **Markdown** formatting:
                 }
                 
                 this.saveNotesToStorage();
-                this.renderNotes();
+                // Re-render notes if modal is open
+                if (this.elements.notesModal.classList.contains('show')) {
+                    this.renderNotes();
+                }
                 this.noteModal.hide();
                 this.currentEditingNote = null;
             }
@@ -3582,7 +3649,10 @@ You can use **Markdown** formatting:
                 if (confirm(`Delete note "${note.title}"?`)) {
                     this.notesCollection = this.notesCollection.filter(n => n.id !== noteId);
                     this.saveNotesToStorage();
-                    this.renderNotes();
+                    // Re-render notes if modal is open
+                    if (this.elements.notesModal.classList.contains('show')) {
+                        this.renderNotes();
+                    }
                     this.showNotification('Note deleted', 'success');
                 }
             }
@@ -3640,7 +3710,6 @@ You can use **Markdown** formatting:
                     this.saveNotesToStorage();
                     this.saveSummariesToStorage();
                     this.renderGallery();
-                    this.renderNotes();
                     this.updateStats();
                     this.updateResourceDropdown();
                     this.showNotification('PDF removed from collection', 'success');
