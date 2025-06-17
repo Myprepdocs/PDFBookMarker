@@ -2090,6 +2090,7 @@ You can use **Markdown** formatting:
                 this.selectedColor = '#3b82f6'; // Default color for new labels
                 this.currentSummaryResource = null; // For editing summaries
                 this.clickTimeout = null; // For distinguishing single vs double clicks
+				this.lastTapData = {}; // For tracking double taps per thumbnail
                 this.currentSearchTerm = ''; // Track current search term for highlighting
                 this.adminClickCount = 0; // For secret admin function
                 this.adminClickTimer = null; // Timer for admin clicks
@@ -3105,56 +3106,66 @@ You can use **Markdown** formatting:
                 this.initVideoSortable();
             }
 
-            handleThumbnailClick(event, resourceId, resourceType) {
-                event.preventDefault();
-                event.stopPropagation();
-                
-                // Enhanced touch device detection including iPad-specific handling
-                const isTouchDevice = (
-                    'ontouchstart' in window || 
-                    navigator.maxTouchPoints > 0 || 
-                    /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
-                );
-                
-                // Specific iPad detection (needs longer timeout)
-                const isIPad = (
-                    /iPad/.test(navigator.userAgent) ||
-                    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
-                );
-                
-                if (isTouchDevice) {
-                    // iPad needs much longer timeout due to different touch handling
-                    const touchTimeout = isIPad ? 800 : 600;
-                    
-                    if (this.clickTimeout) {
-                        // This is a second tap (double tap) - show summary
-                        clearTimeout(this.clickTimeout);
-                        this.clickTimeout = null;
-                        this.showSummary(resourceId, resourceType);
-                    } else {
-                        // First tap - wait for potential double tap with device-specific timing
-                        this.clickTimeout = setTimeout(() => {
-                            this.clickTimeout = null;
-                            this.openResource(resourceId, resourceType);
-                        }, touchTimeout);
-                    }
-                } else {
-                    // Desktop behavior - standard timeout for mouse double-clicks
-                    if (this.clickTimeout) {
-                        // Double click - show summary
-                        clearTimeout(this.clickTimeout);
-                        this.clickTimeout = null;
-                        this.showSummary(resourceId, resourceType);
-                    } else {
-                        // Single click - open resource
-                        this.clickTimeout = setTimeout(() => {
-                            this.clickTimeout = null;
-                            this.openResource(resourceId, resourceType);
-                        }, 300);
-                    }
-                }
-            }
+				handleThumbnailClick(event, resourceId, resourceType) {
+					event.preventDefault();
+					event.stopPropagation();
+					
+					const now = Date.now();
+					const isTouchDevice = (
+						'ontouchstart' in window || 
+						navigator.maxTouchPoints > 0 || 
+						/iPad|iPhone|iPod/.test(navigator.userAgent) ||
+						(navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+					);
+					
+					// Store last tap time and resource for this specific thumbnail
+					const thumbnailKey = `${resourceType}:${resourceId}`;
+					
+					if (!this.lastTapData) {
+						this.lastTapData = {};
+					}
+					
+					const lastTap = this.lastTapData[thumbnailKey];
+					const timeSinceLastTap = lastTap ? now - lastTap.time : Infinity;
+					
+					// Use consistent timeout for all devices - shorter is better for reliability
+					const doubleClickWindow = isTouchDevice ? 400 : 300;
+					
+					if (timeSinceLastTap < doubleClickWindow) {
+						// This is a double tap/click - show summary
+						if (this.clickTimeout) {
+							clearTimeout(this.clickTimeout);
+							this.clickTimeout = null;
+						}
+						
+						// Clear the tap data to prevent triple+ taps from triggering
+						delete this.lastTapData[thumbnailKey];
+						
+						this.showSummary(resourceId, resourceType);
+					} else {
+						// This is potentially the first tap - wait to see if there's a second one
+						this.lastTapData[thumbnailKey] = {
+							time: now,
+							resourceId: resourceId,
+							resourceType: resourceType
+						};
+						
+						// Clear any existing timeout
+						if (this.clickTimeout) {
+							clearTimeout(this.clickTimeout);
+						}
+						
+						// Set timeout to open resource if no second tap comes
+						this.clickTimeout = setTimeout(() => {
+							// Only execute if this tap data still exists (hasn't been cleared by double tap)
+							if (this.lastTapData[thumbnailKey] && this.lastTapData[thumbnailKey].time === now) {
+								delete this.lastTapData[thumbnailKey];
+								this.openResource(resourceId, resourceType);
+							}
+							this.clickTimeout = null;
+						}, doubleClickWindow);
+					}
+				}
 
             openResource(resourceId, resourceType) {
                 if (resourceType === 'pdf') {
