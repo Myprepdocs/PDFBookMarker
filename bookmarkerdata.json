@@ -1,8 +1,8 @@
 {
-  "version": "5.6",
-  "exportDate": "2025-06-17T11:38:41.544Z",
+  "version": "5.8",
+  "exportDate": "2025-06-17T17:14:11.504Z",
   "totalPdfs": 46,
-  "totalVideos": 1,
+  "totalVideos": 61,
   "totalLabels": 6,
   "totalSummaries": 43,
   "collection": [
@@ -319,14 +319,6 @@
       "domain": "guidedogs.kallidus-suite.com"
     },
     {
-      "id": "1750063809029",
-      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/6d011120-3149-47e6-acf2-242b8f49fa01/Applying%20the%20principles.%20Our%20four%20Principals.pdf",
-      "title": "Applying the principles. Our four Principals",
-      "labelId": "1750062281161",
-      "dateAdded": "2025-06-16T08:50:09.029Z",
-      "domain": "guidedogs.kallidus-suite.com"
-    },
-    {
       "id": "1750063965161",
       "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/cee56fc5-1b53-47a7-aa58-ba7f15e849fd/C801%20Guide%20Dogs%20Puppy%20Raising%20-%20Foundation%20knowledge.pdf",
       "title": "C801 Guide Dogs Puppy Raising Foundation knowledge",
@@ -359,6 +351,14 @@
       "domain": "guidedogs.kallidus-suite.com"
     },
     {
+      "id": "1750063809029",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/6d011120-3149-47e6-acf2-242b8f49fa01/Applying%20the%20principles.%20Our%20four%20Principals.pdf",
+      "title": "Applying the principles. Our four Principals",
+      "labelId": "1750062281161",
+      "dateAdded": "2025-06-16T08:50:09.029Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
       "id": "1750063615211",
       "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/a19f38c7-8443-46be-926d-6cb3c5e76d6e/BW.%20Foundation%20Knowledge,%20Understanding%20your%20puppy%20-%20the%20ladder%20of%20aggression%20and%20body%20language%20of%20fear%20in%20dogs.pdf",
       "title": "BW. Foundation Knowledge, Understanding your puppy the ladder of aggression and body language of fear in dogs",
@@ -380,8 +380,488 @@
       "id": "1750065335798",
       "title": "How we raise our pups",
       "url": "https://www.youtube.com/watch?v=B8goVqh7s8A",
-      "labelId": "1750065329660",
+      "labelId": "1750062281161",
       "dateAdded": "2025-06-16T09:15:35.798Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176203496",
+      "title": "Why teach good toileting routines",
+      "url": "https://www.youtube.com/watch?v=oqEsWc-5OE4",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:03:23.496Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176311504",
+      "title": "Starting \"busy-busy\" assiciation",
+      "url": "https://www.youtube.com/watch?v=FsM10MzEBTo",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:05:11.504Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176363944",
+      "title": "Developing \"busy-busy\" cue association",
+      "url": "https://www.youtube.com/watch?v=oBp42ezRH3E",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:06:03.944Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176402391",
+      "title": "Leash relief",
+      "url": "https://www.youtube.com/watch?v=4aea5rY7s-U&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:06:42.391Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176468780",
+      "title": "Why is play important?",
+      "url": "https://www.youtube.com/watch?v=0PUwUMobkvE",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:07:48.780Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176508948",
+      "title": "Managing Mouthing",
+      "url": "https://www.youtube.com/watch?v=_hLauJKpuiI",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:08:28.948Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176554463",
+      "title": "Managing Stealing",
+      "url": "https://www.youtube.com/watch?v=jiqOZ3fpm3E",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:09:14.463Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176630320",
+      "title": "Tug Game",
+      "url": "https://www.youtube.com/watch?v=fnPelFbi1xw",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:10:30.320Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176676940",
+      "title": "Teaching \"Drop\"",
+      "url": "https://www.youtube.com/watch?v=5FtB0H3lROM",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:11:16.940Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176792891",
+      "title": "Why is it important for a dog to be calm around people?",
+      "url": "https://www.youtube.com/watch?v=Unwn5UkCVLI&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:13:12.891Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176849116",
+      "title": "Visitor arriving - young puppy",
+      "url": "https://www.youtube.com/watch?v=YhcH_k4CRi8",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:14:09.116Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176897069",
+      "title": "Ideal greeting on a lead outside",
+      "url": "https://www.youtube.com/watch?v=bunLmxghieE",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:14:57.069Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750176939312",
+      "title": "Managing excitable greeting on a lead",
+      "url": "https://www.youtube.com/watch?v=V5tTnEvVRbI",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:15:39.312Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177005052",
+      "title": "Introducing \"Sit\"",
+      "url": "https://www.youtube.com/watch?v=tpvWyOJRsEQ",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:16:45.052Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177052357",
+      "title": "Introducing \"Down\"",
+      "url": "https://www.youtube.com/watch?v=RSe9VzkvhkU&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:17:32.357Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177175632",
+      "title": "Why teach your puppy how to travel confidently",
+      "url": "https://www.youtube.com/watch?v=3NWm_AS4r1I",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:19:35.632Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177228780",
+      "title": "Young puppy into boot of the car",
+      "url": "https://www.youtube.com/watch?v=pZ0g1T6a8Jo",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:20:28.780Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177276529",
+      "title": "Puppy getting out of a car",
+      "url": "https://www.youtube.com/watch?v=O2huQA3XFt4",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:21:16.529Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177319132",
+      "title": "Puppy uncomfortable travelling",
+      "url": "https://www.youtube.com/watch?v=I96xYriLxHI",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:21:59.132Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177366916",
+      "title": "Public Transport Information",
+      "url": "https://www.youtube.com/watch?v=jq0_q8W0cuE",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:22:46.916Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177425612",
+      "title": "Why teach walking on a loose lead?",
+      "url": "https://www.youtube.com/watch?v=n624JaCAmQw",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:23:45.612Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177587660",
+      "title": "Managing lead problems",
+      "url": "https://www.youtube.com/watch?v=Let5fwmKCSo",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:26:27.660Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177701148",
+      "title": "Changing direction on a lead",
+      "url": "https://www.youtube.com/watch?v=ScCser85Z3M",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:28:21.148Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177748672",
+      "title": "Managing yo-yo-ing",
+      "url": "https://www.youtube.com/watch?v=R4dW-pj6znY",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:29:08.672Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177788552",
+      "title": "Using a magnet lure",
+      "url": "https://www.youtube.com/watch?v=gsmvf1PHrZY",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:29:48.552Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177840552",
+      "title": "Young puppy stopping to look",
+      "url": "https://www.youtube.com/watch?v=y4JLZuzWibE",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:30:40.552Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177886160",
+      "title": "Older puppy stopping",
+      "url": "https://www.youtube.com/watch?v=KTawZLq5SnE",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:31:26.160Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750177938055",
+      "title": "Why teach recall?",
+      "url": "https://www.youtube.com/watch?v=SZMpDKiUCMk",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:32:18.055Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178005716",
+      "title": "Introducing recall at home",
+      "url": "https://www.youtube.com/watch?v=2ZYejjfSZXo&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:33:25.716Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178047264",
+      "title": "Engaging with your puppy off-lead",
+      "url": "https://www.youtube.com/watch?v=SwnM9Th6WPg&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:34:07.264Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178134736",
+      "title": "Problems with not engaging with your puppy off-lead",
+      "url": "https://www.youtube.com/watch?v=Zswbxfdlo7s",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:35:34.736Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178262080",
+      "title": "Appropriate and inappropriate play",
+      "url": "https://www.youtube.com/watch?v=XiqpuzfbtWE&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:37:42.080Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178308500",
+      "title": "Recall away from another dog",
+      "url": "https://www.youtube.com/watch?v=fHWkVLL1WnE&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:38:28.500Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178365348",
+      "title": "Younger puppy whistle association",
+      "url": "https://www.youtube.com/watch?v=pYV1BIBke8c",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:39:25.348Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178439120",
+      "title": "Why teach puppy to be comfortable being touched",
+      "url": "https://www.youtube.com/watch?v=JEGD2AEr3cc",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:40:39.120Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178474924",
+      "title": "Touching a puppy's head",
+      "url": "https://www.youtube.com/watch?v=toaZwNCr6RI",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:41:14.924Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178510544",
+      "title": "Checking puppy's paws",
+      "url": "https://www.youtube.com/watch?v=8zlruNRE3Zs",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:41:50.544Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178551528",
+      "title": "How to hold puppy at vet's",
+      "url": "https://www.youtube.com/watch?v=Asu-_YQEBu8&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:42:31.528Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178601492",
+      "title": "Introduction to the vet surgery",
+      "url": "https://www.youtube.com/watch?v=yrlKsqzhJdg",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:43:21.492Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178652968",
+      "title": "Young puppy having collar and lead fitted",
+      "url": "https://www.youtube.com/watch?v=UxQ0Rqhh9UM",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:44:12.968Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178693544",
+      "title": "Introducing equipment",
+      "url": "https://www.youtube.com/watch?v=7j6XzzPnLx0",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:44:53.544Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178730024",
+      "title": "Introducing grooming equipment",
+      "url": "https://www.youtube.com/watch?v=vLh6gMMOC_k&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:45:30.024Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178797975",
+      "title": "Why teach a puppy to be calm in busy environments",
+      "url": "https://www.youtube.com/watch?v=xZFVEThwXms&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:46:37.975Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178843232",
+      "title": "Puppies in nest with background sounds",
+      "url": "https://www.youtube.com/watch?v=2sEmm041K9Q",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:47:23.232Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178879576",
+      "title": "Puppy at a train station",
+      "url": "https://www.youtube.com/watch?v=-jayXvh1Vuo",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:47:59.576Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178916788",
+      "title": "Settled young puppy with sound",
+      "url": "https://www.youtube.com/watch?v=rg-dlzrInUw",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:48:36.788Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750178964861",
+      "title": "Settled older pup with background noise",
+      "url": "https://www.youtube.com/watch?v=iaEdzu4KsG0",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:49:24.861Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179006812",
+      "title": "Confidence Course set-up",
+      "url": "https://www.youtube.com/watch?v=tX1EpJSa6Hw&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:50:06.812Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179067443",
+      "title": "Exposing puppy to sounds",
+      "url": "https://www.youtube.com/watch?v=hbMYT1oZi8w",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:51:07.443Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179127920",
+      "title": "Introducing puppy to new environments",
+      "url": "https://www.youtube.com/watch?v=ifeWDRiaz80",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:52:07.920Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179171392",
+      "title": "Engage - Dis-engage",
+      "url": "https://www.youtube.com/watch?v=s0YRWsddtP4",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:52:51.392Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179215512",
+      "title": "Young puppy greeting person, on lead",
+      "url": "https://www.youtube.com/watch?v=HyfaZsLQ-hk",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:53:35.512Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179262996",
+      "title": "Older puppy greeting person, on lead",
+      "url": "https://www.youtube.com/watch?v=g4YpFKbNtVY&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:54:22.996Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179335537",
+      "title": "Settled puppy, home alone",
+      "url": "https://www.youtube.com/watch?v=FAZZ9eqYYwg&feature=youtu.be",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:55:35.537Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179378256",
+      "title": "Slightly unsettled puppy alone, but ok",
+      "url": "https://www.youtube.com/watch?v=LX1vTtwjxBQ",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:56:18.256Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179458176",
+      "title": "Why teach puppy to be calm when left alone",
+      "url": "https://www.youtube.com/watch?v=bX1LBhHTCcI",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T16:57:38.176Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179539585",
+      "title": "Managing Mouthing",
+      "url": "https://www.youtube.com/watch?v=2RZjOtT2-2g",
+      "labelId": "1749923898186",
+      "dateAdded": "2025-06-17T16:58:59.585Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179592977",
+      "title": "Younger puppy whistle association",
+      "url": "https://www.youtube.com/watch?v=wC_gkKNI39M",
+      "labelId": "1749923898186",
+      "dateAdded": "2025-06-17T16:59:52.977Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179694937",
+      "title": "Steps and Stairs",
+      "url": "https://www.youtube.com/watch?v=71BmZPIgyAk",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T17:01:34.937Z",
+      "domain": "www.youtube.com"
+    },
+    {
+      "id": "1750179719748",
+      "title": "Stairs",
+      "url": "https://www.youtube.com/watch?v=cVzY5eYADEw",
+      "labelId": "1749923216569",
+      "dateAdded": "2025-06-17T17:01:59.748Z",
       "domain": "www.youtube.com"
     }
   ],
