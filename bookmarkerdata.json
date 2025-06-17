@@ -1,10 +1,10 @@
 {
-  "version": "5.0",
-  "exportDate": "2025-06-16T11:39:25.492Z",
+  "version": "5.3",
+  "exportDate": "2025-06-17T08:30:56.489Z",
   "totalPdfs": 46,
   "totalVideos": 1,
   "totalLabels": 6,
-  "totalSummaries": 2,
+  "totalSummaries": 11,
   "collection": [
     {
       "id": "1750064532666",
@@ -28,6 +28,14 @@
       "title": "Puppy guidance for children. Preparing for your puppy",
       "labelId": "1750064150802",
       "dateAdded": "2025-06-16T08:48:57.512Z",
+      "domain": "guidedogs.kallidus-suite.com"
+    },
+    {
+      "id": "1750063547096",
+      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/93c05e45-9af0-46e1-963b-d925abcae3d5/Essential%20information.%20Key%20contacts%20and%20how%20to%20order%20dog%20food..pdf",
+      "title": "Essential information. Key contacts and how to order dog food.",
+      "labelId": "1750064150802",
+      "dateAdded": "2025-06-16T08:45:47.096Z",
       "domain": "guidedogs.kallidus-suite.com"
     },
     {
@@ -351,14 +359,6 @@
       "domain": "guidedogs.kallidus-suite.com"
     },
     {
-      "id": "1750063547096",
-      "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/93c05e45-9af0-46e1-963b-d925abcae3d5/Essential%20information.%20Key%20contacts%20and%20how%20to%20order%20dog%20food..pdf",
-      "title": "Essential information. Key contacts and how to order dog food.",
-      "labelId": "1750062281161",
-      "dateAdded": "2025-06-16T08:45:47.096Z",
-      "domain": "guidedogs.kallidus-suite.com"
-    },
-    {
       "id": "1750063615211",
       "url": "https://guidedogs.kallidus-suite.com/learn/content/singlefilecontent/a19f38c7-8443-46be-926d-6cb3c5e76d6e/BW.%20Foundation%20Knowledge,%20Understanding%20your%20puppy%20-%20the%20ladder%20of%20aggression%20and%20body%20language%20of%20fear%20in%20dogs.pdf",
       "title": "BW. Foundation Knowledge, Understanding your puppy the ladder of aggression and body language of fear in dogs",
@@ -435,6 +435,51 @@
       "text": "# Puppy Raising: Toileting Routine Guidance Summary\n\n## Goals\n* Develop a reliable toileting routine where puppy is clean in the house [[2]]\n* Teach puppy to respond to the \"busy-busy\" cue [[2]]\n* Train puppy to toilet on different surfaces (on and off lead) [[2]]\n* Establish a predictable routine where puppy doesn't toilet when socializing unless asked [[2]]\n\n## Why Important\n* Affects puppy's ability to concentrate and guide effectively [[3]]\n* Impacts matching process with potential guide dog owners [[3]]\n* Has practical and welfare implications [[3]]\n\n## Factors Affecting Toileting\n* Age, illness, diet changes, stress, exercise, weather, environment [[3-4]]\n* Individual preferences and developmental changes [[6]]\n\n## Teaching Process\n1. **Association**: Say \"busy-busy\" when puppy begins toileting naturally [[7]]\n2. **Timing**: Say \"busy-busy\" just before puppy toilets [[7]]\n3. **Response**: Puppy toilets in response to the cue [[8]]\n4. **Leash relieving**: Teaching puppy to toilet while on lead [[8]]\n5. **Progression**: Expanding to different locations and surfaces [[8-9]]\n\n## Tips for Success\n* Set puppy up for success with frequent opportunities [[4-5]]\n* Let puppy finish when accidents happen [[4-5]]\n* Take puppy out after waking, eating, playing or training [[5]]\n* Always supervise puppy in the garden [[5]]\n* Use a toileting chart to track progress [[6]]\n* Remember each puppy develops at their own pace [[7,9]]\n* Reward consistently for positive responses [[9]]",
       "dateAdded": "2025-06-15T07:24:39.952Z",
       "dateModified": "2025-06-15T07:24:39.952Z"
+    },
+    "pdf:1750064268694": {
+      "text": "# Visual Impairment Foundation Knowledge - Summary\n\n* This document provides overview information about visual impairments affecting guide dog partners \n\n* Five most common eye conditions in adults supported by guide dogs are:\n  - Age-related macular degeneration (AMD) \n  - Retinitis pigmentosa (RP) \n  - Glaucoma \n  - Diabetic retinopathy \n  - Cataracts \n\n* Visual information basics:\n  - Light enters through cornea and lens, projected onto retina, then to optic nerve \n  - Visual acuity refers to ability to see detail \n  - Visual field includes both central and peripheral vision \n\n* Common practical implications across conditions:\n  - Difficulty crossing roads and seeing traffic \n  - Problems recognizing and negotiating kerbs or street furniture \n  - Sensitivity to glare from sun and bright light \n  - Reduced ability to see low contrast objects \n  - May confuse harmless things with hazards \n\n* Each condition affects vision differently, impacting daily tasks like reading, recognizing faces, navigating environments, and performing personal care",
+      "dateAdded": "2025-06-17T07:42:48.949Z",
+      "dateModified": "2025-06-17T07:48:52.536Z"
+    },
+    "pdf:1750063809029": {
+      "text": "# Summary of the Four Principles Document\n\n* The document explains the \"PREP programme\" which provides guidance on applying four key principles to puppy raising \n\n* The four principles are: Know, Manage, Teach, and Partner \n\n* Under each principle, there are 4 key questions to ask yourself when handling real-life situations with your puppy \n\n* \"Know\" questions focus on understanding your puppy's health, development, needs, and body language \n\n* \"Manage\" questions address environmental management, prevention of unwanted behavior, and setting clear expectations \n\n* \"Teach\" questions help identify desired behaviors, promote them, and ensure proper reinforcement \n\n* \"Partner\" questions emphasize the relationship with your puppy, building trust, working together, and mutual enjoyment \n\n* The document emphasizes that puppies learn continuously throughout the day and even process information during sleep \n\n* The goal is to set up situations where the puppy can succeed and learn appropriate behaviors",
+      "dateAdded": "2025-06-17T07:45:46.789Z",
+      "dateModified": "2025-06-17T07:47:01.156Z"
+    },
+    "pdf:1750061342312": {
+      "text": "# Dog Health and Wellbeing - Summary\n\n## Physical Checks \n- Ensure dog is calm and ready before starting checks\n- Wash hands before and after\n- Start with eyes, then work from sensitive to less sensitive areas\n- Follow the checklist for examining different body parts (eyes, nose, ears, mouth, body, legs, etc.)\n- Use \"bucket game\" or \"chin rest\" techniques where trained\n\n## Grooming \n- Essential for comfort, hygiene and bonding\n- Introduce gradually after dog settles in home\n- Use only provided equipment\n- Stop if dog becomes distressed\n- Use fingertips to massage coat from tail to head against lay of coat\n- Use bristle brush with lay of coat to remove loose hair\n- Take extra care with long-haired breeds\n- Clean grooming equipment after each use\n\n## Bathing \n- Regular grooming is preferred over frequent bathing\n- Bathe only when necessary (e.g., rolled in something unpleasant)\n- Remove organic material before bathing\n- Use only dog-specific shampoos, never human shampoos\n- Rinse thoroughly until coat feels \"squeaky\" clean\n- Tip: use tomato ketchup before bathing to reduce fox poo smell",
+      "dateAdded": "2025-06-17T07:52:30.772Z",
+      "dateModified": "2025-06-17T07:52:30.772Z"
+    },
+    "pdf:1750063547096": {
+      "text": "# Puppy Raising Essential Information - Summary\n\n## Key Information\n* Document provides essential guidance for Guide Dogs puppy raisers \n* Covers 17 topics related to puppy raising responsibilities and best practices \n\n## Puppy Care & Health\n* Puppies need to be ordered through Crown Pet Foods (Royal Canin) \n* Dog Health and Wellbeing Index provides guidance on emergency care, common health problems, neutering, health checks, and feeding \n* Guide dog puppies are first and foremost dogs - they need training and puppy-proofing \n* Good hygiene measures are essential when handling puppies \n\n## Safety & Legal Requirements\n* Puppies must wear Guide Dogs ID disk in public places \n* Owners must clean up after their dogs - fines apply for non-compliance \n* Dogs must be kept under control - particularly near roads and livestock \n* Manual handling guidance provided for lifting puppies safely \n* Off-lead exercise requires permission from Puppy Development Advisor \n\n## Behaviour & Training\n* Dog handling observations are conducted to identify challenges \n* Puppies can cause damage - report immediately with photos \n* Supervise interactions between puppies and people, especially children \n* Report any aggressive incidents within 48 hours \n\n## Program Participation\n* Puppies can participate in fundraising events after 18 weeks old \n* Puppy Behaviour Questionnaire (PBQ) must be completed at 5, 8, and 12 months \n* Process outlined for puppies being considered for breeding program \n* Updates provided after puppy leaves for training or breeding \n* Some puppies may have career changes (buddy dogs, other assistance roles, or pets)",
+      "dateAdded": "2025-06-17T08:01:16.817Z",
+      "dateModified": "2025-06-17T08:01:16.817Z"
+    },
+    "pdf:1750063965161": {
+      "text": "# Understanding Your Puppy: Foundation Knowledge Summary\n\n## Knowing Your Puppy\n- Puppies are individuals with different personalities shaped by genetics and experiences \n- Breed can influence tendencies but doesn't directly predict temperament \n- Puppies go through developmental stages from birth through adolescence \n- During adolescence (6 months to 2 years), puppies may seem to \"forget\" training as their brain rewires \n\n## Managing for Success\n- Some behaviors are self-reinforcing (barking, chasing, chewing) and need management \n- Pay attention to subtle signs of discomfort to prevent escalation \n- Monitor dog-dog interactions carefully \n- Manage frustration when puppies can't access what they want \n\n## Teaching Foundations\n- Dogs learn through associations and consequences \n- Reinforcement strengthens behaviors; timing is critical\n- Use food rewards strategically from daily allowance \n- Fade out luring quickly to avoid dependence \n- Use marker training to communicate precisely \n- Focus on reinforcing desired behaviors rather than punishing unwanted ones\n- Consistent practice helps behaviors become habits \n- Use cues rather than commands, allowing puppies to make choices \n\n## Being a Partnership\n- Prevention is better than punishment, which can damage trust \n- Respond to your puppy's body language \n- Create distance from overwhelming situations \n- Be your puppy's \"safety net\" when they're uncertain \n- Build a positive \"life bank account\" of experiences to offset negative ones",
+      "dateAdded": "2025-06-17T08:07:17.800Z",
+      "dateModified": "2025-06-17T08:07:17.800Z"
+    },
+    "pdf:1750064532666": {
+      "text": "# Preparing for Your Guide Dog Puppy: Summary\n\n## Creating a Safe Environment\n- Puppy-proof your home by removing hazards like electrical wires, chewable objects, and chemicals\n- Use baby gates and pens to restrict puppy's movement within the house\n- Ensure at least two barriers prevent access to roads/highways (e.g., front door and garden gate)\n- Gardens must be secure with 4ft+ fencing and no escape routes\n\n## Sleeping Area\n- Provide a den-like environment for sleeping\n- Consider using a crate or pen initially\n- Ensure the area is draught-free, away from direct heat and household appliances\n- Crates should never be used as punishment\n\n## Garden Safety\n- Ensure garden is fully enclosed with secure fencing\n- Remove toxic plants and hazardous chemicals\n- Block access to ponds or streams\n- Always supervise puppy in the garden\n\n## Toileting\n- Puppies need frequent opportunities to toilet outside (every 20-30 minutes initially)\n- Concrete surfaces are preferred but other surfaces are acceptable\n- Consider sectioning off a specific toileting area\n\n## Car Travel\n- Puppies must be secured when traveling (crate, car harness, or behind dog guard)\n- Provide comfortable bedding for journeys\n- Never transport in convertibles with roof down or in footwells (except with special permission)\n\n## Equipment\n- Guide Dogs provides collar, leads, and car harness\n- Puppy raisers provide toys, chews, and food rewards\n- Avoid items that are small enough to swallow, sticks, tennis balls, rawhide, and peanut butter\n- Regularly check toys for damage and rotate them to prevent boredom\n\n## Children and Puppies\n- Always supervise children and puppies together\n- Teach children to respect the puppy's space, especially during eating or sleeping\n- No one under 18 can be responsible for a guide dog puppy\n- Follow specific guidelines for child-puppy interactions\n\n## Holidays\n- Try to plan major holidays before getting your puppy\n- Puppies can often accompany you on holidays within the UK\n- Guide Dogs can provide fosterers when you can't take your puppy\n- Share unavailable dates with your Puppy Development Advisor as early as possible\n\n## Going Out and About\n- Keep puppy home primarily during the first week\n- Initially carry puppies in environments where they can't walk due to vaccination status\n- Gradually teach puppies to be left alone (up to 3 hours maximum)\n- Only registered Guide Dogs volunteers aged 18+ can walk puppies outside the home",
+      "dateAdded": "2025-06-17T08:19:21.447Z",
+      "dateModified": "2025-06-17T08:19:21.447Z"
+    },
+    "pdf:1750064155490": {
+      "text": "# Guide Dogs Puppy Raising - Your First Week Summary\n\n**Overview:**\n- This guide covers the first week with your new puppy\n- Based on four principles: Knowing your puppy, Teaching foundations, Managing for success, Being a partnership\n\n**Feeding:**\n- Feed 4 times daily until puppy is 12 weeks old\n- Space meals evenly; no more than 12 hours between last and first feed\n- Feed in crate/pen/sleeping area to create positive associations\n- Order more food within first few days\n\n**Toilet Training:**\n- Take puppy out every 20-30 minutes initially\n- Always take out after waking, eating, playing, or training\n- Watch for signs: sniffing, circling, dipped posture, loss of interest in activities\n- Reward toileting in garden with treats/praise\n- Clean accidents thoroughly without scolding puppy\n- Use toileting chart to track patterns\n\n**Daytime Sleep:**\n- Puppies need 18-20 hours sleep daily\n- Place sleeping area in room where you spend most time\n- Consider multiple beds/crates in commonly used areas\n- Provide comfort items with familiar scent\n- Excessive mouthing/excitement often indicates tiredness\n\n**Overnight:**\n- Puppies typically need to toilet at least once overnight\n- Start bedtime routine 30 minutes before your normal bedtime\n- Choose between having puppy sleep in your room or separate room\n- If separate room, make it familiar by spending time there during the day\n- Don't leave puppy to cry - respond during pauses in vocalization\n- If distressed, move puppy closer to you temporarily\n\n**General Tips:**\n- Enjoy getting to know each other; stay close to home\n- Don't worry about teaching formal cues yet\n- Keep track of toileting patterns using the provided chart\n- Gradually build independence over time",
+      "dateAdded": "2025-06-17T08:24:05.463Z",
+      "dateModified": "2025-06-17T08:24:05.463Z"
+    },
+    "pdf:1749928489408": {
+      "text": "# T-Touch Harness Guide Summary\n\n**Purpose and Introduction:**\n- Some puppies benefit from wearing a harness based on PDA assessment\n- Proper introduction is crucial as discomfort with this harness may lead to issues with guiding harness later\n\n**Care and Maintenance:**\n- Made of nylon webbing with metal rings\n- Avoid salt water (causes rust)\n- Wash in hot soapy water, rinse, soak, and air dry\n- Replace if showing fraying, rips, rust, damaged clips or loose stitching\n\n**Fitting Instructions:**\n- Unclip straps, lay flat on floor\n- Have puppy sit or stand\n- Fasten neck clip, then torso clips\n- Ensure 1.5 inch gap between elbow and body strap\n- Clip lead to both front and back D-rings\n\n**Usage Guidelines:**\n- Only use Guide Dogs approved equipment\n- Don't wear t-touch and puppy jacket simultaneously\n- Remove when puppy is off-lead\n- Check size and condition regularly\n- The harness should follow the puppy to their next home/role\n\n**Training Note:**\n- Harness alone won't teach lead walking - follow Walking on Lead guidance",
+      "dateAdded": "2025-06-17T08:27:55.549Z",
+      "dateModified": "2025-06-17T08:27:55.549Z"
+    },
+    "pdf:1749928370296": {
+      "text": "# Mouthing in Puppies - Summary\n\n* Mouthing is when puppies take hold of skin and apply pressure - normal exploratory behavior but needs training\n* Common reasons for mouthing include play, attention-seeking, exploration, communication, and teething\n\n* Understanding why your puppy mouths is essential for addressing it effectively\n* Establish a consistent routine with adequate rest, sleep, exercise and mental stimulation\n\n* Common mouthing triggers:\n  * Over-tiredness (\"zoomies\")\n  * Being physically moved\n  * Equipment being put on\n  * During play with toys\n  * Meeting new people\n\n* Management strategies:\n  * Create safe spaces with puppy pens or baby gates\n  * Use food lures instead of physical handling\n  * Drop toys and pause play if mouthing occurs\n  * Keep interactions with new people brief\n  * Use Kongs and chews to encourage calm behavior\n\n* Never tell your puppy off for mouthing - this can make them worried or scared\n* If mouthing persists or increases, consult your Puppy Development Advisor",
+      "dateAdded": "2025-06-17T08:30:45.169Z",
+      "dateModified": "2025-06-17T08:30:45.169Z"
     }
   }
 }
