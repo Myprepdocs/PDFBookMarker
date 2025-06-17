@@ -1377,6 +1377,173 @@
                 box-shadow: var(--card-shadow) !important;
             }
         }
+		/* Progress Chart Specific Styles */
+		.progress-chart-section {
+			margin: 0;
+			background: rgba(255, 255, 255, 0.98);
+			border-top: 1px solid rgba(255, 255, 255, 0.3);
+		}
+
+		.progress-chart-section .control-panel {
+			margin: 20px;
+			text-align: center;
+			background: rgba(255, 255, 255, 0.95);
+			padding: 15px;
+			border-radius: 0.5rem;
+		}
+
+		.progress-chart-section .toggle-btn {
+			background: linear-gradient(135deg, #667eea, #764ba2);
+			border: none;
+			color: white;
+			border-radius: 0.5rem;
+			padding: 0.75rem 1.5rem;
+			font-weight: 600;
+			transition: all 0.3s ease;
+			font-size: 1rem;
+			cursor: pointer;
+			box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+		}
+
+		.progress-chart-section .toggle-btn:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+		}
+
+		.progress-chart-section .header {
+			background: white;
+			color: black;
+			padding: 20px;
+			text-align: left;
+			border-radius: 8px 8px 0 0;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+		}
+
+		.progress-chart-section .header h2 {
+			margin: 0;
+			font-size: 1.5em;
+			font-weight: 600;
+			color: #374151;
+		}
+
+		.progress-chart-section .header p {
+			margin: 10px 0 0 0;
+			font-size: 1em;
+			color: #6b7280;
+		}
+
+		.progress-chart-section .timeline-header {
+			background: #f8f9fa;
+			padding: 15px;
+			display: grid;
+			grid-template-columns: 180px 1fr 1fr 1fr 1fr;
+			gap: 2px;
+			font-weight: bold;
+			text-align: center;
+		}
+
+		.progress-chart-section .timeline-header div:first-child {
+			background: transparent;
+		}
+
+		.progress-chart-section .timeline-header div:not(:first-child) {
+			background: white;
+			padding: 10px;
+			border-radius: 4px;
+		}
+
+		.progress-chart-section .behavior-row {
+			display: grid;
+			grid-template-columns: 180px 1fr 1fr 1fr 1fr;
+			gap: 2px;
+			background: #e5e7eb;
+			margin-bottom: 10px;
+		}
+
+		.progress-chart-section .behavior-cell {
+			background: white;
+			padding: 15px;
+			min-height: 100px;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+
+		.progress-chart-section .behavior-category {
+			background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+			color: white;
+			font-weight: bold;
+			font-size: 1.1em;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			text-align: center;
+		}
+
+		.progress-chart-section .e-learning-btn {
+			background: #1e40af;
+			color: white;
+			border: none;
+			padding: 8px 16px;
+			border-radius: 20px;
+			font-size: 12px;
+			margin-top: 10px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.progress-chart-section .e-learning-btn:hover {
+			background: #1e3a8a;
+			transform: scale(1.05);
+		}
+
+		.progress-chart-section .milestone-text {
+			font-size: 14px;
+			line-height: 1.4;
+			text-align: left;
+		}
+
+		.progress-chart-section .table-container {
+			transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out;
+			overflow: hidden;
+			border-radius: 0 0 8px 8px;
+			box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+			margin: 0 20px 20px 20px;
+		}
+
+		.progress-chart-section .table-container.collapsed {
+			max-height: 0;
+			opacity: 0;
+		}
+
+		.progress-chart-section .table-container.expanded {
+			max-height: none;
+			opacity: 1;
+		}
+
+		/* Mobile responsive adjustments for progress chart */
+		@media (max-width: 768px) {
+			.progress-chart-section .timeline-header,
+			.progress-chart-section .behavior-row {
+				grid-template-columns: 1fr;
+				gap: 1px;
+			}
+			
+			.progress-chart-section .behavior-cell {
+				min-height: auto;
+				padding: 10px;
+			}
+			
+			.progress-chart-section .behavior-category {
+				font-size: 1em;
+				padding: 15px;
+			}
+			
+			.progress-chart-section .milestone-text {
+				font-size: 13px;
+			}
+		}
     </style>
 </head>
 <body>
@@ -1446,6 +1613,228 @@
                 
                 <input type="file" id="notesImportFile" accept=".json" style="display: none;">
             </div>
+
+			<!-- Progress Chart Section -->
+			<div class="progress-chart-section" id="progressChartSection">
+				<div class="control-panel">
+					<button class="toggle-btn" id="progressToggleBtn" onclick="toggleProgressChart()">📊 Expand Progress Chart</button>
+				</div>
+
+				<div class="table-container collapsed" id="progressTableContainer">
+					<div class="header">
+						<h2>Puppy Progression Chart</h2>
+						<p>Use this chart with five columns and ten rows to track your guide dog puppy's progress from 12 weeks to 12 months.</p>
+					</div>
+					
+					<div class="timeline-header">
+						<div></div>
+						<div>12 weeks</div>
+						<div></div>
+						<div></div>
+						<div>12 months</div>
+					</div>
+
+					<!-- Row 1: Toileting routine -->
+					<div class="behavior-row">
+						<div class="behavior-cell behavior-category">
+							Toileting routine
+							<button class="e-learning-btn" onclick="handleELearning('toileting')">Link</button>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I know my toileting area and ask to use it.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am clean in the house and overnight with management. I show no interest in eating my own or other dog's faeces.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I reliably respond to the 'busy, busy' cue and consistently use my toileting area at home. I show no interest in eating dogs faeces.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am clean in the house and comfortable relieving at my home. I have a predictable routine where I do not toilet when on lead without indicating or when asked to so by the handler. I am comfortable relieving myself on different surfaces. I am not interested in eating dog faeces.</div>
+						</div>
+					</div>
+
+					<!-- Row 2: Learning to play -->
+					<div class="behavior-row">
+						<div class="behavior-cell behavior-category">
+							Learning to play
+							<button class="e-learning-btn" onclick="handleELearning('play')">Link</button>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I generally understand what is mine and what is yours.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am learning to play with toys without mouthing or jumping up and I have begun to swap items when asked.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I reliably swap items when asked. I play with toys without mouthing.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I consistently play without mouthing and I will swap my toys for another object when asked.</div>
+						</div>
+					</div>
+
+					<!-- Row 3: Greeting people -->
+					<div class="behavior-row">
+						<div class="behavior-cell behavior-category">
+							Greeting people
+							<button class="e-learning-btn" onclick="handleELearning('greeting')">Link</button>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am settling well in the company of people I know.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I have calmly met a range of unfamiliar people including children.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I greet people, including children, without jumping up on most occasions.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I greet people without jumping up on the majority of occasions. After greeting I consistently settle in the presence of visitors, with occasional reinforcement or management.</div>
+						</div>
+					</div>
+
+					<!-- Row 4: Learning manners -->
+					<div class="behavior-row">
+						<div class="behavior-cell behavior-category">
+							Learning manners
+							<button class="e-learning-btn" onclick="handleELearning('manners')">Link</button>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I know my name. I understand how to sit when using a lure. I am learning to take food politely.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I have started to introduce the word 'sit' and 'down' when the behaviour is reliable, using a lure as required.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I respond to the word sit, down, stand without a lure, in most situations. I consistently take food politely.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I respond to my name, 'sit', 'down', and 'stand' when asked.</div>
+						</div>
+					</div>
+
+					<!-- Row 5: Travel and transport -->
+					<div class="behavior-row">
+						<div class="behavior-cell behavior-category">
+							Travel and transport
+							<button class="e-learning-btn" onclick="handleELearning('transport')">Link</button>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am comfortable on a car journey up to 15 mins. I am keen to approach the car.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I do not attempt to jump out of a car when the door is opened and continue to build up the duration of journeys.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am comfortable on car journeys of up to 30 mins. I have had the opportunity to experience public transport (e.g. buses, trains).</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am comfortable to get in the car and travel for up to 45 mins. I have had opportunities to get used to public transport. I am relaxed and comfortable travelling on one form of public transport.</div>
+						</div>
+					</div>
+
+					<!-- Row 6: Walking on a lead -->
+					<div class="behavior-row">
+						<div class="behavior-cell behavior-category">
+							Walking on a lead
+							<button class="e-learning-btn" onclick="handleELearning('walking')">Link</button>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am comfortable having my collar and lead put on and taken off and do not back away. I have started to learn to walk on the lead at home.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am walking for longer distances at home and in the garden on lead. I have started going on short walks in quiet areas.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am walking on lead in lots of different places and can manage my excitement around distractions most of the time. I continue moving with my handler unless indicating a need to toilet.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am walking on lead in lots of different places and can manage my excitement around distractions most of the time. I require less input to stay focused and continue moving with my handler unless indicating a need to toilet.</div>
+						</div>
+					</div>
+
+					<!-- Row 7: Recall and off lead exercise -->
+					<div class="behavior-row">
+						<div class="behavior-cell behavior-category">
+							Recall and off lead exercise
+							<button class="e-learning-btn" onclick="handleELearning('recall')">Link</button>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I know my name.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I know the recall cue and I will come to you in the house and garden when utilised at least 90% of the time.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I reliably return to you in response to recall cue when off lead in an area with few distractions.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I have demonstrated the ability to consistently recall at a safe speed, making contact with a hand touch out to the side of the handler and without jumping up. I may require encouragement in higher distraction areas. I will remain with handler until released. I will recall away from other dogs in most situations, with reinforcement.</div>
+						</div>
+					</div>
+
+					<!-- Row 8: Handling, grooming and equipment -->
+					<div class="behavior-row">
+						<div class="behavior-cell behavior-category">
+							Handling, grooming and equipment
+							<button class="e-learning-btn" onclick="handleELearning('handling')">Link</button>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am happy to be gently lifted, carried and touched all over my body. I am being introduced to equipment without backing away.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am happy for you to check my eyes, ears and feet. I enjoy short grooming sessions with a brush. I have visited the vets.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am happy for a full body check including by the vet. I remain comfortable standing for grooming sessions up to 10 minutes and being towel dried.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am comfortable entering and having a full body check at the vets. I remain still and comfortable being groomed. I am comfortable wearing Guide Dogs equipment.</div>
+						</div>
+					</div>
+
+					<!-- Row 9: Being out and about -->
+					<div class="behavior-row">
+						<div class="behavior-cell behavior-category">
+							Being out and about
+							<button class="e-learning-btn" onclick="handleELearning('outdoors')">Link</button>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am relaxed interacting with any other animals that live in my home. I have experienced a range of sights and sounds at home.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I happily interact with any other animals at home. I can move away from distractions with help from my handler. I am comfortable around loud noises.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I politely interact with other dogs when on and off lead and can be lured away from interactions. I can pass people and animals with encouragement from my handler.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I can walk past food, people (including joggers), bikes, dogs or other animals, while on a lead, without avoiding or lunging in most situations. I politely interact with other dogs when on lead when given the opportunity and will move away when asked. I am comfortable in lots of different places and with sights and sounds of daily life.</div>
+						</div>
+					</div>
+
+					<!-- Row 10: Social behaviours and settling on a lead -->
+					<div class="behavior-row">
+						<div class="behavior-cell behavior-category">
+							Social behaviours and settling on a lead
+							<button class="e-learning-btn" onclick="handleELearning('social')">Link</button>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I have a routine and I am comfortable settling overnight. I am building my confidence being on my own for short periods in the day with items that help me do so. I am being introduced to tools to help me settle.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am learning how to settle on lead in appropriate environments. I continue to be comfortable settling overnight on my own. I can entertain myself whilst my handler completes daily tasks. I can be left for short periods in the daytime.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am practising self settling quietly for longer periods in more places with less help. I am being left for longer periods of time regularly on my own at home with less restrictions without getting into mischief.</div>
+						</div>
+						<div class="behavior-cell">
+							<div class="milestone-text">I am comfortable settling quietly in familiar social situations with minimal input. I am calm and self-controlled around food, only chewing and playing with items I've been given, and not jumping up or stealing items. I have demonstrated I am able to be left alone, for periods of 1 to 3 hours without the need for a closed crate.</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
             <!-- Content Section -->
             <div class="content-section">
@@ -2037,6 +2426,12 @@ You can use **Markdown** formatting:
                         <i class="bi bi-journal-text me-2"></i>
                         <strong>Notes Backup:</strong> Use "Save Notes" regularly to backup your personal notes. The main collection (PDFs, videos, summaries, labels) is managed centrally and updates automatically.
                     </div>
+					<div class="alert alert-primary mt-3">
+						<i class="bi bi-graph-up me-2"></i>
+						<strong>Progress Chart:</strong> The collapsible Progress Chart helps you track your guide dog puppy's development across 10 key behavior areas from 12 weeks to 12 months. Click the expand button to view detailed milestones and access e-learning resources!
+					</div>					
+					
+					
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it!</button>
@@ -2060,6 +2455,41 @@ You can use **Markdown** formatting:
     <script>
         // PDF.js worker setup
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+		
+		// Progress Chart Functions (from basicprog.html)
+			function toggleProgressChart() {
+				const container = document.getElementById('progressTableContainer');
+				const button = document.getElementById('progressToggleBtn');
+				
+				if (container.classList.contains('collapsed')) {
+					container.classList.remove('collapsed');
+					container.classList.add('expanded');
+					button.textContent = '📊 Collapse Progress Chart';
+				} else {
+					container.classList.remove('expanded');
+					container.classList.add('collapsed');
+					button.textContent = '📊 Expand Progress Chart';
+				}
+			}
+
+			// Handle e-learning link clicks
+			function handleELearning(topic) {
+				alert(`E-learning module for "${topic}" would open here. This is a placeholder for the actual e-learning integration.`);
+			}
+
+			// Enhanced visual effects for e-learning buttons
+			document.addEventListener('DOMContentLoaded', function() {
+				const elearningBtns = document.querySelectorAll('.e-learning-btn');
+				elearningBtns.forEach(btn => {
+					btn.addEventListener('mouseenter', function() {
+						this.style.transform = 'scale(1.1)';
+					});
+					
+					btn.addEventListener('mouseleave', function() {
+						this.style.transform = 'scale(1)';
+					});
+				});
+			});
 
         class PDFCompanion {
             constructor() {
