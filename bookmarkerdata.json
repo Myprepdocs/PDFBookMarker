@@ -1,10 +1,10 @@
 {
-  "version": "5.3",
-  "exportDate": "2025-06-17T08:30:56.489Z",
+  "version": "5.4",
+  "exportDate": "2025-06-17T10:10:18.647Z",
   "totalPdfs": 46,
   "totalVideos": 1,
   "totalLabels": 6,
-  "totalSummaries": 11,
+  "totalSummaries": 14,
   "collection": [
     {
       "id": "1750064532666",
@@ -427,9 +427,9 @@
   ],
   "summaries": {
     "pdf:1749923372978": {
-      "text": "# Puppy Progression Chart Summary\n\n- The document is a Guide Dogs puppy progression chart that tracks development from 12 weeks to 12 months [[1]][[2]]\n- The chart is organized in 10 key training areas with proficiency levels [[1]][[2]][[3]][[4]]\n- Key training areas include:\n  * Toileting routine [[1]]\n  * Learning to play [[1]]\n  * Greeting people [[1]]\n  * Learning manners [[2]]\n  * Travel and transport [[2]]\n  * Walking on a lead [[2]]\n  * Recall and off-lead exercise [[3]]\n  * Handling, grooming and equipment [[3]]\n  * Being out and about [[4]]\n  * Social behaviors and settling on a lead [[4]]\n\n- Each training area has specific milestones to achieve [[1]][[2]][[3]][[4]]\n- The document includes useful definitions of terms like \"comfortable\" and \"uncomfortable\" behaviors [[5]]\n- A cue list is provided with common commands used in training [[5]]\n- Supporting documents are available for specific training challenges like mouthing, adolescence, and stairs [[6]]\n- The document is linked to e-learning modules in Kallidus that can be downloaded as PDFs [[1]]",
+      "text": "# Puppy Progression Chart Summary\n\n* A tracking tool to monitor guide dog puppy development from 12 weeks to 12 months\n* Includes e-learning modules available on Kallidus with downloadable PDF guidance\n\n## Key Development Areas:\n* **Toileting routine** - From learning designated areas to reliable response to cues\n* **Learning to play** - Developing appropriate play without mouthing and learning to swap items\n* **Greeting people** - Progressing from settling with familiar people to greeting without jumping up\n* **Learning manners** - Following basic commands like sit, down, and stand\n* **Travel and transport** - Building comfort with car journeys and public transport\n* **Walking on lead** - Developing from basic lead acceptance to walking in various environments\n* **Recall and off-lead exercise** - Progressing from name recognition to reliable recall\n* **Handling, grooming and equipment** - Accepting physical handling and veterinary checks\n* **Being out and about** - Interacting appropriately with other animals and handling distractions\n* **Social behaviors and settling** - Learning to settle alone and in various environments\n\n## Additional Resources:\n* Useful definitions of terms like \"comfortable\" vs \"uncomfortable\" body language\n* Common cues used in training (sit, touch, busy busy, etc.)\n* Supporting documents on specific topics like mouthing, adolescence, and navigating stairs",
       "dateAdded": "2025-06-15T07:16:14.698Z",
-      "dateModified": "2025-06-15T07:22:06.800Z"
+      "dateModified": "2025-06-17T10:09:55.007Z"
     },
     "pdf:1749923219404": {
       "text": "# Puppy Raising: Toileting Routine Guidance Summary\n\n## Goals\n* Develop a reliable toileting routine where puppy is clean in the house [[2]]\n* Teach puppy to respond to the \"busy-busy\" cue [[2]]\n* Train puppy to toilet on different surfaces (on and off lead) [[2]]\n* Establish a predictable routine where puppy doesn't toilet when socializing unless asked [[2]]\n\n## Why Important\n* Affects puppy's ability to concentrate and guide effectively [[3]]\n* Impacts matching process with potential guide dog owners [[3]]\n* Has practical and welfare implications [[3]]\n\n## Factors Affecting Toileting\n* Age, illness, diet changes, stress, exercise, weather, environment [[3-4]]\n* Individual preferences and developmental changes [[6]]\n\n## Teaching Process\n1. **Association**: Say \"busy-busy\" when puppy begins toileting naturally [[7]]\n2. **Timing**: Say \"busy-busy\" just before puppy toilets [[7]]\n3. **Response**: Puppy toilets in response to the cue [[8]]\n4. **Leash relieving**: Teaching puppy to toilet while on lead [[8]]\n5. **Progression**: Expanding to different locations and surfaces [[8-9]]\n\n## Tips for Success\n* Set puppy up for success with frequent opportunities [[4-5]]\n* Let puppy finish when accidents happen [[4-5]]\n* Take puppy out after waking, eating, playing or training [[5]]\n* Always supervise puppy in the garden [[5]]\n* Use a toileting chart to track progress [[6]]\n* Remember each puppy develops at their own pace [[7,9]]\n* Reward consistently for positive responses [[9]]",
@@ -480,6 +480,21 @@
       "text": "# Mouthing in Puppies - Summary\n\n* Mouthing is when puppies take hold of skin and apply pressure - normal exploratory behavior but needs training\n* Common reasons for mouthing include play, attention-seeking, exploration, communication, and teething\n\n* Understanding why your puppy mouths is essential for addressing it effectively\n* Establish a consistent routine with adequate rest, sleep, exercise and mental stimulation\n\n* Common mouthing triggers:\n  * Over-tiredness (\"zoomies\")\n  * Being physically moved\n  * Equipment being put on\n  * During play with toys\n  * Meeting new people\n\n* Management strategies:\n  * Create safe spaces with puppy pens or baby gates\n  * Use food lures instead of physical handling\n  * Drop toys and pause play if mouthing occurs\n  * Keep interactions with new people brief\n  * Use Kongs and chews to encourage calm behavior\n\n* Never tell your puppy off for mouthing - this can make them worried or scared\n* If mouthing persists or increases, consult your Puppy Development Advisor",
       "dateAdded": "2025-06-17T08:30:45.169Z",
       "dateModified": "2025-06-17T08:30:45.169Z"
+    },
+    "pdf:1749928456179": {
+      "text": "# Guide Dogs Puppy Raising: Observing Traffic\n\n## Why It Matters\n- Helps puppies become relaxed around traffic and transport\n- Prepares them for accompanying their future partners in various environments\n\n## Key Approaches\n- Start with home exposure to traffic sounds\n- Begin with quiet roads before progressing to busier ones\n- Keep distance from traffic initially\n- Allow the puppy to set their own pace\n\n## Teaching Process\n- Stage 1: Create positive associations while watching traffic from a safe distance\n- Stage 2: Walk down roads keeping closer to buildings than traffic\n- Let puppies observe and sniff at their comfort level\n- Gradually decrease distance to traffic as comfort increases\n\n## Tips for Success\n- Monitor for signs of discomfort (lip licking, yawning, ears back)\n- Don't rush the process\n- Pair unexpected loud sounds with rewards\n- Give regular breaks for play and learning consolidation",
+      "dateAdded": "2025-06-17T09:59:56.735Z",
+      "dateModified": "2025-06-17T09:59:56.735Z"
+    },
+    "pdf:1749928629360": {
+      "text": "# Puppy Raising: Stairs and Steps - Summary\n\n* Puppies under three months old should not use stairs and should be carried up and down\n* After three months, provide managed access to stairs to minimize falling risk\n* Start with a few easy, non-slip stairs in familiar environments\n* Allow puppies to investigate stairs at their own pace\n* Reward puppies on each step initially to encourage slow, steady movement\n* Gradually reduce rewards to only after completing the set of stairs\n* As puppies grow, introduce different types of stairs (carpeted, glass, open-backed)\n* Practice stopping on steps to build confidence and prevent rushing\n* Don't lure puppies with food or voice as this can cause conflict\n* Be prepared to carry younger puppies if stairs are too challenging when out\n* Using stairs helps develop a puppy's sense of body movement (proprioception)\n* Limit frequent stair use for young puppies, even as they become more familiar with stairs",
+      "dateAdded": "2025-06-17T10:02:25.511Z",
+      "dateModified": "2025-06-17T10:02:25.511Z"
+    },
+    "pdf:1749928422127": {
+      "text": "# Whistle Association - Summary\n\n* The exercise teaches puppies to associate whistle sounds with coming to the handler for rewards\n* Whistle training is important as some guide dog owners find it easier than voice commands outdoors\n* Most puppies are naturally curious about whistle sounds though some may be sensitive to loud noises\n* Training typically begins at feeding time to create positive associations\n* The process involves:\n  - Having the whistle ready when bringing puppy to feeding area\n  - Waiting for the puppy to be calm with all paws on floor\n  - Giving 3 short pips on the whistle\n  - Immediately providing food bowl or reward\n* Can also be done in separate sessions using high-value toys or treats\n* The goal is to build a strong response so puppy comes when hearing 3 short pips regardless of location\n* Puppy Development Advisor (PDA) will provide guidance on when to introduce whistle training\n* The whistle should become part of the everyday feeding routine\n* This training helps future guide dog partners be confident with their dog off-lead",
+      "dateAdded": "2025-06-17T10:04:50.810Z",
+      "dateModified": "2025-06-17T10:04:50.810Z"
     }
   }
 }
