@@ -1,0 +1,1154 @@
+<!-- Progress Chart Embed - to be included in main app -->
+<div class="progress-chart-section" id="progressChartSection">
+    <div class="control-panel">
+        <button class="toggle-btn" id="progressToggleBtn" onclick="toggleProgressChart()">Expand Progress Chart</button>
+    </div>
+
+    <div class="table-container collapsed" id="progressTableContainer">
+        <div class="header">
+            <h2>Puppy Progression Chart</h2>
+            <p>Use this chart with five columns and ten rows to track your guide dog puppy's progress from 12 weeks to 12 months.</p>
+        </div>
+        
+        <div class="timeline-header">
+            <div></div>
+            <div>12 weeks</div>
+            <div></div>
+            <div></div>
+            <div>12 months</div>
+        </div>
+
+        <!-- Row 1: Toileting routine -->
+        <div class="behavior-row">
+            <div class="behavior-cell behavior-category">
+                Toileting routine
+                <button class="e-learning-btn" onclick="handleELearning('toileting')">Link</button>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I know my toileting area and ask to use it.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am clean in the house and overnight with management. I show no interest in eating my own or other dog's faeces.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I reliably respond to the 'busy, busy' cue and consistently use my toileting area at home. I show no interest in eating dogs faeces.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am clean in the house and comfortable relieving at my home. I have a predictable routine where I do not toilet when on lead without indicating or when asked to so by the handler. I am comfortable relieving myself on different surfaces. I am not interested in eating dog faeces.</div>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <div class="input-cell input-category">Progress</div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="toileting_woi_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="toileting_woi_1">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="toileting_prof_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="toileting_prof_1">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="toileting_notes_1">Notes:</label>
+                    <textarea id="toileting_notes_1" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="toileting_woi_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="toileting_woi_2">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="toileting_prof_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="toileting_prof_2">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="toileting_notes_2">Notes:</label>
+                    <textarea id="toileting_notes_2" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="toileting_woi_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="toileting_woi_3">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="toileting_prof_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="toileting_prof_3">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="toileting_notes_3">Notes:</label>
+                    <textarea id="toileting_notes_3" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="toileting_woi_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="toileting_woi_4">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="toileting_prof_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="toileting_prof_4">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="toileting_notes_4">Notes:</label>
+                    <textarea id="toileting_notes_4" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2: Learning to play -->
+        <div class="behavior-row">
+            <div class="behavior-cell behavior-category">
+                Learning to play
+                <button class="e-learning-btn" onclick="handleELearning('play')">Link</button>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I generally understand what is mine and what is yours.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am learning to play with toys without mouthing or jumping up and I have begun to swap items when asked.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I reliably swap items when asked. I play with toys without mouthing.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I consistently play without mouthing and I will swap my toys for another object when asked.</div>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <div class="input-cell input-category">Progress</div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="play_woi_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="play_woi_1">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="play_prof_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="play_prof_1">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="play_notes_1">Notes:</label>
+                    <textarea id="play_notes_1" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="play_woi_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="play_woi_2">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="play_prof_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="play_prof_2">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="play_notes_2">Notes:</label>
+                    <textarea id="play_notes_2" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="play_woi_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="play_woi_3">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="play_prof_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="play_prof_3">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="play_notes_3">Notes:</label>
+                    <textarea id="play_notes_3" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="play_woi_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="play_woi_4">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="play_prof_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="play_prof_4">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="play_notes_4">Notes:</label>
+                    <textarea id="play_notes_4" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 3: Greeting people -->
+        <div class="behavior-row">
+            <div class="behavior-cell behavior-category">
+                Greeting people
+                <button class="e-learning-btn" onclick="handleELearning('greeting')">Link</button>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am settling well in the company of people I know.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I have calmly met a range of unfamiliar people including children.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I greet people, including children, without jumping up on most occasions.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I greet people without jumping up on the majority of occasions. After greeting I consistently settle in the presence of visitors, with occasional reinforcement or management.</div>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <div class="input-cell input-category">Progress</div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="greeting_woi_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="greeting_woi_1">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="greeting_prof_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="greeting_prof_1">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="greeting_notes_1">Notes:</label>
+                    <textarea id="greeting_notes_1" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="greeting_woi_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="greeting_woi_2">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="greeting_prof_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="greeting_prof_2">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="greeting_notes_2">Notes:</label>
+                    <textarea id="greeting_notes_2" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="greeting_woi_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="greeting_woi_3">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="greeting_prof_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="greeting_prof_3">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="greeting_notes_3">Notes:</label>
+                    <textarea id="greeting_notes_3" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="greeting_woi_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="greeting_woi_4">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="greeting_prof_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="greeting_prof_4">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="greeting_notes_4">Notes:</label>
+                    <textarea id="greeting_notes_4" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 4: Learning manners -->
+        <div class="behavior-row">
+            <div class="behavior-cell behavior-category">
+                Learning manners
+                <button class="e-learning-btn" onclick="handleELearning('manners')">Link</button>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I know my name. I understand how to sit when using a lure. I am learning to take food politely.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I have started to introduce the word 'sit' and 'down' when the behaviour is reliable, using a lure as required.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I respond to the word sit, down, stand without a lure, in most situations. I consistently take food politely.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I respond to my name, 'sit', 'down', and 'stand' when asked.</div>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <div class="input-cell input-category">Progress</div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="manners_woi_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="manners_woi_1">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="manners_prof_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="manners_prof_1">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="manners_notes_1">Notes:</label>
+                    <textarea id="manners_notes_1" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="manners_woi_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="manners_woi_2">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="manners_prof_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="manners_prof_2">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="manners_notes_2">Notes:</label>
+                    <textarea id="manners_notes_2" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="manners_woi_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="manners_woi_3">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="manners_prof_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="manners_prof_3">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="manners_notes_3">Notes:</label>
+                    <textarea id="manners_notes_3" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="manners_woi_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="manners_woi_4">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="manners_prof_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="manners_prof_4">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="manners_notes_4">Notes:</label>
+                    <textarea id="manners_notes_4" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 5: Travel and transport -->
+        <div class="behavior-row">
+            <div class="behavior-cell behavior-category">
+                Travel and transport
+                <button class="e-learning-btn" onclick="handleELearning('transport')">Link</button>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am comfortable on a car journey up to 15 mins. I am keen to approach the car.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I do not attempt to jump out of a car when the door is opened and continue to build up the duration of journeys.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am comfortable on car journeys of up to 30 mins. I have had the opportunity to experience public transport (e.g. buses, trains).</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am comfortable to get in the car and travel for up to 45 mins. I have had opportunities to get used to public transport. I am relaxed and comfortable travelling on one form of public transport.</div>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <div class="input-cell input-category">Progress</div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="transport_woi_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="transport_woi_1">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="transport_prof_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="transport_prof_1">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="transport_notes_1">Notes:</label>
+                    <textarea id="transport_notes_1" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="transport_woi_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="transport_woi_2">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="transport_prof_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="transport_prof_2">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="transport_notes_2">Notes:</label>
+                    <textarea id="transport_notes_2" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="transport_woi_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="transport_woi_3">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="transport_prof_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="transport_prof_3">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="transport_notes_3">Notes:</label>
+                    <textarea id="transport_notes_3" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="transport_woi_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="transport_woi_4">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="transport_prof_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="transport_prof_4">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="transport_notes_4">Notes:</label>
+                    <textarea id="transport_notes_4" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 6: Walking on a lead -->
+        <div class="behavior-row">
+            <div class="behavior-cell behavior-category">
+                Walking on a lead
+                <button class="e-learning-btn" onclick="handleELearning('walking')">Link</button>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am comfortable having my collar and lead put on and taken off and do not back away. I have started to learn to walk on the lead at home.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am walking for longer distances at home and in the garden on lead. I have started going on short walks in quiet areas.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am walking on lead in lots of different places and can manage my excitement around distractions most of the time. I continue moving with my handler unless indicating a need to toilet.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am walking on lead in lots of different places and can manage my excitement around distractions most of the time. I require less input to stay focused and continue moving with my handler unless indicating a need to toilet.</div>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <div class="input-cell input-category">Progress</div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="walking_woi_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="walking_woi_1">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="walking_prof_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="walking_prof_1">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="walking_notes_1">Notes:</label>
+                    <textarea id="walking_notes_1" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="walking_woi_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="walking_woi_2">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="walking_prof_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="walking_prof_2">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="walking_notes_2">Notes:</label>
+                    <textarea id="walking_notes_2" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="walking_woi_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="walking_woi_3">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="walking_prof_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="walking_prof_3">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="walking_notes_3">Notes:</label>
+                    <textarea id="walking_notes_3" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="walking_woi_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="walking_woi_4">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="walking_prof_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="walking_prof_4">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="walking_notes_4">Notes:</label>
+                    <textarea id="walking_notes_4" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 7: Recall and off lead exercise -->
+        <div class="behavior-row">
+            <div class="behavior-cell behavior-category">
+                Recall and off lead exercise
+                <button class="e-learning-btn" onclick="handleELearning('recall')">Link</button>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I know my name.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I know the recall cue and I will come to you in the house and garden when utilised at least 90% of the time.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I reliably return to you in response to recall cue when off lead in an area with few distractions.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I have demonstrated the ability to consistently recall at a safe speed, making contact with a hand touch out to the side of the handler and without jumping up. I may require encouragement in higher distraction areas. I will remain with handler until released. I will recall away from other dogs in most situations, with reinforcement.</div>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <div class="input-cell input-category">Progress</div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="recall_woi_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="recall_woi_1">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="recall_prof_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="recall_prof_1">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="recall_notes_1">Notes:</label>
+                    <textarea id="recall_notes_1" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="recall_woi_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="recall_woi_2">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="recall_prof_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="recall_prof_2">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="recall_notes_2">Notes:</label>
+                    <textarea id="recall_notes_2" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="recall_woi_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="recall_woi_3">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="recall_prof_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="recall_prof_3">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="recall_notes_3">Notes:</label>
+                    <textarea id="recall_notes_3" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="recall_woi_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="recall_woi_4">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="recall_prof_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="recall_prof_4">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="recall_notes_4">Notes:</label>
+                    <textarea id="recall_notes_4" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 8: Handling, grooming and equipment -->
+        <div class="behavior-row">
+            <div class="behavior-cell behavior-category">
+                Handling, grooming and equipment
+                <button class="e-learning-btn" onclick="handleELearning('handling')">Link</button>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am happy to be gently lifted, carried and touched all over my body. I am being introduced to equipment without backing away.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am happy for you to check my eyes, ears and feet. I enjoy short grooming sessions with a brush. I have visited the vets.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am happy for a full body check including by the vet. I remain comfortable standing for grooming sessions up to 10 minutes and being towel dried.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am comfortable entering and having a full body check at the vets. I remain still and comfortable being groomed. I am comfortable wearing Guide Dogs equipment.</div>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <div class="input-cell input-category">Progress</div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="handling_woi_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="handling_woi_1">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="handling_prof_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="handling_prof_1">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="handling_notes_1">Notes:</label>
+                    <textarea id="handling_notes_1" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="handling_woi_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="handling_woi_2">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="handling_prof_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="handling_prof_2">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="handling_notes_2">Notes:</label>
+                    <textarea id="handling_notes_2" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="handling_woi_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="handling_woi_3">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="handling_prof_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="handling_prof_3">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="handling_notes_3">Notes:</label>
+                    <textarea id="handling_notes_3" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="handling_woi_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="handling_woi_4">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="handling_prof_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="handling_prof_4">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="handling_notes_4">Notes:</label>
+                    <textarea id="handling_notes_4" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 9: Being out and about -->
+        <div class="behavior-row">
+            <div class="behavior-cell behavior-category">
+                Being out and about
+                <button class="e-learning-btn" onclick="handleELearning('outdoors')">Link</button>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am relaxed interacting with any other animals that live in my home. I have experienced a range of sights and sounds at home.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I happily interact with any other animals at home. I can move away from distractions with help from my handler. I am comfortable around loud noises.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I politely interact with other dogs when on and off lead and can be lured away from interactions. I can pass people and animals with encouragement from my handler.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I can walk past food, people (including joggers), bikes, dogs or other animals, while on a lead, without avoiding or lunging in most situations. I politely interact with other dogs when on lead when given the opportunity and will move away when asked. I am comfortable in lots of different places and with sights and sounds of daily life.</div>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <div class="input-cell input-category">Progress</div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="outdoors_woi_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="outdoors_woi_1">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="outdoors_prof_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="outdoors_prof_1">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="outdoors_notes_1">Notes:</label>
+                    <textarea id="outdoors_notes_1" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="outdoors_woi_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="outdoors_woi_2">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="outdoors_prof_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="outdoors_prof_2">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="outdoors_notes_2">Notes:</label>
+                    <textarea id="outdoors_notes_2" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="outdoors_woi_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="outdoors_woi_3">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="outdoors_prof_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="outdoors_prof_3">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="outdoors_notes_3">Notes:</label>
+                    <textarea id="outdoors_notes_3" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="outdoors_woi_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="outdoors_woi_4">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="outdoors_prof_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="outdoors_prof_4">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="outdoors_notes_4">Notes:</label>
+                    <textarea id="outdoors_notes_4" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 10: Social behaviours and settling on a lead -->
+        <div class="behavior-row">
+            <div class="behavior-cell behavior-category">
+                Social behaviours and settling on a lead
+                <button class="e-learning-btn" onclick="handleELearning('social')">Link</button>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I have a routine and I am comfortable settling overnight. I am building my confidence being on my own for short periods in the day with items that help me do so. I am being introduced to tools to help me settle.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am learning how to settle on lead in appropriate environments. I continue to be comfortable settling overnight on my own. I can entertain myself whilst my handler completes daily tasks. I can be left for short periods in the daytime.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am practising self settling quietly for longer periods in more places with less help. I am being left for longer periods of time regularly on my own at home with less restrictions without getting into mischief.</div>
+            </div>
+            <div class="behavior-cell">
+                <div class="milestone-text">I am comfortable settling quietly in familiar social situations with minimal input. I am calm and self-controlled around food, only chewing and playing with items I've been given, and not jumping up or stealing items. I have demonstrated I am able to be left alone, for periods of 1 to 3 hours without the need for a closed crate.</div>
+            </div>
+        </div>
+        
+        <div class="input-row">
+            <div class="input-cell input-category">Progress</div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="social_woi_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="social_woi_1">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="social_prof_1" onchange="handleProgressCheckboxChange(this)">
+                        <label for="social_prof_1">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="social_notes_1">Notes:</label>
+                    <textarea id="social_notes_1" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="social_woi_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="social_woi_2">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="social_prof_2" onchange="handleProgressCheckboxChange(this)">
+                        <label for="social_prof_2">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="social_notes_2">Notes:</label>
+                    <textarea id="social_notes_2" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="social_woi_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="social_woi_3">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="social_prof_3" onchange="handleProgressCheckboxChange(this)">
+                        <label for="social_prof_3">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="social_notes_3">Notes:</label>
+                    <textarea id="social_notes_3" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+            <div class="input-cell">
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="social_woi_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="social_woi_4">Working on it</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="social_prof_4" onchange="handleProgressCheckboxChange(this)">
+                        <label for="social_prof_4">Proficient</label>
+                    </div>
+                </div>
+                <div class="notes-section">
+                    <label for="social_notes_4">Notes:</label>
+                    <textarea id="social_notes_4" onchange="handleProgressNotesChange(this)"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Progress Chart Specific Styles */
+.progress-chart-section {
+    margin-bottom: 2rem;
+}
+
+.progress-chart-section .control-panel {
+    margin: 20px 0;
+    text-align: left;
+}
+
+.progress-chart-section .toggle-btn {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.progress-chart-section .toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.progress-chart-section .header {
+    background: white;
+    color: black;
+    padding: 20px;
+    text-align: left;
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.progress-chart-section .header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #374151;
+}
+
+.progress-chart-section .header p {
+    margin: 10px 0 0 0;
+    font-size: 1em;
+    color: #6b7280;
+}
+
+.progress-chart-section .timeline-header {
+    background: #f8f9fa;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr 1fr 1fr;
+    gap: 2px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.progress-chart-section .timeline-header div:first-child {
+    background: transparent;
+}
+
+.progress-chart-section .timeline-header div:not(:first-child) {
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.progress-chart-section .behavior-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr 1fr 1fr;
+    gap: 2px;
+    background: #e5e7eb;
+    margin-bottom: 2px;
+}
+
+.progress-chart-section .behavior-cell {
+    background: white;
+    padding: 15px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.progress-chart-section .behavior-category {
+    background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    color: white;
+    font-weight: bold;
+    font-size: 1.1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.progress-chart-section .e-learning-btn {
+    background: #1e40af;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.progress-chart-section .e-learning-btn:hover {
+    background: #1e3a8a;
+}
+
+.progress-chart-section .milestone-text {
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: left;
+}
+
+.progress-chart-section .input-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1fr 1fr 1fr;
+    gap: 2px;
+    background: #f3f4f6;
+    margin-bottom: 10px;
+}
+
+.progress-chart-section .input-cell {
+    background: #fafafa;
+    padding: 15px;
+    border: 1px solid #e5e7eb;
+}
+
+.progress-chart-section .input-category {
+    background: #f8fafc;
+    color: #64748b;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 14px;
+}
+
+.progress-chart-section .checkbox-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.progress-chart-section .checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.progress-chart-section .checkbox-item input[type="checkbox"] {
+    margin: 0;
+    cursor: pointer;
+}
+
+.progress-chart-section .checkbox-item label {
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.progress-chart-section .notes-section {
+    width: 100%;
+}
+
+.progress-chart-section .notes-section label {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #374151;
+}
+
+.progress-chart-section .notes-section textarea {
+    width: 100%;
+    height: 60px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 12px;
+    resize: vertical;
+    box-sizing: border-box;
+}
+
+.progress-chart-section .notes-section textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.progress-chart-section .table-container {
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    overflow: hidden;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.progress-chart-section .table-container.collapsed {
+    max-height: 0;
+    opacity: 0;
+}
+
+.progress-chart-section .table-container.expanded {
+    max-height: none;
+    opacity: 1;
+}
+
+/* Mobile responsive adjustments for progress chart */
+@media (max-width: 768px) {
+    .progress-chart-section .timeline-header,
+    .progress-chart-section .behavior-row,
+    .progress-chart-section .input-row {
+        grid-template-columns: 1fr;
+        gap: 1px;
+    }
+    
+    .progress-chart-section .behavior-cell,
+    .progress-chart-section .input-cell {
+        min-height: auto;
+        padding: 10px;
+    }
+    
+    .progress-chart-section .behavior-category {
+        font-size: 1em;
+        padding: 15px;
+    }
+    
+    .progress-chart-section .milestone-text {
+        font-size: 13px;
+    }
+    
+    .progress-chart-section .checkbox-group {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .progress-chart-section .notes-section textarea {
+        height: 50px;
+    }
+}
+</style>
