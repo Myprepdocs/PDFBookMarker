@@ -1,0 +1,93 @@
+            loadNotesFromStorage() {
+                try {
+                    const stored = localStorage.getItem('pdfCompanionNotes');
+                    return stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    console.error('Failed to load notes from localStorage:', error);
+                    return [];
+                }
+            }
+
+            loadLabelsFromStorage() {
+                try {
+                    const stored = localStorage.getItem('pdfCompanionLabels');
+                    if (stored) {
+                        return JSON.parse(stored);
+                    } else {
+                        return this.getSampleLabels();
+                    }
+                } catch (error) {
+                    console.error('Failed to load labels from localStorage:', error);
+                    return this.getSampleLabels();
+                }
+            }
+
+            getSampleLabels() {
+                return [
+                    { id: '1', name: 'Training', color: '#3b82f6', dateAdded: new Date().toISOString() },
+                    { id: '2', name: 'Important', color: '#ef4444', dateAdded: new Date().toISOString() },
+                    { id: '3', name: 'Safety', color: '#f59e0b', dateAdded: new Date().toISOString() },
+                    { id: '4', name: 'Guidelines', color: '#10b981', dateAdded: new Date().toISOString() }
+                ];
+            }
+
+            getSamplePDFs() {
+                return [
+                    {
+                        id: '1',
+                        title: 'Training Manual',
+                        url: 'https://example.com/training.pdf',
+                        labelId: '1',
+                        dateAdded: new Date(2024, 0, 15).toISOString()
+                    },
+                    {
+                        id: '2',
+                        title: 'Safety Guidelines',
+                        url: 'https://example.com/safety.pdf',
+                        labelId: '3',
+                        dateAdded: new Date(2024, 1, 20).toISOString()
+                    },
+                    {
+                        id: '3',
+                        title: 'Important Procedures',
+                        url: 'https://example.com/procedures.pdf',
+                        labelId: '2',
+                        dateAdded: new Date(2024, 2, 10).toISOString()
+                    },
+                    {
+                        id: '4',
+                        title: 'General Guidelines',
+                        url: 'https://example.com/guidelines.pdf',
+                        labelId: '4',
+                        dateAdded: new Date(2024, 3, 5).toISOString()
+                    }
+                ];
+            }
+
+            getSampleVideos() {
+                return [
+                    {
+                        id: '1',
+                        title: 'Introduction Video',
+                        url: 'https://example.com/intro-video',
+                        labelId: '1',
+                        dateAdded: new Date(2024, 0, 18).toISOString()
+                    },
+                    {
+                        id: '2',
+                        title: 'Safety Training Video',
+                        url: 'https://example.com/safety-video',
+                        labelId: '3',
+                        dateAdded: new Date(2024, 1, 25).toISOString()
+                    }
+                ];
+            }
+        }
+
+        // Initialize the application
+        const pdfCompanion = new PDFCompanion();
+
+        console.log('💡 Prep Docs is ready!');
+    </script>
+</body>
+</html>
